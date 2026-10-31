@@ -42,6 +42,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 
 public class DietValueGenerator {
@@ -50,7 +51,7 @@ public class DietValueGenerator {
   private static final Map<Item, List<Item>> TRAILS = new HashMap<>();
   private static final Comparator<ItemStack> COMPARATOR = new IngredientComparator();
   private static final Set<Item> UNGROUPED = new HashSet<>();
-  private static final Map<Item, List<Recipe<?>>> RECIPES = new HashMap<>();
+  private static final Map<Item, List<RecipeHolder<?>>> RECIPES = new HashMap<>();
   private static final Set<Item> PROCESSED = new HashSet<>();
 
   public static void reload(MinecraftServer server) {
@@ -100,15 +101,15 @@ public class DietValueGenerator {
     }
 
     if (result.isEmpty()) {
-      List<Recipe<?>> list = RECIPES.get(targetItem);
+      List<RecipeHolder<?>> list = RECIPES.get(targetItem);
 
       if (list != null) {
         Set<IDietGroup> found = new HashSet<>();
 
-        for (Recipe<?> recipe : list) {
+        for (RecipeHolder<?> recipe : list) {
           Set<Item> keys = new HashSet<>();
 
-          for (Ingredient ingredient : recipe.getIngredients()) {
+          for (Ingredient ingredient : recipe.value().getIngredients()) {
             ItemStack[] itemStacks = ingredient.getItems().clone();
 
             if (itemStacks.length == 0) {
@@ -177,33 +178,33 @@ public class DietValueGenerator {
                                              RegistryAccess registryAccess) {
     DietConstants.LOG.info("Building item-to-recipes map...");
     RECIPES.clear();
-    Map<Item, List<Recipe<?>>> result = new HashMap<>();
+    Map<Item, List<RecipeHolder<?>>> result = new HashMap<>();
 
-    for (Recipe<?> recipe : recipeManager.getRecipes()) {
+    for (RecipeHolder<?> recipe : recipeManager.getRecipes()) {
       ItemStack output = ItemStack.EMPTY;
 
       try {
-        output = recipe.getResultItem(registryAccess);
+        output = recipe.value().getResultItem(registryAccess);
       } catch (Exception e) {
-        DietConstants.LOG.error("Diet was unable to process recipe: {}", recipe.getId());
+        DietConstants.LOG.error("Diet was unable to process recipe: {}", recipe.id());
       }
 
       // This shouldn't be necessary but some mods are violating the non-null contract, so
       // we have to check for it anyway
       if (output == null) {
         DietConstants.LOG.debug("Diet was unable to process recipe due to null output: {}",
-            recipe.getId());
+            recipe.id());
         continue;
       }
       Item item = output.getItem();
-      List<Recipe<?>> current = result.computeIfAbsent(item, k -> new ArrayList<>());
+      List<RecipeHolder<?>> current = result.computeIfAbsent(item, k -> new ArrayList<>());
       current.add(recipe);
     }
 
-    for (List<Recipe<?>> list : result.values()) {
+    for (List<RecipeHolder<?>> list : result.values()) {
 
       if (list.size() > 1) {
-        list.sort(Comparator.comparing(Recipe::getId));
+        list.sort(Comparator.comparing(RecipeHolder::id));
       }
     }
     RECIPES.putAll(result);

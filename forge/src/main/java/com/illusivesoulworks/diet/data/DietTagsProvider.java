@@ -40,7 +40,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 public class DietTagsProvider extends ItemTagsProvider {
-
   protected TagsProvider.TagAppender<Item> fruits;
   protected TagsProvider.TagAppender<Item> grains;
   protected TagsProvider.TagAppender<Item> proteins;

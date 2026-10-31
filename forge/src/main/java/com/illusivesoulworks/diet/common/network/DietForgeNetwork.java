@@ -31,44 +31,30 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.network.*;
+import net.minecraftforge.network.SimpleChannel;
 
 public class DietForgeNetwork {
-
-  private static final String PTC_VERSION = "1";
-
+  private static final int PTC_VERSION = 1;
   public static SimpleChannel instance;
 
-  private static int id = 0;
-
   public static void setup() {
-    instance =
-        NetworkRegistry.ChannelBuilder.named(new ResourceLocation(DietConstants.MOD_ID, "main"))
-            .networkProtocolVersion(() -> PTC_VERSION).clientAcceptedVersions(PTC_VERSION::equals)
-            .serverAcceptedVersions(PTC_VERSION::equals).simpleChannel();
+    instance = ChannelBuilder.named(new ResourceLocation(DietConstants.MOD_ID, "main"))
+            .networkProtocolVersion(PTC_VERSION).clientAcceptedVersions(Channel.VersionTest.exact(PTC_VERSION))
+            .serverAcceptedVersions(Channel.VersionTest.exact(PTC_VERSION)).simpleChannel();
 
     // Server Packets
     register(SPacketDiet.class, SPacketDiet::encode, SPacketDiet::decode, SPacketDiet::handle);
-    register(SPacketEffectsInfo.class, SPacketEffectsInfo::encode, SPacketEffectsInfo::decode,
-        SPacketEffectsInfo::handle);
-    register(SPacketActivate.class, SPacketActivate::encode, SPacketActivate::decode,
-        SPacketActivate::handle);
+    register(SPacketEffectsInfo.class, SPacketEffectsInfo::encode, SPacketEffectsInfo::decode, SPacketEffectsInfo::handle);
+    register(SPacketActivate.class, SPacketActivate::encode, SPacketActivate::decode, SPacketActivate::handle);
     register(SPacketEaten.class, SPacketEaten::encode, SPacketEaten::decode, SPacketEaten::handle);
-    register(SPacketGroups.class, SPacketGroups::encode, SPacketGroups::decode,
-        SPacketGroups::handle);
-    register(SPacketSuites.class, SPacketSuites::encode, SPacketSuites::decode,
-        SPacketSuites::handle);
+    register(SPacketGroups.class, SPacketGroups::encode, SPacketGroups::decode, SPacketGroups::handle);
+    register(SPacketSuites.class, SPacketSuites::encode, SPacketSuites::decode, SPacketSuites::handle);
   }
 
-  public static <M> void register(Class<M> clazz, BiConsumer<M, FriendlyByteBuf> encoder,
-                                  Function<FriendlyByteBuf, M> decoder, Consumer<M> handler) {
-    instance.registerMessage(id++, clazz, encoder, decoder, (message, contextSupplier) -> {
-      NetworkEvent.Context context = contextSupplier.get();
-      context.enqueueWork(
-          () -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handler.accept(message)));
-      context.setPacketHandled(true);
-    });
+  public static <M> void register(Class<M> clazz, BiConsumer<M, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, M> decoder, Consumer<M> handler) {
+    instance.messageBuilder(clazz, NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder)
+            .consumerMainThread((m, context) -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handler.accept(m)))
+            .add();
   }
 }

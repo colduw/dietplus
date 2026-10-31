@@ -96,10 +96,10 @@ public class DietScreen extends Screen {
 
   @Override
   public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground(guiGraphics);
+    // this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
+    super.render(guiGraphics, mouseX, mouseY, partialTicks);
     this.renderForeground(guiGraphics, mouseX, mouseY);
     this.renderTitle(guiGraphics, mouseX, mouseY);
-    super.render(guiGraphics, mouseX, mouseY, partialTicks);
   }
 
   public void renderTitle(GuiGraphics guiGraphics, int mouseX, int mouseY) {
@@ -197,8 +197,8 @@ public class DietScreen extends Screen {
   }
 
   @Override
-  public void renderBackground(@Nonnull GuiGraphics guiGraphics) {
-    super.renderBackground(guiGraphics);
+  public void renderBackground(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    super.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
 
     if (this.minecraft != null) {
       int i = (this.width - this.xSize) / 2;

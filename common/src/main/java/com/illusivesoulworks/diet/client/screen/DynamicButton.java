@@ -23,32 +23,34 @@ import com.illusivesoulworks.diet.platform.ClientServices;
 import java.util.List;
 import javax.annotation.Nonnull;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-public class DynamicButton extends ImageButton {
-
+public class DynamicButton extends Button {
   private final AbstractContainerScreen<?> containerScreen;
+  private final int xTexStartIn, yTexStartIn, yDiffTextIn;
+  ResourceLocation texture;
 
   public DynamicButton(AbstractContainerScreen<?> screenIn, int xIn, int yIn, int widthIn,
                        int heightIn, int xTexStartIn, int yTexStartIn, int yDiffTextIn,
                        ResourceLocation resourceLocationIn, OnPress onPressIn) {
-    super(xIn, yIn, widthIn, heightIn, xTexStartIn, yTexStartIn, yDiffTextIn, resourceLocationIn,
-        onPressIn);
+    super(xIn, yIn, widthIn, heightIn, Component.empty(), onPressIn, DEFAULT_NARRATION);
     this.containerScreen = screenIn;
+    this.xTexStartIn = xTexStartIn;
+    this.yTexStartIn = yTexStartIn;
+    this.yDiffTextIn = yDiffTextIn;
+    this.texture = resourceLocationIn;
   }
 
   @Override
-  public void renderWidget(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY,
-                           float partialTicks) {
-    this.setX(
-        ClientServices.INSTANCE.getGuiLeft(this.containerScreen) + DietConfig.CLIENT.buttonX.get());
-    this.setY(
-        ClientServices.INSTANCE.getGuiTop(this.containerScreen) + DietConfig.CLIENT.buttonY.get() +
-            83);
+  public void renderWidget(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    this.setX(ClientServices.INSTANCE.getGuiLeft(this.containerScreen) + DietConfig.CLIENT.buttonX.get());
+    this.setY(ClientServices.INSTANCE.getGuiTop(this.containerScreen) + DietConfig.CLIENT.buttonY.get() + 83);
 
+    int yAdj = 0;
     if (this.isHoveredOrFocused()) {
       List<Component> tooltips = DietTooltip.getEffects();
 
@@ -57,7 +59,10 @@ public class DynamicButton extends ImageButton {
         DietClientEvents.tooltipX = mouseX;
         DietClientEvents.tooltipY = mouseY;
       }
+
+      yAdj = yDiffTextIn;
     }
-    super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
+
+    guiGraphics.blit(this.texture, getX(), getY(), xTexStartIn, yTexStartIn+yAdj, width, height);
   }
 }

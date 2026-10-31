@@ -33,41 +33,33 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.network.PacketDistributor;
 
 public class ForgeNetworkService implements INetworkService {
-
   @Override
   public void sendEffectsInfoS2C(ServerPlayer player, DietEffectsInfo info) {
-    DietForgeNetwork.instance.send(PacketDistributor.PLAYER.with(() -> player),
-        new SPacketEffectsInfo(info));
+    DietForgeNetwork.instance.send(new SPacketEffectsInfo(info), PacketDistributor.PLAYER.with(player));
   }
 
   @Override
   public void sendDietS2C(ServerPlayer player, String suite, Map<String, Float> groups) {
-    DietForgeNetwork.instance.send(PacketDistributor.PLAYER.with(() -> player),
-        new SPacketDiet(suite, groups));
+    DietForgeNetwork.instance.send(new SPacketDiet(suite, groups), PacketDistributor.PLAYER.with(player));
   }
 
   @Override
   public void sendActivationS2C(ServerPlayer player, boolean flag) {
-    DietForgeNetwork.instance.send(PacketDistributor.PLAYER.with(() -> player),
-        new SPacketActivate(flag));
+    DietForgeNetwork.instance.send(new SPacketActivate(flag), PacketDistributor.PLAYER.with(player));
   }
 
   @Override
   public void sendEatenS2C(ServerPlayer player, Set<Item> items) {
-    DietForgeNetwork.instance.send(PacketDistributor.PLAYER.with(() -> player),
-        new SPacketEaten(items));
+    DietForgeNetwork.instance.send(new SPacketEaten(items), PacketDistributor.PLAYER.with(player));
   }
 
   @Override
-  public void sendDietGroupsS2C(ServerPlayer player, CompoundTag groups,
-                                Map<Item, Set<String>> generated) {
-    DietForgeNetwork.instance.send(PacketDistributor.PLAYER.with(() -> player),
-        new SPacketGroups(groups, generated));
+  public void sendDietGroupsS2C(ServerPlayer player, CompoundTag groups, Map<Item, Set<String>> generated) {
+    DietForgeNetwork.instance.send(new SPacketGroups(groups, generated), PacketDistributor.PLAYER.with(player));
   }
 
   @Override
   public void sendDietSuitesS2C(ServerPlayer player, CompoundTag suites) {
-    DietForgeNetwork.instance.send(PacketDistributor.PLAYER.with(() -> player),
-        new SPacketSuites(suites));
+    DietForgeNetwork.instance.send(new SPacketSuites(suites), PacketDistributor.PLAYER.with(player));
   }
 }

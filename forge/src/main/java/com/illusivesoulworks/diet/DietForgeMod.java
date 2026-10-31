@@ -108,13 +108,10 @@ public class DietForgeMod {
     if (evt.includeServer()) {
       ExistingFileHelper existingFileHelper = evt.getExistingFileHelper();
       CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
-      DataGenerator gen = evt.getGenerator();
-      PackOutput packOutput = gen.getPackOutput();
-      DietBlockTagsProvider blockTagsProvider =
-          new DietBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
-      generator.addProvider(true,
-          new DietTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(),
-              existingFileHelper));
+      PackOutput packOutput = generator.getPackOutput();
+      DietBlockTagsProvider blockTagsProvider = new DietBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
+      generator.addProvider(true, blockTagsProvider);
+      generator.addProvider(true, new DietTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
     }
   }
 

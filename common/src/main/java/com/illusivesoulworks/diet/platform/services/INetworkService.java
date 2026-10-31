@@ -25,17 +25,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 
 public interface INetworkService {
-
   void sendEffectsInfoS2C(ServerPlayer player, DietEffectsInfo info);
-
   void sendDietS2C(ServerPlayer player, String suite, Map<String, Float> groups);
-
   void sendActivationS2C(ServerPlayer player, boolean flag);
-
   void sendEatenS2C(ServerPlayer player, Set<Item> items);
-
-  void sendDietGroupsS2C(ServerPlayer player, CompoundTag groups,
-                         Map<Item, Set<String>> generated);
-
+  void sendDietGroupsS2C(ServerPlayer player, CompoundTag groups, Map<Item, Set<String>> generated);
   void sendDietSuitesS2C(ServerPlayer player, CompoundTag suites);
 }
