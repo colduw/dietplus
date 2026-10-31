@@ -53,11 +53,11 @@ public final class DietSuite implements IDietSuite {
 
     if (groups != null) {
 
-      for (String key : groups.getAllKeys()) {
+      for (String key : groups.keySet()) {
         set.add(DietGroup.load((CompoundTag) Objects.requireNonNull(groups.get(key))));
       }
     }
-    return new DietSuite(tag.getString("Name"), set, new ArrayList<>());
+    return new DietSuite(tag.getStringOr("Name", ""), set, new ArrayList<>());
   }
 
   @Override

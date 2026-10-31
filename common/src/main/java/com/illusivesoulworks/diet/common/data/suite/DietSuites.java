@@ -88,7 +88,7 @@ public class DietSuites extends SimpleJsonResourceReloadListener<JsonElement> {
   public void load(CompoundTag tag) {
     Map<String, IDietSuite> loaded = new HashMap<>();
 
-    for (String key : tag.getAllKeys()) {
+    for (String key : tag.keySet()) {
       loaded.put(key, DietSuite.load((CompoundTag) Objects.requireNonNull(tag.get(key))));
     }
     this.suites = loaded;

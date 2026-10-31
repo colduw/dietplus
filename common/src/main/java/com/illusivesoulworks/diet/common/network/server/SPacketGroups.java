@@ -66,15 +66,15 @@ public record SPacketGroups(CompoundTag groups, Map<Item, Set<String>> generated
 
     if (compoundNBT != null) {
 
-      for (String name : compoundNBT.getAllKeys()) {
+      for (String name : compoundNBT.keySet()) {
         Item item = Services.REGISTRY.getItem(ResourceLocation.parse(name)).orElse(null);
 
         if (item != null) {
-          ListTag listNBT = compoundNBT.getList(name, Tag.TAG_STRING);
+          ListTag listNBT = compoundNBT.getListOrEmpty(name);
           Set<String> found = new HashSet<>();
 
           for (Tag nbt : listNBT) {
-            String entry = nbt.getAsString();
+            String entry = nbt.asString().orElse("");
             found.add(entry);
           }
           generated.put(item, found);

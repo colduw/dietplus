@@ -89,7 +89,7 @@ public class DietGroups extends SimpleJsonResourceReloadListener<JsonElement> {
   public void load(CompoundTag tag) {
     Map<String, IDietGroup> loaded = new HashMap<>();
 
-    for (String key : tag.getAllKeys()) {
+    for (String key : tag.keySet()) {
       loaded.put(key, DietGroup.load((CompoundTag) Objects.requireNonNull(tag.get(key))));
     }
     this.groups = loaded;

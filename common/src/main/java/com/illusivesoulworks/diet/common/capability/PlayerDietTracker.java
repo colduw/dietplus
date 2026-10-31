@@ -77,7 +77,7 @@ public class PlayerDietTracker implements IDietTracker {
 
   static {
     EFFECT_DURATION.put(MobEffects.NIGHT_VISION.value(), 300);
-    EFFECT_DURATION.put(MobEffects.CONFUSION.value(), 300);
+    EFFECT_DURATION.put(MobEffects.NAUSEA.value(), 300);
   }
 
   public PlayerDietTracker(Player player) {
@@ -456,40 +456,40 @@ public class PlayerDietTracker implements IDietTracker {
 
       for (IDietGroup group : suite.getGroups()) {
         String name = group.getName();
-        float amount = tag.contains(name) ? tag.getFloat(name) : group.getDefaultValue();
+        float amount = tag.contains(name) ? tag.getFloatOr(name, 0.0f) : group.getDefaultValue();
         groups.put(name, Mth.clamp(amount, 0.0f, 1.0f));
       }
     });
-    ListTag list = tag.getList("Modifiers", Tag.TAG_COMPOUND);
+    ListTag list = tag.getListOrEmpty("Modifiers");
     Map<Attribute, Set<UUID>> modifiers = new HashMap<>();
 
     for (int i = 0; i < list.size(); i++) {
-      CompoundTag attributeTag = list.getCompound(i);
+      CompoundTag attributeTag = list.getCompoundOrEmpty(i);
       Attribute att = Services.REGISTRY.getAttribute(
-          ResourceLocation.parse(attributeTag.getString("AttributeName"))).orElse(null);
+          ResourceLocation.parse(attributeTag.getStringOr("AttributeName", ""))).orElse(null);
 
       if (att != null) {
         Set<UUID> uuids = new HashSet<>();
-        ListTag uuidList = attributeTag.getList("UUIDs", Tag.TAG_STRING);
+        ListTag uuidList = attributeTag.getListOrEmpty("UUIDs");
 
         for (int j = 0; j < uuidList.size(); j++) {
-          uuids.add(UUID.fromString(uuidList.getString(j)));
+          uuids.add(UUID.fromString(uuidList.getStringOr(j, "")));
         }
         modifiers.put(att, uuids);
       }
     }
-    list = tag.getList("Eaten", Tag.TAG_STRING);
+    list = tag.getListOrEmpty("Eaten");
     Set<Item> eaten = new HashSet<>();
 
     for (int i = 0; i < list.size(); i++) {
-      String s = list.getString(i);
+      String s = list.getStringOr(i, "");
       ResourceLocation rl = ResourceLocation.parse(s);
       Services.REGISTRY.getItem(rl).ifPresent(eaten::add);
     }
     this.setEaten(eaten);
     this.setModifiers(modifiers);
     this.setValues(groups);
-    this.setActive(!tag.contains("Active") || tag.getBoolean("Active"));
+    this.setActive(!tag.contains("Active") || tag.getBooleanOr("Active", true));
   }
 
   @Override

@@ -87,31 +87,31 @@ public class DietEffectsInfo {
 
   public static DietEffectsInfo read(CompoundTag tag) {
     DietEffectsInfo info = new DietEffectsInfo();
-    ListTag modifiersList = tag.getList("Modifiers", Tag.TAG_COMPOUND);
+    ListTag modifiersList = tag.getListOrEmpty("Modifiers");
 
     for (int i = 0; i < modifiersList.size(); i++) {
-      CompoundTag modifierTag = modifiersList.getCompound(i);
-      String name = modifierTag.getString("AttributeName");
+      CompoundTag modifierTag = modifiersList.getCompoundOrEmpty(i);
+      String name = modifierTag.getStringOr("AttributeName", "");
       Attribute attribute = Services.REGISTRY.getAttribute(ResourceLocation.parse(name)).orElse(null);
 
       if (attribute == null) {
         continue;
       }
-      float amount = modifierTag.getFloat("Amount");
-      net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation operation = net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.BY_ID.apply(modifierTag.getInt("Operation"));
+      float amount = modifierTag.getFloatOr("Amount", 0.0f);
+      net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation operation = net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.BY_ID.apply(modifierTag.getIntOr("Operation", 0));
       info.addModifier(attribute, operation, amount);
     }
-    ListTag effectsList = tag.getList("Effects", Tag.TAG_COMPOUND);
+    ListTag effectsList = tag.getListOrEmpty("Effects");
 
     for (int i = 0; i < effectsList.size(); i++) {
-      CompoundTag effectTag = effectsList.getCompound(i);
-      String name = effectTag.getString("EffectName");
+      CompoundTag effectTag = effectsList.getCompoundOrEmpty(i);
+      String name = effectTag.getStringOr("EffectName", "");
       MobEffect effect = Services.REGISTRY.getStatusEffect(ResourceLocation.parse(name)).orElse(null);
 
       if (effect == null) {
         continue;
       }
-      int amplifier = effectTag.getInt("Amplifier");
+      int amplifier = effectTag.getIntOr("Amplifier", 0);
       info.addEffect(effect, amplifier);
     }
     return info;

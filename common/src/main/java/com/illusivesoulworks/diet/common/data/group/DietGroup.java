@@ -55,12 +55,12 @@ public final class DietGroup implements IDietGroup {
   }
 
   public static IDietGroup load(CompoundTag tag) {
-    String name = tag.getString("Name");
-    String icon = tag.getString("Icon");
+    String name = tag.getStringOr("Name", "");
+    String icon = tag.getStringOr("Icon", "");
     Item item = Services.REGISTRY.getItem(ResourceLocation.parse(icon)).orElse(null);
-    int order = tag.getInt("Order");
-    boolean beneficial = tag.getBoolean("Beneficial");
-    int color = tag.getInt("Color");
+    int order = tag.getIntOr("Order", 0);
+    boolean beneficial = tag.getBooleanOr("Beneficial", true);
+    int color = tag.getIntOr("Color", 0);
     int r = ((color >> 16) & 0xff);
     int g = ((color >> 8) & 0xff);
     int b = ((color) & 0xff);
@@ -69,8 +69,8 @@ public final class DietGroup implements IDietGroup {
     builder.order(order);
     builder.beneficial(beneficial);
     builder.color(new DietColor(r, g, b));
-    builder.gainMultiplier((float) tag.getDouble("Gain"));
-    builder.decayMultiplier((float) tag.getDouble("Decay"));
+    builder.gainMultiplier((float) tag.getDoubleOr("Gain", 0.0));
+    builder.decayMultiplier((float) tag.getDoubleOr("Decay", 0.0));
     return builder.build();
   }
 

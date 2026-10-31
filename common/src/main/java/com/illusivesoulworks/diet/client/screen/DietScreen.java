@@ -29,7 +29,6 @@ import com.illusivesoulworks.diet.common.data.suite.DietSuites;
 import com.illusivesoulworks.diet.platform.Services;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -43,8 +42,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.CoreShaders;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -149,8 +146,6 @@ public class DietScreen extends Screen {
                 MutableComponent text = Component.translatable(
                     "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name");
                 guiGraphics.drawString(this.font, text, x + 20, y, getTextColor(), false);
-                RenderSystem.setShader(CoreShaders.POSITION_TEX_COLOR);
-                RenderSystem.setShaderTexture(0, ICONS);
                 DietColor color = diet.isActive() ? group.getColor() : DietColor.GRAY;
                 int red = color.red();
                 int green = color.green();
@@ -251,6 +246,6 @@ public class DietScreen extends Screen {
     bufferbuilder.addVertex(matrix, (float) x2, (float) y2, 0).setColor(red, green, blue, alpha).setUv(maxU, maxV);
     bufferbuilder.addVertex(matrix, (float) x2, (float) y, 0).setColor(red, green, blue, alpha).setUv(maxU, minV);
     bufferbuilder.addVertex(matrix, (float) x, (float) y, 0).setColor(red, green, blue, alpha).setUv(minU, minV);
-    BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+    RenderType.guiTextured(ICONS).draw(bufferbuilder.buildOrThrow());
   }
 }
