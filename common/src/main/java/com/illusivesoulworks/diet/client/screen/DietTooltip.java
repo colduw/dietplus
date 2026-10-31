@@ -31,6 +31,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 public class DietTooltip {
 
@@ -63,11 +64,11 @@ public class DietTooltip {
               Component.translatable(key.getDescriptionId())).withStyle(ChatFormatting.RED));
         }
       } else {
-        addAttributeTooltip(tooltips, info.added, AttributeModifier.Operation.ADDITION, key);
+        addAttributeTooltip(tooltips, info.added, AttributeModifier.Operation.ADD_VALUE, key);
         addAttributeTooltip(tooltips, info.baseMultiplier,
-            AttributeModifier.Operation.MULTIPLY_BASE, key);
+            AttributeModifier.Operation.ADD_MULTIPLIED_BASE, key);
         addAttributeTooltip(tooltips, info.totalMultiplier - 1.0f,
-            AttributeModifier.Operation.MULTIPLY_TOTAL, key);
+            AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, key);
       }
     }
     Map<MobEffect, Integer> mergedEffects = new HashMap<>();
@@ -98,8 +99,8 @@ public class DietTooltip {
                                           Attribute attribute) {
     double formattedAmount;
 
-    if (operation != AttributeModifier.Operation.MULTIPLY_BASE &&
-        operation != AttributeModifier.Operation.MULTIPLY_TOTAL) {
+    if (operation != AttributeModifier.Operation.ADD_MULTIPLIED_BASE &&
+        operation != AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
 
       if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE)) {
         formattedAmount = amount * 10.0D;
@@ -111,19 +112,18 @@ public class DietTooltip {
     }
 
     if (amount > 0.0D) {
-      tooltips.add((Component.translatable("attribute.modifier.plus." + operation.toValue(),
-          ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(formattedAmount),
+      tooltips.add((Component.translatable("attribute.modifier.plus." + operation.ordinal(),
+              ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(formattedAmount),
           Component.translatable(attribute.getDescriptionId()))).withStyle(ChatFormatting.BLUE));
     } else if (amount < 0.0D) {
       formattedAmount = formattedAmount * -1.0D;
-      tooltips.add((Component.translatable("attribute.modifier.take." + operation.toValue(),
-          ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(formattedAmount),
+      tooltips.add((Component.translatable("attribute.modifier.take." + operation.ordinal(),
+          ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(formattedAmount),
           Component.translatable(attribute.getDescriptionId()))).withStyle(ChatFormatting.RED));
     }
   }
 
   private static class AttributeTooltip {
-
     float added = 0;
     float baseMultiplier = 0.0f;
     float totalMultiplier = 1.0f;
@@ -131,9 +131,9 @@ public class DietTooltip {
     void merge(DietEffectsInfo.AttributeModifier modifier) {
       float amount = modifier.getAmount();
 
-      if (modifier.getOperation() == AttributeModifier.Operation.MULTIPLY_BASE) {
+      if (modifier.getOperation() == AttributeModifier.Operation.ADD_MULTIPLIED_BASE) {
         baseMultiplier += amount;
-      } else if (modifier.getOperation() == AttributeModifier.Operation.MULTIPLY_TOTAL) {
+      } else if (modifier.getOperation() == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
         totalMultiplier *= 1.0f + amount;
       } else {
         added += amount;

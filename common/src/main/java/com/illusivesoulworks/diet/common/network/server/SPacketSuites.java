@@ -21,19 +21,16 @@ import com.illusivesoulworks.diet.DietCommonMod;
 import com.illusivesoulworks.diet.client.DietClientPacketReceiver;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 public record SPacketSuites(CompoundTag suites) implements CustomPacketPayload {
-  public static final ResourceLocation SUITES = DietCommonMod.resource("suites");
+  public static final Type<SPacketSuites> SUITES = new Type<>(DietCommonMod.resource("suites"));
+  public static final StreamCodec<FriendlyByteBuf, SPacketSuites> CODEC = StreamCodec.ofMember(SPacketSuites::encode, SPacketSuites::decode);
 
   @Override
-  public void write(FriendlyByteBuf buf) {
-    encode(this, buf);
-  }
-
-  @Override
-  public ResourceLocation id() {
+  public Type<SPacketSuites> type() {
     return SUITES;
   }
 

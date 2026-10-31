@@ -40,6 +40,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -73,8 +75,8 @@ public class PlayerDietTracker implements IDietTracker {
   private ItemStack captured = ItemStack.EMPTY;
 
   static {
-    EFFECT_DURATION.put(MobEffects.NIGHT_VISION, 300);
-    EFFECT_DURATION.put(MobEffects.CONFUSION, 300);
+    EFFECT_DURATION.put(MobEffects.NIGHT_VISION.value(), 300);
+    EFFECT_DURATION.put(MobEffects.CONFUSION.value(), 300);
   }
 
   public PlayerDietTracker(Player player) {
@@ -119,7 +121,7 @@ public class PlayerDietTracker implements IDietTracker {
       if (this.player.tickCount % 80 == 0) {
         for (Map.Entry<Attribute, Set<UUID>> entry : this.activeModifiers.entrySet()) {
           Set<UUID> uuids = entry.getValue();
-          AttributeInstance att = this.player.getAttribute(entry.getKey());
+          AttributeInstance att = this.player.getAttribute(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(entry.getKey()));
 
           if (att != null) {
 
@@ -271,7 +273,7 @@ public class PlayerDietTracker implements IDietTracker {
           multiplier = Math.max(1, multiplier);
 
           for (IDietAttribute attribute : effect.getAttributes()) {
-            AttributeInstance att = player.getAttribute(attribute.getAttribute());
+            AttributeInstance att = player.getAttribute(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute.getAttribute()));
             AttributeModifier mod = new AttributeModifier(effect.getUuid(), "Diet group effect",
                 attribute.getBaseAmount() + ((multiplier - 1) * attribute.getIncrement()),
                 attribute.getOperation());
@@ -286,7 +288,7 @@ public class PlayerDietTracker implements IDietTracker {
 
           for (IDietStatusEffect statusEffect : effect.getStatusEffects()) {
             int duration = EFFECT_DURATION.getOrDefault(statusEffect.getEffect(), 100);
-            MobEffectInstance instance = new MobEffectInstance(statusEffect.getEffect(), duration,
+            MobEffectInstance instance = new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(statusEffect.getEffect()), duration,
                 statusEffect.getBasePower() + ((multiplier - 1) * statusEffect.getIncrement()),
                 true, false);
             player.addEffect(instance);

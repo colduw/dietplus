@@ -125,8 +125,8 @@ public class DietApiImpl extends DietApi {
       healing = apply.getMiddle();
       saturation = apply.getRight();
     } else if (food != null) {
-      healing = food.getNutrition();
-      saturation = food.getSaturationModifier();
+      healing = food.nutrition();
+      saturation = food.saturation();
 
       if (healing == 0) {
         return DietResult.EMPTY;

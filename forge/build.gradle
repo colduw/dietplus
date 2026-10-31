@@ -14,8 +14,6 @@ base {
 }
 
 mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
-
     config "${mod_id}.mixins.json"
 }
 
@@ -80,10 +78,9 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":common")
-	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    implementation fg.deobf(group: 'top.theillusivec4.curios', name: 'curios-forge', version: "${curios_version}")
-    implementation fg.deobf(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_version}")
+    implementation(group: 'top.theillusivec4.curios', name: 'curios-forge', version: "${curios_version}")
+    implementation(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_version}")
     jarJar(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_range}") {
         jarJar.pin(it, "${spectrelib_version}")
     }
@@ -118,14 +115,9 @@ processResources {
     }
 }
 
-jar.finalizedBy('reobfJar')
-
-reobf {
-    jarJar {}
-}
-
-tasks.jarJar.configure {
-    archiveClassifier.set("")
+tasks.named('jar', Jar) {
+    archiveClassifier.set("slim")
+    manifest.attributes('MixinConfigs': "${mod_id}.mixins.json")
     from(rootProject.file("LICENSE"))
     from(rootProject.file("COPYING"))
     from(rootProject.file("COPYING.LESSER"))
@@ -133,8 +125,18 @@ tasks.jarJar.configure {
     from(rootProject.file("CHANGELOG.md"))
 }
 
-jarJar {
-    enable()
+tasks.named('jarJar', Jar) {
+    archiveClassifier.set("")
+    manifest.attributes('MixinConfigs': "${mod_id}.mixins.json")
+    from(rootProject.file("LICENSE"))
+    from(rootProject.file("COPYING"))
+    from(rootProject.file("COPYING.LESSER"))
+    from(rootProject.file("README.md"))
+    from(rootProject.file("CHANGELOG.md"))
+}
+
+tasks.named('build') {
+    dependsOn('jarJar')
 }
 
 tasks.withType(JavaCompile).configureEach {

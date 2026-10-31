@@ -28,14 +28,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 
 public class DietFabricClientMod implements ClientModInitializer {
-
   @Override
   public void onInitializeClient() {
-    DietFabricNetwork.setup();
+    DietFabricNetwork.setupClient();
     KeyBindingHelper.registerKeyBinding(DietKeys.get());
     ClientTickEvents.END_CLIENT_TICK.register(DietClientEvents::tick);
     ItemTooltipCallback.EVENT.register(
-        (stack, context, lines) -> DietClientEvents.renderItemTooltip(
+        (stack, context, flag, lines) -> DietClientEvents.renderItemTooltip(
             Minecraft.getInstance().player, stack, lines));
     ScreenEvents.BEFORE_INIT.register(
         (client, screen, scaledWidth, scaledHeight) -> ScreenEvents.afterRender(screen).register(

@@ -27,7 +27,7 @@ import com.illusivesoulworks.diet.common.network.server.SPacketSuites;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -52,7 +52,7 @@ public class DietForgeNetwork {
     register(SPacketSuites.class, SPacketSuites::encode, SPacketSuites::decode, SPacketSuites::handle);
   }
 
-  public static <M> void register(Class<M> clazz, BiConsumer<M, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, M> decoder, Consumer<M> handler) {
+  public static <M> void register(Class<M> clazz, BiConsumer<M, RegistryFriendlyByteBuf> encoder, Function<RegistryFriendlyByteBuf, M> decoder, Consumer<M> handler) {
     instance.messageBuilder(clazz, NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder)
             .consumerMainThread((m, context) -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handler.accept(m)))
             .add();

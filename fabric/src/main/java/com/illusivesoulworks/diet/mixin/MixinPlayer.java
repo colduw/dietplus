@@ -20,6 +20,7 @@ package com.illusivesoulworks.diet.mixin;
 import com.illusivesoulworks.diet.api.DietApi;
 import com.illusivesoulworks.diet.api.type.IDietTracker;
 import com.illusivesoulworks.diet.common.component.DietComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,7 +34,7 @@ public class MixinPlayer {
 
   @Inject(at = @At("RETURN"), method = "createAttributes()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;")
   private static void diet$createAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
-    cir.getReturnValue().add(DietApi.getInstance().getNaturalRegeneration());
+    cir.getReturnValue().add(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(DietApi.getInstance().getNaturalRegeneration()));
   }
 
   @Inject(at = @At("TAIL"), method = "tick")

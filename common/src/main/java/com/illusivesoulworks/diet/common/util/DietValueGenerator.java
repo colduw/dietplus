@@ -220,7 +220,7 @@ public class DietValueGenerator {
       ItemStack stack = item.getDefaultInstance();
       FoodProperties food = Services.REGISTRY.getFoodProperties(stack, null);
 
-      if ((food != null && food.getNutrition() > 0) || Services.REGISTRY.isSpecialFood(stack)) {
+      if ((food != null && food.nutrition() > 0) || Services.REGISTRY.isSpecialFood(stack)) {
 
         for (IDietGroup group : groups) {
 

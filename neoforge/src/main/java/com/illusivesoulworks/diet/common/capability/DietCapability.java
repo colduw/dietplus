@@ -22,6 +22,7 @@ import com.illusivesoulworks.diet.api.type.IDietTracker;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -36,14 +37,14 @@ public class DietCapability {
           iAttachmentHolder -> new PlayerDietTracker((Player) iAttachmentHolder)
   ).serialize(new IAttachmentSerializer<CompoundTag, IDietTracker>() {
             @Override
-            public CompoundTag write(IDietTracker iDietTracker) {
+            public CompoundTag write(IDietTracker iDietTracker, HolderLookup.Provider provider) {
               CompoundTag tag = new CompoundTag();
               iDietTracker.save(tag);
               return tag;
             }
 
             @Override
-            public IDietTracker read(IAttachmentHolder holder, CompoundTag tag) {
+            public IDietTracker read(IAttachmentHolder holder, CompoundTag tag, HolderLookup.Provider provider) {
               IDietTracker dietTracker = new PlayerDietTracker((Player) holder);
               dietTracker.load(tag);
               return dietTracker;

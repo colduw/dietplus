@@ -22,6 +22,7 @@ import com.illusivesoulworks.diet.api.type.IDietTracker;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
@@ -112,7 +113,7 @@ public class DietCapabilityEventsListener {
     LivingEntity livingEntity = evt.getEntity();
 
     if (!livingEntity.level().isClientSide() && livingEntity instanceof Player) {
-      FoodProperties food = stack.getFoodProperties(livingEntity);
+      FoodProperties food = stack.get(DataComponents.FOOD);
 
       if (food != null) {
         DietCapability.get((Player) livingEntity).ifPresent(diet -> diet.consume(stack));

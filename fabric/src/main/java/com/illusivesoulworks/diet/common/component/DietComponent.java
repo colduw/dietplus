@@ -18,24 +18,25 @@
 package com.illusivesoulworks.diet.common.component;
 
 import com.illusivesoulworks.diet.common.capability.PlayerDietTracker;
-import dev.onyxstudios.cca.api.v3.component.Component;
 import javax.annotation.Nonnull;
+
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import org.ladysnake.cca.api.v3.component.Component;
 
 public class DietComponent extends PlayerDietTracker implements Component {
-
   public DietComponent(Player player) {
     super(player);
   }
 
   @Override
-  public void readFromNbt(@Nonnull CompoundTag tag) {
+  public void readFromNbt(@Nonnull CompoundTag tag, HolderLookup.Provider provider) {
     this.load(tag);
   }
 
   @Override
-  public void writeToNbt(@Nonnull CompoundTag tag) {
+  public void writeToNbt(@Nonnull CompoundTag tag, HolderLookup.Provider provider) {
     this.save(tag);
   }
 }

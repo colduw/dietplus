@@ -33,10 +33,13 @@ import com.illusivesoulworks.diet.common.util.DietValueGenerator;
 import com.illusivesoulworks.diet.data.DietBlockTagsProvider;
 import com.illusivesoulworks.diet.data.DietTagsProvider;
 import java.util.concurrent.CompletableFuture;
+
+import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
@@ -44,6 +47,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
@@ -64,6 +68,9 @@ public class DietNeoForgeMod {
   private static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(BuiltInRegistries.ATTRIBUTE, DietConstants.MOD_ID);
   public static final DeferredHolder<Attribute, Attribute> NATURAL_REGEN = ATTRIBUTES.register("natural_regeneration", () -> DietApi.getInstance().getNaturalRegeneration());
 
+  private static final DeferredRegister<ArgumentTypeInfo<?, ?>> ARGUMENT_TYPE_INFO_DEFERRED_REGISTER = DeferredRegister.create(Registries.COMMAND_ARGUMENT_TYPE, DietConstants.MOD_ID);
+  private static final DeferredHolder<ArgumentTypeInfo<?, ?>, ArgumentTypeInfo<?, ?>> GROUP_ARGUMENT = ARGUMENT_TYPE_INFO_DEFERRED_REGISTER.register("group", () -> ArgumentTypeInfos.registerByClass(DietGroupArgument.class, SingletonArgumentInfo.contextFree(DietGroupArgument::group)));
+
   public DietNeoForgeMod(IEventBus eventBus) {
     eventBus.addListener(this::setup);
     eventBus.addListener(this::process);
@@ -73,6 +80,7 @@ public class DietNeoForgeMod {
     eventBus.addListener(this::modifyAttributes);
     DietConfigLoader.setup();
     ATTRIBUTES.register(eventBus);
+    ARGUMENT_TYPE_INFO_DEFERRED_REGISTER.register(eventBus);
     NeoForge.EVENT_BUS.addListener(this::serverStarting);
     NeoForge.EVENT_BUS.addListener(this::onDatapackSync);
     NeoForge.EVENT_BUS.addListener(this::setupCommands);
@@ -81,7 +89,7 @@ public class DietNeoForgeMod {
 
   private void setup(final FMLCommonSetupEvent evt) {
     IntegrationManager.setup();
-    evt.enqueueWork(() -> ArgumentTypeInfos.registerByClass(DietGroupArgument.class, SingletonArgumentInfo.contextFree(DietGroupArgument::group)));
+    // evt.enqueueWork(() -> ArgumentTypeInfos.registerByClass(DietGroupArgument.class, SingletonArgumentInfo.contextFree(DietGroupArgument::group)));
   }
 
   private void addReloaders(final AddReloadListenerEvent evt) {
@@ -107,7 +115,7 @@ public class DietNeoForgeMod {
   }
 
   private void modifyAttributes(final EntityAttributeModificationEvent evt) {
-    evt.add(EntityType.PLAYER, DietApi.getInstance().getNaturalRegeneration());
+    evt.add(EntityType.PLAYER, BuiltInRegistries.ATTRIBUTE.wrapAsHolder(DietApi.getInstance().getNaturalRegeneration()));
   }
 
   private void serverStarting(final ServerStartingEvent evt) {
@@ -127,7 +135,7 @@ public class DietNeoForgeMod {
     DietCommand.register(evt.getDispatcher());
   }
 
-  @Mod.EventBusSubscriber(modid = DietConstants.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+  @EventBusSubscriber(modid = DietConstants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
   public static class ClientModEvents {
     @SubscribeEvent
     public static void registerKeys(final RegisterKeyMappingsEvent evt) {

@@ -29,6 +29,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -193,7 +194,7 @@ public class DietCommand {
   private static int clear(CommandSourceStack sender, ServerPlayer player) {
     Services.CAPABILITY.get(player).ifPresent(diet -> {
       diet.getModifiers().forEach((k, v) -> {
-        AttributeInstance instance = player.getAttribute(k);
+        AttributeInstance instance = player.getAttribute(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(k));
         if (instance != null) {
           v.forEach(instance::removeModifier);
         }

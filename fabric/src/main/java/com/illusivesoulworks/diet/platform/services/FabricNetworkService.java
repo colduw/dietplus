@@ -35,47 +35,33 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 
 public class FabricNetworkService implements INetworkService {
-
   @Override
   public void sendEffectsInfoS2C(ServerPlayer player, DietEffectsInfo info) {
-    FriendlyByteBuf buf = PacketByteBufs.create();
-    SPacketEffectsInfo.encode(new SPacketEffectsInfo(info), buf);
-    ServerPlayNetworking.send(player, DietFabricNetwork.EFFECTS_INFO, buf);
+    ServerPlayNetworking.send(player, new SPacketEffectsInfo(info));
   }
 
   @Override
   public void sendDietS2C(ServerPlayer player, String suite, Map<String, Float> groups) {
-    FriendlyByteBuf buf = PacketByteBufs.create();
-    SPacketDiet.encode(new SPacketDiet(suite, groups), buf);
-    ServerPlayNetworking.send(player, DietFabricNetwork.DIET, buf);
+    ServerPlayNetworking.send(player, new SPacketDiet(suite, groups));
   }
 
   @Override
   public void sendActivationS2C(ServerPlayer player, boolean flag) {
-    FriendlyByteBuf buf = PacketByteBufs.create();
-    SPacketActivate.encode(new SPacketActivate(flag), buf);
-    ServerPlayNetworking.send(player, DietFabricNetwork.ACTIVATION, buf);
+    ServerPlayNetworking.send(player, new SPacketActivate(flag));
   }
 
   @Override
   public void sendEatenS2C(ServerPlayer player, Set<Item> items) {
-    FriendlyByteBuf buf = PacketByteBufs.create();
-    SPacketEaten.encode(new SPacketEaten(items), buf);
-    ServerPlayNetworking.send(player, DietFabricNetwork.EATEN, buf);
+    ServerPlayNetworking.send(player, new SPacketEaten(items));
   }
 
   @Override
-  public void sendDietGroupsS2C(ServerPlayer player, CompoundTag groups,
-                                Map<Item, Set<String>> generated) {
-    FriendlyByteBuf buf = PacketByteBufs.create();
-    SPacketGroups.encode(new SPacketGroups(groups, generated), buf);
-    ServerPlayNetworking.send(player, DietFabricNetwork.GROUPS, buf);
+  public void sendDietGroupsS2C(ServerPlayer player, CompoundTag groups, Map<Item, Set<String>> generated) {
+    ServerPlayNetworking.send(player, new SPacketGroups(groups, generated));
   }
 
   @Override
   public void sendDietSuitesS2C(ServerPlayer player, CompoundTag suites) {
-    FriendlyByteBuf buf = PacketByteBufs.create();
-    SPacketSuites.encode(new SPacketSuites(suites), buf);
-    ServerPlayNetworking.send(player, DietFabricNetwork.SUITES, buf);
+    ServerPlayNetworking.send(player, new SPacketSuites(suites));
   }
 }

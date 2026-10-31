@@ -33,9 +33,13 @@ import com.illusivesoulworks.diet.common.util.DietValueGenerator;
 import com.illusivesoulworks.diet.data.DietBlockTagsProvider;
 import com.illusivesoulworks.diet.data.DietTagsProvider;
 import java.util.concurrent.CompletableFuture;
+
+import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
@@ -63,13 +67,11 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Mod(DietConstants.MOD_ID)
 public class DietForgeMod {
+  private static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, DietConstants.MOD_ID);
+  public static final RegistryObject<Attribute> NATURAL_REGEN = ATTRIBUTES.register("natural_regeneration", () -> DietApi.getInstance().getNaturalRegeneration());
 
-  private static final DeferredRegister<Attribute> ATTRIBUTES =
-      DeferredRegister.create(ForgeRegistries.ATTRIBUTES, DietConstants.MOD_ID);
-
-  public static final RegistryObject<Attribute> NATURAL_REGEN =
-      ATTRIBUTES.register("natural_regeneration",
-          () -> DietApi.getInstance().getNaturalRegeneration());
+  private static final DeferredRegister<ArgumentTypeInfo<?, ?>> ARGUMENT_TYPE_INFO_DEFERRED_REGISTER = DeferredRegister.create(Registries.COMMAND_ARGUMENT_TYPE, DietConstants.MOD_ID);
+  private static final RegistryObject<ArgumentTypeInfo<?, ?>> GROUP_ARGUMENT = ARGUMENT_TYPE_INFO_DEFERRED_REGISTER.register("group", () -> ArgumentTypeInfos.registerByClass(DietGroupArgument.class, SingletonArgumentInfo.contextFree(DietGroupArgument::group)));
 
   public DietForgeMod() {
     IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -80,6 +82,7 @@ public class DietForgeMod {
     eventBus.addListener(this::modifyAttributes);
     DietConfigLoader.setup();
     ATTRIBUTES.register(eventBus);
+    ARGUMENT_TYPE_INFO_DEFERRED_REGISTER.register(eventBus);
     MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
     MinecraftForge.EVENT_BUS.addListener(this::onDatapackSync);
     MinecraftForge.EVENT_BUS.addListener(this::setupCommands);
@@ -89,8 +92,7 @@ public class DietForgeMod {
   private void setup(final FMLCommonSetupEvent evt) {
     DietForgeNetwork.setup();
     IntegrationManager.setup();
-    evt.enqueueWork(() -> ArgumentTypeInfos.registerByClass(DietGroupArgument.class,
-        SingletonArgumentInfo.contextFree(DietGroupArgument::group)));
+    // evt.enqueueWork(() -> ArgumentTypeInfos.registerByClass(DietGroupArgument.class, SingletonArgumentInfo.contextFree(DietGroupArgument::group)));
   }
 
   private void addReloaders(final AddReloadListenerEvent evt) {
@@ -120,7 +122,7 @@ public class DietForgeMod {
   }
 
   private void modifyAttributes(final EntityAttributeModificationEvent evt) {
-    evt.add(EntityType.PLAYER, DietApi.getInstance().getNaturalRegeneration());
+    evt.add(EntityType.PLAYER, BuiltInRegistries.ATTRIBUTE.wrapAsHolder(DietApi.getInstance().getNaturalRegeneration()));
   }
 
   private void serverStarting(final ServerStartingEvent evt) {

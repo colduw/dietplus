@@ -23,20 +23,17 @@ import com.illusivesoulworks.diet.platform.Services;
 import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 public record SPacketEaten(Set<Item> items) implements CustomPacketPayload {
-  public static final ResourceLocation EATEN = DietCommonMod.resource("eaten");
+  public static final Type<SPacketEaten> EATEN = new Type<>(DietCommonMod.resource("eaten"));
+  public static final StreamCodec<FriendlyByteBuf, SPacketEaten> CODEC = StreamCodec.ofMember(SPacketEaten::encode, SPacketEaten::decode);
 
   @Override
-  public void write(FriendlyByteBuf buf) {
-    encode(this, buf);
-  }
-
-  @Override
-  public ResourceLocation id() {
+  public Type<SPacketEaten> type() {
     return EATEN;
   }
 

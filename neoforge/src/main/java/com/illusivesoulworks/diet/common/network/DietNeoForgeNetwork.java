@@ -30,14 +30,14 @@ import java.util.function.Consumer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class DietNeoForgeNetwork {
   private static final String PTC_VERSION = "1";
 
-  public static void setup(RegisterPayloadHandlerEvent event) {
-    IPayloadRegistrar registrar = event.registrar(DietConstants.MOD_ID).versioned(PTC_VERSION);
+  public static void setup(RegisterPayloadHandlersEvent event) {
+    PayloadRegistrar registrar = event.registrar(DietConstants.MOD_ID).versioned(PTC_VERSION);
 
     /*
       public static final ResourceLocation EFFECTS_INFO = DietCommonMod.resource("effects_info");
@@ -49,15 +49,11 @@ public class DietNeoForgeNetwork {
     */
 
     // Server Packets
-    register(registrar, SPacketDiet.DIET, SPacketDiet::decode, SPacketDiet::handle);
-    register(registrar, SPacketEffectsInfo.EFFECTS_INFO, SPacketEffectsInfo::decode, SPacketEffectsInfo::handle);
-    register(registrar, SPacketActivate.ACTIVATION, SPacketActivate::decode, SPacketActivate::handle);
-    register(registrar, SPacketEaten.EATEN, SPacketEaten::decode, SPacketEaten::handle);
-    register(registrar, SPacketGroups.GROUPS, SPacketGroups::decode, SPacketGroups::handle);
-    register(registrar, SPacketSuites.SUITES, SPacketSuites::decode, SPacketSuites::handle);
-  }
-
-  public static <M extends CustomPacketPayload> void register(IPayloadRegistrar registrar, ResourceLocation resourceLocation, FriendlyByteBuf.Reader<M> reader, Consumer<M> handler) {
-    registrar.play(resourceLocation, reader, h -> h.client((m, playPayloadContext) -> playPayloadContext.workHandler().execute(() -> handler.accept(m))));
+    registrar.playToClient(SPacketDiet.DIET, SPacketDiet.CODEC, (p, ctx) -> SPacketDiet.handle(p));
+    registrar.playToClient(SPacketEffectsInfo.EFFECTS_INFO, SPacketEffectsInfo.CODEC, (p, ctx) -> SPacketEffectsInfo.handle(p));
+    registrar.playToClient(SPacketActivate.ACTIVATION, SPacketActivate.CODEC, (p, ctx) -> SPacketActivate.handle(p));
+    registrar.playToClient(SPacketEaten.EATEN, SPacketEaten.CODEC, (p, ctx) -> SPacketEaten.handle(p));
+    registrar.playToClient(SPacketGroups.GROUPS, SPacketGroups.CODEC, (p, ctx) -> SPacketGroups.handle(p));
+    registrar.playToClient(SPacketSuites.SUITES, SPacketSuites.CODEC, (p, ctx) -> SPacketSuites.handle(p));
   }
 }

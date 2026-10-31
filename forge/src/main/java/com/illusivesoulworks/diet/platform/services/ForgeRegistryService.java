@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -83,7 +84,7 @@ public class ForgeRegistryService implements IRegistryService {
 
   @Override
   public FoodProperties getFoodProperties(ItemStack stack, Player player) {
-    return stack.getFoodProperties(player);
+    return stack.get(DataComponents.FOOD);
   }
 
   @Override

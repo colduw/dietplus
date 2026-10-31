@@ -18,6 +18,7 @@
 package com.illusivesoulworks.diet.mixin;
 
 import com.illusivesoulworks.diet.common.component.DietComponents;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -56,7 +57,7 @@ public class MixinLivingEntity {
 
     if (!((LivingEntity) (Object) this).level().isClientSide() &&
         ((LivingEntity) (Object) this) instanceof Player) {
-      FoodProperties food = diet$copy.getItem().getFoodProperties();
+      FoodProperties food = diet$copy.get(DataComponents.FOOD);
 
       if (food != null) {
         DietComponents.DIET_TRACKER.maybeGet(this).ifPresent(diet -> diet.consume(diet$copy));

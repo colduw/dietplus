@@ -20,7 +20,7 @@
     "client": [
       "com.illusivesoulworks.diet.client.DietFabricClientMod"
     ],
-    "spectrelib": [
+    "spectrelib-config": [
       "com.illusivesoulworks.diet.DietConfigInitializer"
     ],
     "cardinal-components-entity": [

@@ -30,7 +30,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 
 public class DietEffectsInfo {
-
   private final List<AttributeModifier> modifiers = new ArrayList<>();
   private final List<StatusEffect> effects = new ArrayList<>();
 
@@ -67,10 +66,9 @@ public class DietEffectsInfo {
 
     for (AttributeModifier modifier : modifiers) {
       CompoundTag modifierTag = new CompoundTag();
-      modifierTag.putString("AttributeName",
-          Objects.requireNonNull(Services.REGISTRY.getAttributeKey(modifier.attribute)).toString());
+      modifierTag.putString("AttributeName", Objects.requireNonNull(Services.REGISTRY.getAttributeKey(modifier.attribute)).toString());
       modifierTag.putFloat("Amount", modifier.amount);
-      modifierTag.putInt("Operation", modifier.operation.toValue());
+      modifierTag.putInt("Operation", modifier.operation.ordinal());
       modifiersList.add(modifierTag);
     }
     ListTag effectsList = new ListTag();
@@ -100,9 +98,7 @@ public class DietEffectsInfo {
         continue;
       }
       float amount = modifierTag.getFloat("Amount");
-      net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation operation =
-          net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation
-              .fromValue(modifierTag.getInt("Operation"));
+      net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation operation = net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.BY_ID.apply(modifierTag.getInt("Operation"));
       info.addModifier(attribute, operation, amount);
     }
     ListTag effectsList = tag.getList("Effects", Tag.TAG_COMPOUND);
@@ -138,8 +134,8 @@ public class DietEffectsInfo {
     private AttributeModifier(Attribute attributeIn,
                               net.minecraft.world.entity.ai.attributes.AttributeModifier modifier) {
       attribute = attributeIn;
-      operation = modifier.getOperation();
-      amount = (float) modifier.getAmount();
+      operation = modifier.operation();
+      amount = (float) modifier.amount();
     }
 
     public Attribute getAttribute() {
@@ -166,7 +162,7 @@ public class DietEffectsInfo {
     }
 
     private StatusEffect(MobEffectInstance effectInstance) {
-      effect = effectInstance.getEffect();
+      effect = effectInstance.getEffect().value();
       amplifier = effectInstance.getAmplifier();
     }
 

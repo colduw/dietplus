@@ -73,8 +73,7 @@ public class DietCsv {
       ItemStack stack = item.getDefaultInstance();
       FoodProperties food = Services.REGISTRY.getFoodProperties(stack, player);
 
-      if (food != null && food.getNutrition() > 0 &&
-          DietApi.getInstance().getGroups(player, stack).isEmpty()) {
+      if (food != null && food.nutrition() > 0 && DietApi.getInstance().getGroups(player, stack).isEmpty()) {
         data.add(new String[] {getName(item)});
       }
     }

@@ -31,12 +31,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
-@Mod.EventBusSubscriber(modid = DietConstants.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = DietConstants.MOD_ID, value = Dist.CLIENT)
 public class DietClientEventsListener {
   @SubscribeEvent
   @SuppressWarnings("unused")
@@ -55,11 +55,8 @@ public class DietClientEventsListener {
 
   @SubscribeEvent
   @SuppressWarnings("unused")
-  public static void tick(final TickEvent.ClientTickEvent evt) {
-
-    if (evt.phase == TickEvent.Phase.END) {
+  public static void tick(final ClientTickEvent.Post evt) {
       DietClientEvents.tick(Minecraft.getInstance());
-    }
   }
 
   @SubscribeEvent

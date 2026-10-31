@@ -34,31 +34,31 @@ import net.neoforged.neoforge.network.PacketDistributor;
 public class NeoForgeNetworkService implements INetworkService {
   @Override
   public void sendEffectsInfoS2C(ServerPlayer player, DietEffectsInfo info) {
-    PacketDistributor.PLAYER.with(player).send(new SPacketEffectsInfo(info));
+    PacketDistributor.sendToPlayer(player, new SPacketEffectsInfo(info));
   }
 
   @Override
   public void sendDietS2C(ServerPlayer player, String suite, Map<String, Float> groups) {
-    PacketDistributor.PLAYER.with(player).send(new SPacketDiet(suite, groups));
+    PacketDistributor.sendToPlayer(player, new SPacketDiet(suite, groups));
   }
 
   @Override
   public void sendActivationS2C(ServerPlayer player, boolean flag) {
-    PacketDistributor.PLAYER.with(player).send(new SPacketActivate(flag));
+    PacketDistributor.sendToPlayer(player, new SPacketActivate(flag));
   }
 
   @Override
   public void sendEatenS2C(ServerPlayer player, Set<Item> items) {
-    PacketDistributor.PLAYER.with(player).send(new SPacketEaten(items));
+    PacketDistributor.sendToPlayer(player, new SPacketEaten(items));
   }
 
   @Override
   public void sendDietGroupsS2C(ServerPlayer player, CompoundTag groups, Map<Item, Set<String>> generated) {
-    PacketDistributor.PLAYER.with(player).send(new SPacketGroups(groups, generated));
+    PacketDistributor.sendToPlayer(player, new SPacketGroups(groups, generated));
   }
 
   @Override
   public void sendDietSuitesS2C(ServerPlayer player, CompoundTag suites) {
-    PacketDistributor.PLAYER.with(player).send(new SPacketSuites(suites));
+    PacketDistributor.sendToPlayer(player, new SPacketSuites(suites));
   }
 }

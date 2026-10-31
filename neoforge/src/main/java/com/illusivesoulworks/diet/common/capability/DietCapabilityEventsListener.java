@@ -27,12 +27,12 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.LogicalSide;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-@Mod.EventBusSubscriber(modid = DietConstants.MOD_ID)
+@EventBusSubscriber(modid = DietConstants.MOD_ID)
 public class DietCapabilityEventsListener {
   @SubscribeEvent
   @SuppressWarnings("unused")
@@ -69,10 +69,8 @@ public class DietCapabilityEventsListener {
 
   @SubscribeEvent
   @SuppressWarnings("unused")
-  public static void playerTick(final TickEvent.PlayerTickEvent evt) {
-    if (evt.side == LogicalSide.SERVER && evt.phase == TickEvent.Phase.END) {
-      DietCapability.get(evt.player).ifPresent(IDietTracker::tick);
-    }
+  public static void playerTick(final PlayerTickEvent.Post evt) {
+    DietCapability.get(evt.getEntity()).ifPresent(IDietTracker::tick);
   }
 
   @SubscribeEvent(priority = EventPriority.LOW)

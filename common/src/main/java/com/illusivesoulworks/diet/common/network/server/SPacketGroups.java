@@ -30,20 +30,17 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 public record SPacketGroups(CompoundTag groups, Map<Item, Set<String>> generated) implements CustomPacketPayload {
-  public static final ResourceLocation GROUPS = DietCommonMod.resource("groups");
+  public static final Type<SPacketGroups> GROUPS = new Type<>(DietCommonMod.resource("groups"));
+  public static final StreamCodec<FriendlyByteBuf, SPacketGroups> CODEC = StreamCodec.ofMember(SPacketGroups::encode, SPacketGroups::decode);
 
   @Override
-  public void write(FriendlyByteBuf buf) {
-    encode(this, buf);
-  }
-
-  @Override
-  public ResourceLocation id() {
+  public Type<SPacketGroups> type() {
     return GROUPS;
   }
 

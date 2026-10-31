@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -83,7 +84,7 @@ public class FabricRegistryService implements IRegistryService {
 
   @Override
   public FoodProperties getFoodProperties(ItemStack stack, Player player) {
-    return stack.getItem().getFoodProperties();
+    return stack.get(DataComponents.FOOD);
   }
 
   @Override

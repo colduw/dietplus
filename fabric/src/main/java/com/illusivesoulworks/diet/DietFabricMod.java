@@ -19,6 +19,7 @@ package com.illusivesoulworks.diet;
 
 import com.illusivesoulworks.diet.api.DietApi;
 import com.illusivesoulworks.diet.common.DietEvents;
+import com.illusivesoulworks.diet.common.DietFabricNetwork;
 import com.illusivesoulworks.diet.common.ModIdArgument;
 import com.illusivesoulworks.diet.common.command.DietCommand;
 import com.illusivesoulworks.diet.common.command.DietGroupArgument;
@@ -38,27 +39,19 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.packs.PackType;
 
 public class DietFabricMod implements ModInitializer {
-
   @Override
   public void onInitialize() {
-    Registry.register(BuiltInRegistries.ATTRIBUTE, DietCommonMod.resource("natural_regeneration"),
-        DietApi.getInstance().getNaturalRegeneration());
+    DietFabricNetwork.setupServer();
+    Registry.register(BuiltInRegistries.ATTRIBUTE, DietCommonMod.resource("natural_regeneration"), DietApi.getInstance().getNaturalRegeneration());
     DietComponents.setup();
     ResourceManagerHelper resourceManagerHelper = ResourceManagerHelper.get(PackType.SERVER_DATA);
-    resourceManagerHelper.registerReloadListener(
-        (IdentifiableResourceReloadListener) DietGroups.SERVER);
-    resourceManagerHelper.registerReloadListener(
-        (IdentifiableResourceReloadListener) DietSuites.SERVER);
-    ArgumentTypeRegistry.registerArgumentType(DietCommonMod.resource("modid"), ModIdArgument.class,
-        SingletonArgumentInfo.contextFree(ModIdArgument::new));
-    ArgumentTypeRegistry.registerArgumentType(DietCommonMod.resource("groups"),
-        DietGroupArgument.class, SingletonArgumentInfo.contextFree(DietGroupArgument::group));
-    CommandRegistrationCallback.EVENT.register(
-        (dispatcher, registryAccess, environment) -> DietCommand.register(dispatcher));
+    resourceManagerHelper.registerReloadListener((IdentifiableResourceReloadListener) DietGroups.SERVER);
+    resourceManagerHelper.registerReloadListener((IdentifiableResourceReloadListener) DietSuites.SERVER);
+    ArgumentTypeRegistry.registerArgumentType(DietCommonMod.resource("modid"), ModIdArgument.class, SingletonArgumentInfo.contextFree(ModIdArgument::new));
+    ArgumentTypeRegistry.registerArgumentType(DietCommonMod.resource("groups"), DietGroupArgument.class, SingletonArgumentInfo.contextFree(DietGroupArgument::group));
+    CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> DietCommand.register(dispatcher));
     ServerLifecycleEvents.SERVER_STARTED.register(DietValueGenerator::reload);
-    ServerLifecycleEvents.END_DATA_PACK_RELOAD.register(
-        (server, resourceManager, success) -> DietEvents.syncDatapack(server));
-    ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(
-        (player, joined) -> DietEvents.syncDatapack(player));
+    ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, resourceManager, success) -> DietEvents.syncDatapack(server));
+    ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> DietEvents.syncDatapack(player));
   }
 }

@@ -22,19 +22,16 @@ import com.illusivesoulworks.diet.client.DietClientPacketReceiver;
 import java.util.Map;
 import java.util.TreeMap;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 public record SPacketDiet(String suite, Map<String, Float> groups) implements CustomPacketPayload {
-  public static final ResourceLocation DIET = DietCommonMod.resource("diet");
+  public static final Type<SPacketDiet> DIET = new Type<>(DietCommonMod.resource("diet"));
+  public static final StreamCodec<FriendlyByteBuf, SPacketDiet> CODEC = StreamCodec.ofMember(SPacketDiet::encode, SPacketDiet::decode);
 
   @Override
-  public void write(FriendlyByteBuf buf) {
-    encode(this, buf);
-  }
-
-  @Override
-  public ResourceLocation id() {
+  public Type<SPacketDiet> type() {
     return DIET;
   }
 

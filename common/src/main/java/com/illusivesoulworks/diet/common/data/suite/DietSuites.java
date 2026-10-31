@@ -223,11 +223,11 @@ public class DietSuites extends SimpleJsonResourceReloadListener {
   }
 
   private static AttributeModifier.Operation getOperation(String name) {
-    if (name.equals("multiply_total")) {
-      return AttributeModifier.Operation.MULTIPLY_TOTAL;
-    } else if (name.equals("multiply_base")) {
-      return AttributeModifier.Operation.MULTIPLY_BASE;
+    if (name.equals("add_multiplied_total")) {
+      return AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL;
+    } else if (name.equals("add_multiplied_base")) {
+      return AttributeModifier.Operation.ADD_MULTIPLIED_BASE;
     }
-    return AttributeModifier.Operation.ADDITION;
+    return AttributeModifier.Operation.ADD_VALUE;
   }
 }

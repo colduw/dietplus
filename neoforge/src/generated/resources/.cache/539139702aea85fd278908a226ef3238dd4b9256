@@ -1,8 +1,8 @@
-// 1.20.4	2026-10-29T19:02:57.943330229	Diet Item Tags
+// 1.20.6	2026-10-29T23:07:44.831469083	Diet Item Tags
 94b2311069d1c117261bf7522fb882838f1bb19d data/diet/tags/items/fruits.json
 e224a366e598dba56b8668ce12f639dde85591be data/diet/tags/items/grains.json
-5d4b719071db4a36abfe6ee8071b27f1683d228e data/diet/tags/items/ingredients.json
-2ccf56e619770b8934b2a4b427ebf92b9a65f774 data/diet/tags/items/proteins.json
+cb9aa61a5827ee889c7cf85aa2860fac02624c61 data/diet/tags/items/ingredients.json
+5385c88db2cf85015ae0c58ebf46b5c4b829b1a6 data/diet/tags/items/proteins.json
 d082838d9e5e71b89acdc364c3285bf6baf40cf1 data/diet/tags/items/special_food.json
 bea751f6ecab52408583f153621b80ba7afb0ebe data/diet/tags/items/sugars.json
-0270182aca46658a259ee9889c65cadf2b754edf data/diet/tags/items/vegetables.json
+404cb6e95715d420cfbcf0c91c04e07e6a071122 data/diet/tags/items/vegetables.json
