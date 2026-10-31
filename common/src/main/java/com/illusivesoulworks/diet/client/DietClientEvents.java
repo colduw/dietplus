@@ -53,12 +53,9 @@ import net.minecraft.world.item.ItemStack;
 
 public class DietClientEvents {
 
-  private static final TagKey<Item> SPECIAL_FOOD = TagKey.create(Registries.ITEM,
-      new ResourceLocation(DietConstants.MOD_ID, "special_food"));
-  private static final DecimalFormat DECIMALFORMAT = Util.make(new DecimalFormat("#.#"),
-      (num) -> num.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ROOT)));
-  private static final ResourceLocation ICONS =
-      new ResourceLocation(DietConstants.MOD_ID, "textures/gui/icons.png");
+  private static final TagKey<Item> SPECIAL_FOOD = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "special_food"));
+  private static final DecimalFormat DECIMALFORMAT = Util.make(new DecimalFormat("#.#"), (num) -> num.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ROOT)));
+  private static final ResourceLocation ICONS = ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "textures/gui/icons.png");
 
   public static List<Component> tooltip = null;
   public static int tooltipX = 0;

@@ -189,7 +189,7 @@ public class DietSuites extends SimpleJsonResourceReloadListener {
           throw new IllegalArgumentException("Attribute requires a name!");
         }
         String name = GsonHelper.getAsString(attributeObject, "name");
-        Services.REGISTRY.getAttribute(new ResourceLocation(name)).ifPresentOrElse(att -> {
+        Services.REGISTRY.getAttribute(ResourceLocation.parse(name)).ifPresentOrElse(att -> {
           float amount = GsonHelper.getAsFloat(attributeObject, "amount", 1.0f);
           AttributeModifier.Operation op =
               getOperation(GsonHelper.getAsString(attributeObject, "operation", ""));
@@ -208,7 +208,7 @@ public class DietSuites extends SimpleJsonResourceReloadListener {
           throw new IllegalArgumentException("Status effect requires a name!");
         }
         String name = GsonHelper.getAsString(statusEffectObject, "name");
-        Services.REGISTRY.getStatusEffect(new ResourceLocation(name)).ifPresentOrElse(eff -> {
+        Services.REGISTRY.getStatusEffect(ResourceLocation.parse(name)).ifPresentOrElse(eff -> {
           int power = GsonHelper.getAsInt(statusEffectObject, "power", 0);
           int increment = GsonHelper.getAsInt(statusEffectObject, "increment", 1);
           finalStatusEffects.add(new DietEffect.DietStatusEffect(eff, power, increment));

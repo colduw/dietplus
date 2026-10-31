@@ -29,10 +29,7 @@ import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
 import org.ladysnake.cca.api.v3.entity.RespawnCopyStrategy;
 
 public class DietComponents implements EntityComponentInitializer {
-
-  public static final ComponentKey<DietComponent> DIET_TRACKER =
-      ComponentRegistry.getOrCreate(new ResourceLocation(DietConstants.MOD_ID, "diet_tracker"),
-          DietComponent.class);
+  public static final ComponentKey<DietComponent> DIET_TRACKER = ComponentRegistry.getOrCreate(ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "diet_tracker"), DietComponent.class);
 
   public static void setup() {
     ServerPlayerEvents.COPY_FROM.register(

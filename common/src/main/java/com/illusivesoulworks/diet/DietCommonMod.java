@@ -22,6 +22,6 @@ import net.minecraft.resources.ResourceLocation;
 public class DietCommonMod {
 
   public static ResourceLocation resource(String path) {
-    return new ResourceLocation(DietConstants.MOD_ID, path);
+    return ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, path);
   }
 }

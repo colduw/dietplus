@@ -57,7 +57,7 @@ public final class DietGroup implements IDietGroup {
   public static IDietGroup load(CompoundTag tag) {
     String name = tag.getString("Name");
     String icon = tag.getString("Icon");
-    Item item = Services.REGISTRY.getItem(new ResourceLocation(icon)).orElse(null);
+    Item item = Services.REGISTRY.getItem(ResourceLocation.parse(icon)).orElse(null);
     int order = tag.getInt("Order");
     boolean beneficial = tag.getBoolean("Beneficial");
     int color = tag.getInt("Color");

@@ -19,6 +19,7 @@ package com.illusivesoulworks.diet.common.capability;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
+import com.illusivesoulworks.diet.DietCommonMod;
 import com.illusivesoulworks.diet.api.DietApi;
 import com.illusivesoulworks.diet.api.type.IDietAttribute;
 import com.illusivesoulworks.diet.api.type.IDietCondition;
@@ -106,9 +107,7 @@ public class PlayerDietTracker implements IDietTracker {
 
   @Override
   public void tick() {
-
     if (!this.player.level().isClientSide()) {
-
       if (!this.player.isCreative() && this.active) {
         int currentFood = this.player.getFoodData().getFoodLevel();
 
@@ -122,11 +121,9 @@ public class PlayerDietTracker implements IDietTracker {
         for (Map.Entry<Attribute, Set<UUID>> entry : this.activeModifiers.entrySet()) {
           Set<UUID> uuids = entry.getValue();
           AttributeInstance att = this.player.getAttribute(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(entry.getKey()));
-
           if (att != null) {
-
             for (UUID uuid : uuids) {
-              att.removeModifier(uuid);
+              att.removeModifier(DietCommonMod.resource(uuid.toString()));
             }
           }
         }
@@ -274,11 +271,11 @@ public class PlayerDietTracker implements IDietTracker {
 
           for (IDietAttribute attribute : effect.getAttributes()) {
             AttributeInstance att = player.getAttribute(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute.getAttribute()));
-            AttributeModifier mod = new AttributeModifier(effect.getUuid(), "Diet group effect",
+            AttributeModifier mod = new AttributeModifier(DietCommonMod.resource(effect.getUuid().toString()),
                 attribute.getBaseAmount() + ((multiplier - 1) * attribute.getIncrement()),
                 attribute.getOperation());
 
-            if (att != null && !att.hasModifier(mod)) {
+            if (att != null && !att.hasModifier(mod.id())) {
               att.addPermanentModifier(mod);
               activeModifiers.computeIfAbsent(attribute.getAttribute(), k -> new HashSet<>())
                   .add(effect.getUuid());
@@ -469,7 +466,7 @@ public class PlayerDietTracker implements IDietTracker {
     for (int i = 0; i < list.size(); i++) {
       CompoundTag attributeTag = list.getCompound(i);
       Attribute att = Services.REGISTRY.getAttribute(
-          new ResourceLocation(attributeTag.getString("AttributeName"))).orElse(null);
+          ResourceLocation.parse(attributeTag.getString("AttributeName"))).orElse(null);
 
       if (att != null) {
         Set<UUID> uuids = new HashSet<>();
@@ -486,7 +483,7 @@ public class PlayerDietTracker implements IDietTracker {
 
     for (int i = 0; i < list.size(); i++) {
       String s = list.getString(i);
-      ResourceLocation rl = new ResourceLocation(s);
+      ResourceLocation rl = ResourceLocation.parse(s);
       Services.REGISTRY.getItem(rl).ifPresent(eaten::add);
     }
     this.setEaten(eaten);

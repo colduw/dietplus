@@ -19,8 +19,6 @@ package com.illusivesoulworks.diet.client;
 
 import com.illusivesoulworks.diet.DietConstants;
 import com.illusivesoulworks.diet.client.screen.DynamicButton;
-import com.illusivesoulworks.diet.common.integration.CuriosIntegration;
-import com.illusivesoulworks.diet.common.integration.IntegrationManager;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -43,8 +41,7 @@ public class DietClientEventsListener {
   public static void initGui(final ScreenEvent.Init.Post evt) {
     Screen screen = evt.getScreen();
 
-    if (screen instanceof InventoryScreen ||
-        (IntegrationManager.isCuriosLoaded() && CuriosIntegration.isCuriosScreen(screen))) {
+    if (screen instanceof InventoryScreen) {
       DynamicButton button = DietClientEvents.getButton(screen);
 
       if (button != null) {

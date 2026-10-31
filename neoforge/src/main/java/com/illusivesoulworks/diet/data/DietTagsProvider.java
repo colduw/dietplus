@@ -190,7 +190,7 @@ public class DietTagsProvider extends ItemTagsProvider {
     addTag(this.ingredients, Tags.Items.ORES);
     addTag(this.ingredients, Tags.Items.RODS);
     addTag(this.ingredients, Tags.Items.SANDS);
-    addTag(this.ingredients, Tags.Items.TOOLS_SHEARS);
+    addTag(this.ingredients, Tags.Items.TOOLS_SHEAR);
     addTag(this.ingredients, Tags.Items.STONES);
     addTag(this.ingredients, Tags.Items.STORAGE_BLOCKS);
     addTag(this.ingredients, Tags.Items.STRINGS);
@@ -209,7 +209,7 @@ public class DietTagsProvider extends ItemTagsProvider {
     addTag(this.ingredients, ItemTags.FENCES);
     addTag(this.ingredients, ItemTags.BOATS);
     addTag(this.ingredients, ItemTags.SIGNS);
-    addTag(this.ingredients, ItemTags.MUSIC_DISCS);
+    addTag(this.ingredients, Tags.Items.MUSIC_DISCS);
     addTag(this.ingredients, ItemTags.COALS);
     addTag(this.ingredients, ItemTags.ARROWS);
     addTag(this.ingredients, ItemTags.LECTERN_BOOKS);
@@ -1806,11 +1806,11 @@ public class DietTagsProvider extends ItemTagsProvider {
           "Attempted to use optional tag: " + name +
               "! Do not use optional tags, this causes weird issues to occur with the Diet tagging system.");
     }
-    builder.addOptional(new ResourceLocation(name));
+    builder.addOptional(ResourceLocation.parse(name));
   }
 
   protected TagKey<Item> tag(String name) {
-    return ItemTags.create(new ResourceLocation(DietConstants.MOD_ID, name));
+    return ItemTags.create(ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, name));
   }
 
   @SafeVarargs

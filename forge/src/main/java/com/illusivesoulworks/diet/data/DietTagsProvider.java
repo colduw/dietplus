@@ -40,6 +40,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 public class DietTagsProvider extends ItemTagsProvider {
+
   protected TagsProvider.TagAppender<Item> fruits;
   protected TagsProvider.TagAppender<Item> grains;
   protected TagsProvider.TagAppender<Item> proteins;
@@ -94,7 +95,7 @@ public class DietTagsProvider extends ItemTagsProvider {
     }
 
     addTag(this.proteins, ItemTags.FISHES);
-    addTag(this.proteins, Tags.Items.SLIMEBALLS);
+    addTag(this.proteins, Tags.Items.SLIME_BALLS);
     elements = createList(
         Items.BEEF,
         Items.BONE,
@@ -171,32 +172,31 @@ public class DietTagsProvider extends ItemTagsProvider {
     //    addTag(this.ingredients, Tags.Items.BARRELS);
     addTag(this.ingredients, Tags.Items.BOOKSHELVES);
     addTag(this.ingredients, Tags.Items.CHESTS);
-    addTag(this.ingredients, Tags.Items.COBBLESTONE);
+    addTag(this.ingredients, Tags.Items.COBBLESTONES);
     addTag(this.ingredients, Tags.Items.DUSTS);
     addTag(this.ingredients, Tags.Items.END_STONES);
     addTag(this.ingredients, Tags.Items.ENDER_PEARLS);
     addTag(this.ingredients, Tags.Items.FEATHERS);
     addTag(this.ingredients, Tags.Items.FENCE_GATES);
     addTag(this.ingredients, Tags.Items.GEMS);
-    addTag(this.ingredients, Tags.Items.GLASS);
+    addTag(this.ingredients, Tags.Items.GLASS_BLOCKS);
     addTag(this.ingredients, Tags.Items.GLASS_PANES);
     addTag(this.ingredients, Tags.Items.GRAVEL);
     addTag(this.ingredients, Tags.Items.GUNPOWDER);
-    addTag(this.ingredients, Tags.Items.HEADS);
+    addTag(this.ingredients, ItemTags.SKULLS);
     addTag(this.ingredients, Tags.Items.INGOTS);
-    addTag(this.ingredients, Tags.Items.LEATHER);
+    addTag(this.ingredients, Tags.Items.LEATHERS);
     addTag(this.ingredients, Tags.Items.NETHER_STARS);
     addTag(this.ingredients, Tags.Items.NETHERRACK);
     addTag(this.ingredients, Tags.Items.NUGGETS);
-    addTag(this.ingredients, Tags.Items.OBSIDIAN);
+    addTag(this.ingredients, Tags.Items.OBSIDIANS);
     addTag(this.ingredients, Tags.Items.ORES);
     addTag(this.ingredients, Tags.Items.RODS);
     addTag(this.ingredients, Tags.Items.SAND);
-    addTag(this.ingredients, Tags.Items.SHEARS);
-    addTag(this.ingredients, Tags.Items.STAINED_GLASS);
-    addTag(this.ingredients, Tags.Items.STONE);
+    addTag(this.ingredients, Tags.Items.TOOLS_SHEAR);
+    addTag(this.ingredients, Tags.Items.STONES);
     addTag(this.ingredients, Tags.Items.STORAGE_BLOCKS);
-    addTag(this.ingredients, Tags.Items.STRING);
+    addTag(this.ingredients, Tags.Items.STRINGS);
     addTag(this.ingredients, ItemTags.WOOL);
     addTag(this.ingredients, ItemTags.PLANKS);
     addTag(this.ingredients, ItemTags.STONE_BRICKS);
@@ -212,7 +212,7 @@ public class DietTagsProvider extends ItemTagsProvider {
     addTag(this.ingredients, ItemTags.FENCES);
     addTag(this.ingredients, ItemTags.BOATS);
     addTag(this.ingredients, ItemTags.SIGNS);
-    addTag(this.ingredients, ItemTags.MUSIC_DISCS);
+    addTag(this.ingredients, Tags.Items.MUSIC_DISCS);
     addTag(this.ingredients, ItemTags.COALS);
     addTag(this.ingredients, ItemTags.ARROWS);
     addTag(this.ingredients, ItemTags.LECTERN_BOOKS);
@@ -1809,11 +1809,11 @@ public class DietTagsProvider extends ItemTagsProvider {
           "Attempted to use optional tag: " + name +
               "! Do not use optional tags, this causes weird issues to occur with the Diet tagging system.");
     }
-    builder.addOptional(new ResourceLocation(name));
+    builder.addOptional(ResourceLocation.parse(name));
   }
 
   protected TagKey<Item> tag(String name) {
-    return ItemTags.create(new ResourceLocation(DietConstants.MOD_ID, name));
+    return ItemTags.create(ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, name));
   }
 
   @SafeVarargs

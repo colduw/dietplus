@@ -35,8 +35,7 @@ public class DietCapability {
       CapabilityManager.get(new CapabilityToken<>() {
       });
 
-  public static final ResourceLocation DIET_TRACKER_ID =
-      new ResourceLocation(DietConstants.MOD_ID, "diet_tracker");
+  public static final ResourceLocation DIET_TRACKER_ID = ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "diet_tracker");
 
   private static final Map<UUID, LazyOptional<IDietTracker>> SERVER_CACHE = new HashMap<>();
   private static final Map<UUID, LazyOptional<IDietTracker>> CLIENT_CACHE = new HashMap<>();

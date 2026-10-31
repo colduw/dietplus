@@ -92,7 +92,7 @@ public class DietEffectsInfo {
     for (int i = 0; i < modifiersList.size(); i++) {
       CompoundTag modifierTag = modifiersList.getCompound(i);
       String name = modifierTag.getString("AttributeName");
-      Attribute attribute = Services.REGISTRY.getAttribute(new ResourceLocation(name)).orElse(null);
+      Attribute attribute = Services.REGISTRY.getAttribute(ResourceLocation.parse(name)).orElse(null);
 
       if (attribute == null) {
         continue;
@@ -106,7 +106,7 @@ public class DietEffectsInfo {
     for (int i = 0; i < effectsList.size(); i++) {
       CompoundTag effectTag = effectsList.getCompound(i);
       String name = effectTag.getString("EffectName");
-      MobEffect effect = Services.REGISTRY.getStatusEffect(new ResourceLocation(name)).orElse(null);
+      MobEffect effect = Services.REGISTRY.getStatusEffect(ResourceLocation.parse(name)).orElse(null);
 
       if (effect == null) {
         continue;

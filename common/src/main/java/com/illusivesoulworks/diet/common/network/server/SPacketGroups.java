@@ -67,7 +67,7 @@ public record SPacketGroups(CompoundTag groups, Map<Item, Set<String>> generated
     if (compoundNBT != null) {
 
       for (String name : compoundNBT.getAllKeys()) {
-        Item item = Services.REGISTRY.getItem(new ResourceLocation(name)).orElse(null);
+        Item item = Services.REGISTRY.getItem(ResourceLocation.parse(name)).orElse(null);
 
         if (item != null) {
           ListTag listNBT = compoundNBT.getList(name, Tag.TAG_STRING);

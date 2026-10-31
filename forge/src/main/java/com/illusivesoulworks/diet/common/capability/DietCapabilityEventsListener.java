@@ -22,6 +22,7 @@ import com.illusivesoulworks.diet.api.type.IDietTracker;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -121,9 +122,7 @@ public class DietCapabilityEventsListener {
     }
   }
 
-  private record Provider(IDietTracker instance, LazyOptional<IDietTracker> capability)
-      implements ICapabilitySerializable<Tag> {
-
+  private record Provider(IDietTracker instance, LazyOptional<IDietTracker> capability) implements ICapabilitySerializable<Tag> {
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
@@ -137,8 +136,7 @@ public class DietCapabilityEventsListener {
     }
 
     @Override
-    public Tag serializeNBT() {
-
+    public Tag serializeNBT(HolderLookup.Provider provider) {
       if (this.instance != null) {
         CompoundTag tag = new CompoundTag();
         this.instance.save(tag);
@@ -150,8 +148,7 @@ public class DietCapabilityEventsListener {
     }
 
     @Override
-    public void deserializeNBT(Tag nbt) {
-
+    public void deserializeNBT(HolderLookup.Provider provider, Tag nbt) {
       if (this.instance != null && nbt instanceof CompoundTag tag) {
         this.instance.load(tag);
       } else {

@@ -17,6 +17,7 @@
 
 package com.illusivesoulworks.diet.common.command;
 
+import com.illusivesoulworks.diet.DietCommonMod;
 import com.illusivesoulworks.diet.DietConstants;
 import com.illusivesoulworks.diet.api.type.IDietGroup;
 import com.illusivesoulworks.diet.common.data.suite.DietSuites;
@@ -196,7 +197,7 @@ public class DietCommand {
       diet.getModifiers().forEach((k, v) -> {
         AttributeInstance instance = player.getAttribute(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(k));
         if (instance != null) {
-          v.forEach(instance::removeModifier);
+          v.forEach(uuid -> instance.removeModifier(DietCommonMod.resource(uuid.toString())));
         }
       });
     });

@@ -144,7 +144,7 @@ public class DietConfig {
 
         for (String s : foodOverrides.get()) {
           String[] split = s.split(";");
-          Services.REGISTRY.getItem(new ResourceLocation(split[0]))
+          Services.REGISTRY.getItem(ResourceLocation.parse(split[0]))
               .ifPresent(item1 -> overrideMap.put(item1, Float.parseFloat(split[1])));
         }
       }

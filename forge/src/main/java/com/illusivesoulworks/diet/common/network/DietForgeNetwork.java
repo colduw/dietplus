@@ -39,7 +39,7 @@ public class DietForgeNetwork {
   public static SimpleChannel instance;
 
   public static void setup() {
-    instance = ChannelBuilder.named(new ResourceLocation(DietConstants.MOD_ID, "main"))
+    instance = ChannelBuilder.named(ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "main"))
             .networkProtocolVersion(PTC_VERSION).clientAcceptedVersions(Channel.VersionTest.exact(PTC_VERSION))
             .serverAcceptedVersions(Channel.VersionTest.exact(PTC_VERSION)).simpleChannel();
 

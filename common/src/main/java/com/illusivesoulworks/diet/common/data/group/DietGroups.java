@@ -153,7 +153,7 @@ public class DietGroups extends SimpleJsonResourceReloadListener {
 
     if (topElement.has("icon")) {
       String icon = GsonHelper.getAsString(topElement, "icon");
-      Services.REGISTRY.getItem(new ResourceLocation(icon)).ifPresent(builder::icon);
+      Services.REGISTRY.getItem(ResourceLocation.parse(icon)).ifPresent(builder::icon);
     }
 
     if (topElement.has("color")) {

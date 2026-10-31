@@ -53,10 +53,8 @@ import org.joml.Matrix4f;
 
 public class DietScreen extends Screen {
 
-  private static final ResourceLocation BACKGROUND =
-      new ResourceLocation("minecraft", "textures/gui/demo_background.png");
-  private static final ResourceLocation ICONS =
-      new ResourceLocation(DietConstants.MOD_ID, "textures/gui/icons.png");
+  private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/demo_background.png");
+  private static final ResourceLocation ICONS = ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "textures/gui/icons.png");
 
   public static DietEffectsInfo tooltip = new DietEffectsInfo();
   private final Set<IDietGroup> groups = new HashSet<>();
@@ -149,7 +147,7 @@ public class DietScreen extends Screen {
                 MutableComponent text = Component.translatable(
                     "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name");
                 guiGraphics.drawString(this.font, text, x + 20, y, getTextColor(), false);
-                RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+                RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
                 RenderSystem.setShaderTexture(0, ICONS);
                 DietColor color = diet.isActive() ? group.getColor() : DietColor.GRAY;
                 int red = color.red();
@@ -246,16 +244,11 @@ public class DietScreen extends Screen {
     float minV = (vOffset + 0.0F) / (float) textureHeight;
     float maxV = (vOffset + (float) vHeight) / (float) textureHeight;
     Matrix4f matrix = matrixStack.last().pose();
-    BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
-    bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
-    bufferbuilder.vertex(matrix, (float) x, (float) y2, 0).color(red, green, blue, alpha)
-        .uv(minU, maxV).endVertex();
-    bufferbuilder.vertex(matrix, (float) x2, (float) y2, 0).color(red, green, blue, alpha)
-        .uv(maxU, maxV).endVertex();
-    bufferbuilder.vertex(matrix, (float) x2, (float) y, 0).color(red, green, blue, alpha)
-        .uv(maxU, minV).endVertex();
-    bufferbuilder.vertex(matrix, (float) x, (float) y, 0).color(red, green, blue, alpha)
-        .uv(minU, minV).endVertex();
-    BufferUploader.drawWithShader(bufferbuilder.end());
+    BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+    bufferbuilder.addVertex(matrix, (float) x, (float) y2, 0).setColor(red, green, blue, alpha).setUv(minU, maxV);
+    bufferbuilder.addVertex(matrix, (float) x2, (float) y2, 0).setColor(red, green, blue, alpha).setUv(maxU, maxV);
+    bufferbuilder.addVertex(matrix, (float) x2, (float) y, 0).setColor(red, green, blue, alpha).setUv(maxU, minV);
+    bufferbuilder.addVertex(matrix, (float) x, (float) y, 0).setColor(red, green, blue, alpha).setUv(minU, minV);
+    BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
   }
 }
