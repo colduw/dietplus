@@ -141,9 +141,8 @@ public class DietForgeMod {
     DietCommand.register(evt.getDispatcher());
   }
 
-  @Mod.EventBusSubscriber(modid = DietConstants.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+  @Mod.EventBusSubscriber(modid = DietConstants.MOD_ID, value = Dist.CLIENT)
   public static class ClientModEvents {
-
     @SubscribeEvent
     public static void registerKeys(final RegisterKeyMappingsEvent evt) {
       evt.register(DietKeys.get());

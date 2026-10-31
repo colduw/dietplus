@@ -21,7 +21,7 @@
     "commands.diet.group.unknown": "\"%s\" är en okänd dietgrupp",
     "commands.diet.export.started": "Exporterar dietinformation, var god vänta...",
     "commands.diet.export.finished": "Exporterade dietinformation till logs/diet.csv",
-    "key.diet.category": "Diet",
+    "key.category.diet.category": "Diet",
     "key.diet.open.desc": "Öppna dietmenyn",
     "attribute.diet.modifier.disabled": "Inget %s",
     "diet.naturalRegeneration": "Naturlig regenerering"

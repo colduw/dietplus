@@ -15,6 +15,6 @@
   "commands.diet.pause.success": "已暂停 %s 的饮食跟踪",
   "commands.diet.resume.success": "已重启 %s 的饮食跟踪",
   "commands.diet.clear.success": "已清除 %s 的膳食增益效果",
-  "key.diet.category": "均衡饮食",
+  "key.category.diet.category": "均衡饮食",
   "key.diet.open.desc": "打开饮食指数界面"
 }

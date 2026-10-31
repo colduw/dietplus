@@ -20,15 +20,24 @@ package com.illusivesoulworks.diet.api;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.bus.CancellableEventBus;
+import net.minecraftforge.eventbus.api.event.MutableEvent;
 import net.minecraftforge.eventbus.api.event.characteristic.Cancellable;
 
 @SuppressWarnings("unused")
-public class DietEvent extends PlayerEvent {
-  public DietEvent(Player player) {
-    super(player);
+public class DietEvent extends MutableEvent implements PlayerEvent {
+  private final Player player;
+  public DietEvent(Player dPlayer) {
+    player = dPlayer;
+  }
+
+  @Override
+  public Player getEntity() {
+    return player;
   }
 
   public static class ConsumeItemStack extends DietEvent implements Cancellable {
+    public static final CancellableEventBus<ConsumeItemStack> BUS = CancellableEventBus.create(ConsumeItemStack.class);
     private final ItemStack stack;
 
     public ConsumeItemStack(ItemStack stackIn, Player player) {
@@ -42,6 +51,7 @@ public class DietEvent extends PlayerEvent {
   }
 
   public static class ApplyDecay extends DietEvent implements Cancellable {
+    public static final CancellableEventBus<ApplyDecay> BUS = CancellableEventBus.create(ApplyDecay.class);
 
     public ApplyDecay(Player player) {
       super(player);
@@ -49,6 +59,8 @@ public class DietEvent extends PlayerEvent {
   }
 
   public static class ApplyEffect extends DietEvent implements Cancellable {
+    public static final CancellableEventBus<ApplyEffect> BUS = CancellableEventBus.create(ApplyEffect.class);
+
     public ApplyEffect(Player player) {
       super(player);
     }

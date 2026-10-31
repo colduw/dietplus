@@ -99,10 +99,9 @@ public class DietCapabilityEventsListener {
 
   @SubscribeEvent
   @SuppressWarnings("unused")
-  public static void playerTick(final TickEvent.PlayerTickEvent evt) {
-
-    if (evt.side == LogicalSide.SERVER && evt.phase == TickEvent.Phase.END) {
-      DietCapability.get(evt.player).ifPresent(IDietTracker::tick);
+  public static void playerTick(final TickEvent.PlayerTickEvent.Post evt) {
+    if (evt.side() == LogicalSide.SERVER) {
+      DietCapability.get(evt.player()).ifPresent(IDietTracker::tick);
     }
   }
 

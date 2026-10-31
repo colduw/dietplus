@@ -20,7 +20,6 @@ package com.illusivesoulworks.diet.platform.services;
 import com.illusivesoulworks.diet.api.DietEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 
 public class ForgeEventService implements IEventService {
 

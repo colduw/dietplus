@@ -21,6 +21,6 @@
   "commands.diet.group.unknown": "不明な食料グループ: %s",
   "commands.diet.export.started": "食料情報を出力しています。しばらくお持ちください...",
   "commands.diet.export.finished": "食料情報をlogs/diet.csvに出力しました",
-  "key.diet.category": "Diet",
+  "key.category.diet.category": "Diet",
   "key.diet.open.desc": "食事情報画面を開く"
 }

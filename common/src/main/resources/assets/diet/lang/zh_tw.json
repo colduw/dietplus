@@ -17,6 +17,6 @@
   "commands.diet.pause.success": "暫停飲食追蹤 %s",
   "commands.diet.resume.success": "恢復飲食追蹤 %s",
   "commands.diet.clear.success": "解除飲食效果 %s",
-  "key.diet.category": "Diet",
+  "key.category.diet.category": "Diet",
   "key.diet.open.desc": "打開飲食介面"
 }

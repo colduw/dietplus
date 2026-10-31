@@ -52,11 +52,8 @@ public class DietClientEventsListener {
 
   @SubscribeEvent
   @SuppressWarnings("unused")
-  public static void tick(final TickEvent.ClientTickEvent evt) {
-
-    if (evt.phase == TickEvent.Phase.END) {
-      DietClientEvents.tick(Minecraft.getInstance());
-    }
+  public static void tick(final TickEvent.ClientTickEvent.Post evt) {
+    DietClientEvents.tick(Minecraft.getInstance());
   }
 
   @SubscribeEvent

@@ -21,6 +21,6 @@
   "commands.diet.group.unknown": "Неизвестная диетическая группа: %s",
   "commands.diet.export.started": "Происходит экспортирование информации о диете, пожалуйста подождите...",
   "commands.diet.export.finished": "Информация о диете занесена в logs/diet.csv",
-  "key.diet.category": "Диета",
+  "key.category.diet.category": "Диета",
   "key.diet.open.desc": "Открыть экран диеты"
 }

@@ -21,6 +21,6 @@
   "commands.diet.group.unknown": "Gruppo dietetico sconosciuto: %s",
   "commands.diet.export.started": "Esportazione di informazioni sulla dieta, attendere prego...",
   "commands.diet.export.finished": "Finita esportazione di informazioni sulla dieta a logs/diet.csv",
-  "key.diet.category": "Dieta",
+  "key.category.diet.category": "Dieta",
   "key.diet.open.desc": "Apri schermo dieta"
 }

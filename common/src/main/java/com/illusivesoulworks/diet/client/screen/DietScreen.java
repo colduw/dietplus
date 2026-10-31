@@ -27,6 +27,7 @@ import com.illusivesoulworks.diet.common.config.DietConfig;
 import com.illusivesoulworks.diet.common.data.effect.DietEffectsInfo;
 import com.illusivesoulworks.diet.common.data.suite.DietSuites;
 import com.illusivesoulworks.diet.platform.Services;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +36,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.locale.Language;
@@ -196,14 +198,12 @@ public class DietScreen extends Screen {
   }
 
   @Override
-  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-
+  public boolean keyPressed(KeyEvent event) {
     if (this.minecraft != null && this.minecraft.player != null) {
-
-      if (this.minecraft.options.keyInventory.matches(keyCode, scanCode)) {
+      if (this.minecraft.options.keyInventory.matches(event)) {
         this.minecraft.setScreen(new InventoryScreen(this.minecraft.player));
         return true;
-      } else if (DietKeys.OPEN_GUI.matches(keyCode, scanCode)) {
+      } else if (DietKeys.OPEN_GUI.matches(event)) {
 
         if (fromInventory) {
           this.minecraft.setScreen(new InventoryScreen(this.minecraft.player));
@@ -213,7 +213,7 @@ public class DietScreen extends Screen {
         return true;
       }
     }
-    return super.keyPressed(keyCode, scanCode, modifiers);
+    return super.keyPressed(event);
   }
 
   @Override

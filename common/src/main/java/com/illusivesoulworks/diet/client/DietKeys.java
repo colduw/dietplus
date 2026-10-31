@@ -17,14 +17,13 @@
 
 package com.illusivesoulworks.diet.client;
 
+import com.illusivesoulworks.diet.DietConstants;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.resources.ResourceLocation;
 
 public class DietKeys {
-
-  public static final KeyMapping OPEN_GUI =
-      new KeyMapping("key.diet.open.desc", InputConstants.UNKNOWN.getValue(),
-          "key.diet.category");
+  public static final KeyMapping OPEN_GUI = new KeyMapping("key.diet.open.desc", InputConstants.UNKNOWN.getValue(), KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "category")));
 
   public static KeyMapping get() {
     return OPEN_GUI;
