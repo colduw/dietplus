@@ -114,9 +114,8 @@ public class ForgeRegistryService implements IRegistryService {
   }
 
   @Override
-  public ItemStack getPickStack(BlockState state, BlockHitResult result, Level world, BlockPos pos,
-                                ServerPlayer player) {
-    return state.getCloneItemStack(result, world, pos, player);
+  public ItemStack getPickStack(BlockState state, BlockHitResult result, Level world, BlockPos pos, ServerPlayer player) {
+    return state.getCloneItemStack(world, pos, false);
   }
 
   @Override

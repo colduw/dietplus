@@ -36,8 +36,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 
 public class DietTagsProvider extends ItemTagsProvider {
 
@@ -49,8 +47,8 @@ public class DietTagsProvider extends ItemTagsProvider {
   protected TagsProvider.TagAppender<Item> specialFood;
   protected TagsProvider.TagAppender<Item> ingredients;
 
-  public DietTagsProvider(PackOutput p_275343_, CompletableFuture<HolderLookup.Provider> p_275729_, CompletableFuture<TagLookup<Block>> p_275322_, @Nullable ExistingFileHelper existingFileHelper) {
-    super(p_275343_, p_275729_, p_275322_, DietConstants.MOD_ID, existingFileHelper);
+  public DietTagsProvider(PackOutput p_275343_, CompletableFuture<HolderLookup.Provider> p_275729_, CompletableFuture<TagLookup<Block>> p_275322_) {
+    super(p_275343_, p_275729_, p_275322_, DietConstants.MOD_ID);
   }
 
   protected void init() {
@@ -92,7 +90,7 @@ public class DietTagsProvider extends ItemTagsProvider {
     }
 
     addTag(this.proteins, ItemTags.FISHES);
-    addTag(this.proteins, Tags.Items.SLIMEBALLS);
+    addTag(this.proteins, Tags.Items.SLIME_BALLS);
     elements = createList(
         Items.BEEF,
         Items.BONE,
@@ -159,7 +157,7 @@ public class DietTagsProvider extends ItemTagsProvider {
     for (Item element : elements) {
       add(this.vegetables, element);
     }
-    addTag(this.vegetables, ItemTags.FLOWERS);
+    addTag(this.vegetables, Tags.Items.FLOWERS);
     addTag(this.vegetables, ItemTags.LEAVES);
     addTag(this.vegetables, Tags.Items.MUSHROOMS);
 

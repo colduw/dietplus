@@ -43,16 +43,18 @@ import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.Level;
 
-public class DietSuites extends SimpleJsonResourceReloadListener {
+public class DietSuites extends SimpleJsonResourceReloadListener<JsonElement> {
 
   private static final Gson GSON =
       (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
@@ -66,7 +68,7 @@ public class DietSuites extends SimpleJsonResourceReloadListener {
   private int uuidSuffix = 0;
 
   public DietSuites() {
-    super(GSON, "diet/suites");
+    super(ExtraCodecs.JSON, FileToIdConverter.json("diet/suites"));
   }
 
   public static Optional<IDietSuite> getSuite(Level level, String name) {

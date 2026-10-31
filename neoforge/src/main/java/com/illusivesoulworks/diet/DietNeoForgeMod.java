@@ -53,9 +53,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
@@ -92,26 +91,23 @@ public class DietNeoForgeMod {
     // evt.enqueueWork(() -> ArgumentTypeInfos.registerByClass(DietGroupArgument.class, SingletonArgumentInfo.contextFree(DietGroupArgument::group)));
   }
 
-  private void addReloaders(final AddReloadListenerEvent evt) {
-    evt.addListener(DietGroups.SERVER);
-    evt.addListener(DietSuites.SERVER);
+  private void addReloaders(final AddServerReloadListenersEvent evt) {
+    evt.addListener(DietCommonMod.resource("groups"), DietGroups.SERVER);
+    evt.addListener(DietCommonMod.resource("suites"), DietSuites.SERVER);
   }
 
   private void process(final InterModProcessEvent evt) {
     DietOverride.process(evt.getIMCStream());
   }
 
-  private void gatherData(final GatherDataEvent evt) {
+  private void gatherData(final GatherDataEvent.Server evt) {
     DataGenerator generator = evt.getGenerator();
 
-    if (evt.includeServer()) {
-      ExistingFileHelper existingFileHelper = evt.getExistingFileHelper();
-      CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
-      PackOutput packOutput = generator.getPackOutput();
-      DietBlockTagsProvider blockTagsProvider = new DietBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
-      generator.addProvider(true, blockTagsProvider);
-      generator.addProvider(true, new DietTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
-    }
+    CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
+    PackOutput packOutput = generator.getPackOutput();
+    DietBlockTagsProvider blockTagsProvider = new DietBlockTagsProvider(packOutput, lookupProvider);
+    generator.addProvider(true, blockTagsProvider);
+    generator.addProvider(true, new DietTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter()));
   }
 
   private void modifyAttributes(final EntityAttributeModificationEvent evt) {

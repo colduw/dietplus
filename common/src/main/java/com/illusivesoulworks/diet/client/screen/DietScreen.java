@@ -43,7 +43,9 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -112,7 +114,7 @@ public class DietScreen extends Screen {
       int lowerY = this.height / 2 - this.ySize / 2 + 7;
       int upperX = lowerX + 16;
       int upperY = lowerY + 16;
-      guiGraphics.blit(ICONS, lowerX, lowerY, 16, 16, 0, 37, 16, 16, 256, 256);
+      guiGraphics.blit(RenderType::guiTextured, ICONS, lowerX, lowerY, 0, 37, 16, 16, 16, 16, 256, 256);
 
       if (mouseX >= lowerX && mouseX <= upperX && mouseY >= lowerY && mouseY <= upperY) {
         List<Component> tooltips = DietTooltip.getEffects();
@@ -147,7 +149,7 @@ public class DietScreen extends Screen {
                 MutableComponent text = Component.translatable(
                     "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name");
                 guiGraphics.drawString(this.font, text, x + 20, y, getTextColor(), false);
-                RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+                RenderSystem.setShader(CoreShaders.POSITION_TEX_COLOR);
                 RenderSystem.setShaderTexture(0, ICONS);
                 DietColor color = diet.isActive() ? group.getColor() : DietColor.GRAY;
                 int red = color.red();
@@ -201,9 +203,9 @@ public class DietScreen extends Screen {
     if (this.minecraft != null) {
       int i = (this.width - this.xSize) / 2;
       int j = (this.height - this.ySize) / 2;
-      guiGraphics.blit(BACKGROUND, i, j, this.xSize, 4, 0, 0, 248, 4, 256, 256);
-      guiGraphics.blit(BACKGROUND, i, j + 4, this.xSize, this.ySize - 8, 0, 4, 248, 24, 256, 256);
-      guiGraphics.blit(BACKGROUND, i, j + this.ySize - 4, this.xSize, 4, 0, 162, 248, 4, 256, 256);
+      guiGraphics.blit(RenderType::guiTextured, BACKGROUND, i, j, 0, 0, this.xSize, 4, 248, 4, 256, 256);
+      guiGraphics.blit(RenderType::guiTextured, BACKGROUND, i, j + 4, 0, 4, this.xSize, this.ySize - 8, 248, 24, 256, 256);
+      guiGraphics.blit(RenderType::guiTextured, BACKGROUND, i, j + this.ySize - 4, 0, 162, this.xSize, 4, 248, 4, 256, 256);
     }
   }
 

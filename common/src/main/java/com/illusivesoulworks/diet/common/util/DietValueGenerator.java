@@ -37,6 +37,8 @@ import java.util.Set;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -44,6 +46,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 
 public class DietValueGenerator {
 
@@ -66,7 +70,7 @@ public class DietValueGenerator {
       Set<IDietGroup> groups = DietGroups.getGroups(server.overworld());
       findUngroupedFoods(groups);
       RecipeManager recipeManager = server.getRecipeManager();
-      findAllRecipesForItems(recipeManager, server.overworld().registryAccess());
+      findAllRecipesForItems(recipeManager, server.overworld());
       processItems(groups);
       stopwatch.stop();
       DietConstants.LOG.info("Generating diet values took {}", stopwatch);
@@ -109,8 +113,8 @@ public class DietValueGenerator {
         for (RecipeHolder<?> recipe : list) {
           Set<Item> keys = new HashSet<>();
 
-          for (Ingredient ingredient : recipe.value().getIngredients()) {
-            ItemStack[] itemStacks = ingredient.getItems().clone();
+          for (Ingredient ingredient : recipe.value().placementInfo().ingredients()) {
+            ItemStack[] itemStacks = ingredient.items().map(ItemStack::new).toArray(ItemStack[]::new);
 
             if (itemStacks.length == 0) {
               continue;
@@ -174,17 +178,20 @@ public class DietValueGenerator {
   }
 
   @SuppressWarnings("ConstantConditions")
-  private static void findAllRecipesForItems(RecipeManager recipeManager,
-                                             RegistryAccess registryAccess) {
+  private static void findAllRecipesForItems(RecipeManager recipeManager, ServerLevel level) {
     DietConstants.LOG.info("Building item-to-recipes map...");
     RECIPES.clear();
     Map<Item, List<RecipeHolder<?>>> result = new HashMap<>();
+    ContextMap contextMap = SlotDisplayContext.fromLevel(level);
 
     for (RecipeHolder<?> recipe : recipeManager.getRecipes()) {
       ItemStack output = ItemStack.EMPTY;
 
       try {
-        output = recipe.value().getResultItem(registryAccess);
+        List<RecipeDisplay> displays = recipe.value().display();
+        if (!displays.isEmpty()) {
+          output = displays.getFirst().result().resolveForFirstStack(contextMap);
+        }
       } catch (Exception e) {
         DietConstants.LOG.error("Diet was unable to process recipe: {}", recipe.id());
       }
@@ -204,7 +211,7 @@ public class DietValueGenerator {
     for (List<RecipeHolder<?>> list : result.values()) {
 
       if (list.size() > 1) {
-        list.sort(Comparator.comparing(RecipeHolder::id));
+        list.sort(Comparator.comparing(recipeHolder -> recipeHolder.id().location()));
       }
     }
     RECIPES.putAll(result);

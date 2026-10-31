@@ -11,17 +11,17 @@
     {
       "attributes": [
         {
-          "name": "minecraft:generic.max_health",
+          "name": "minecraft:max_health",
           "operation": "add",
           "amount": 2.0
         },
         {
-          "name": "minecraft:generic.attack_damage",
+          "name": "minecraft:attack_damage",
           "operation": "add",
           "amount": 2.0
         },
         {
-          "name": "minecraft:generic.attack_speed",
+          "name": "minecraft:attack_speed",
           "operation": "add_multiplied_total",
           "amount": 0.1
         }
@@ -38,17 +38,17 @@
     {
       "attributes": [
         {
-          "name": "minecraft:generic.max_health",
+          "name": "minecraft:max_health",
           "operation": "add",
           "amount": 2.0
         },
         {
-          "name": "minecraft:generic.knockback_resistance",
+          "name": "minecraft:knockback_resistance",
           "operation": "add",
           "amount": 0.10
         },
         {
-          "name": "minecraft:generic.armor_toughness",
+          "name": "minecraft:armor_toughness",
           "operation": "add",
           "amount": 1.0
         }
@@ -65,7 +65,7 @@
     {
       "attributes": [
         {
-          "name": "minecraft:generic.movement_speed",
+          "name": "minecraft:movement_speed",
           "operation": "add_multiplied_base",
           "amount": 0.25
         }

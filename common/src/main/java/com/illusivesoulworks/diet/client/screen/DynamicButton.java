@@ -26,6 +26,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -63,6 +64,6 @@ public class DynamicButton extends Button {
       yAdj = yDiffTextIn;
     }
 
-    guiGraphics.blit(this.texture, getX(), getY(), xTexStartIn, yTexStartIn+yAdj, width, height);
+    guiGraphics.blit(RenderType::guiTextured, this.texture, getX(), getY(), xTexStartIn, yTexStartIn+yAdj, width, height, 256, 256);
   }
 }

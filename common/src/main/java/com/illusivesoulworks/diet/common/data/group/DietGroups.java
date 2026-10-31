@@ -37,26 +37,26 @@ import java.util.Optional;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 
-public class DietGroups extends SimpleJsonResourceReloadListener {
-
-  private static final Gson GSON =
-      (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
+public class DietGroups extends SimpleJsonResourceReloadListener<JsonElement> {
+  private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
   public static final DietGroups SERVER = Services.CAPABILITY.getGroupsListener();
   public static final DietGroups CLIENT = Services.CAPABILITY.getGroupsListener();
 
   private Map<String, IDietGroup> groups = new HashMap<>();
 
   public DietGroups() {
-    super(GSON, "diet/groups");
+    super(ExtraCodecs.JSON, FileToIdConverter.json("diet/groups"));
   }
 
   public static Set<IDietGroup> getGroups(Level level) {

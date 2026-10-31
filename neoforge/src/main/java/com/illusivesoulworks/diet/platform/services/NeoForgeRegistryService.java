@@ -26,6 +26,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -80,7 +81,7 @@ public class NeoForgeRegistryService implements IRegistryService {
 
   @Override
   public FoodProperties getFoodProperties(ItemStack stack, Player player) {
-    return stack.getFoodProperties(player);
+    return stack.get(DataComponents.FOOD);
   }
 
   @Override
@@ -106,12 +107,12 @@ public class NeoForgeRegistryService implements IRegistryService {
 
   @Override
   public Collection<Item> getTagItems(TagKey<Item> tagKey) {
-    return BuiltInRegistries.ITEM.getTag(tagKey).map(item -> item.stream().map(Holder::value).toList()).orElse(List.of());
+    return BuiltInRegistries.ITEM.get(tagKey).map(item -> item.stream().map(Holder::value).toList()).orElse(List.of());
   }
 
   @Override
   public ItemStack getPickStack(BlockState state, BlockHitResult result, Level world, BlockPos pos, ServerPlayer player) {
-    return state.getCloneItemStack(result, world, pos, player);
+    return state.getCloneItemStack( world, pos, false);
   }
 
   @Override

@@ -57,7 +57,7 @@ public class DietMixinFoodData implements PlayerSensitive {
       at = @At(
           value = "INVOKE_ASSIGN",
           target = "net/minecraft/world/level/GameRules.getBoolean(Lnet/minecraft/world/level/GameRules$Key;)Z"),
-      method = "tick(Lnet/minecraft/world/entity/player/Player;)V")
+      method = "tick(Lnet/minecraft/server/level/ServerPlayer;)V")
   public boolean diet$tick(boolean flag) {
     return diet_player != null ? DietRegeneration.hasRegen(diet_player, flag) : flag;
   }

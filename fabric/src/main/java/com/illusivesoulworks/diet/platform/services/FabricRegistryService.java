@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
-import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -54,7 +53,7 @@ public class FabricRegistryService implements IRegistryService {
 
   @Override
   public Optional<Item> getItem(ResourceLocation resourceLocation) {
-    return Optional.of(BuiltInRegistries.ITEM.get(resourceLocation));
+    return BuiltInRegistries.ITEM.getOptional(resourceLocation);
   }
 
   @Override
@@ -64,7 +63,7 @@ public class FabricRegistryService implements IRegistryService {
 
   @Override
   public Optional<Attribute> getAttribute(ResourceLocation resourceLocation) {
-    return Optional.ofNullable(BuiltInRegistries.ATTRIBUTE.get(resourceLocation));
+    return BuiltInRegistries.ATTRIBUTE.getOptional(resourceLocation);
   }
 
   @Override
@@ -74,7 +73,7 @@ public class FabricRegistryService implements IRegistryService {
 
   @Override
   public Optional<MobEffect> getStatusEffect(ResourceLocation resourceLocation) {
-    return Optional.ofNullable(BuiltInRegistries.MOB_EFFECT.get(resourceLocation));
+    return BuiltInRegistries.MOB_EFFECT.getOptional(resourceLocation);
   }
 
   @Override
@@ -110,19 +109,13 @@ public class FabricRegistryService implements IRegistryService {
 
   @Override
   public Collection<Item> getTagItems(TagKey<Item> tagKey) {
-    return BuiltInRegistries.ITEM.getTag(tagKey).stream().flatMap(HolderSet.ListBacked::stream)
+    return BuiltInRegistries.ITEM.get(tagKey).stream().flatMap(HolderSet.ListBacked::stream)
         .map(Holder::value).collect(Collectors.toSet());
   }
 
   @Override
-  public ItemStack getPickStack(BlockState state, BlockHitResult result, Level world, BlockPos pos,
-                                ServerPlayer player) {
-
-    if (state.getBlock() instanceof BlockPickInteractionAware) {
-      return (((BlockPickInteractionAware) state.getBlock()).getPickedStack(state, world, pos,
-          player, result));
-    }
-    return state.getBlock().getCloneItemStack(world, pos, state);
+  public ItemStack getPickStack(BlockState state, BlockHitResult result, Level world, BlockPos pos, ServerPlayer player) {
+    return state.getCloneItemStack(world, pos, false);
   }
 
   @Override

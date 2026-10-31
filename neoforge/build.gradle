@@ -22,7 +22,7 @@ neoForge {
         client { client()}
         server { server() }
         data {
-            data()
+            serverData()
             programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
         configureEach {

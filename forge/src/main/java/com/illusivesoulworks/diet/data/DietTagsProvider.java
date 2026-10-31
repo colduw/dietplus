@@ -162,7 +162,7 @@ public class DietTagsProvider extends ItemTagsProvider {
     for (Item element : elements) {
       add(this.vegetables, element);
     }
-    addTag(this.vegetables, ItemTags.FLOWERS);
+    addTag(this.vegetables, Tags.Items.FLOWERS);
     addTag(this.vegetables, ItemTags.LEAVES);
     addTag(this.vegetables, Tags.Items.MUSHROOMS);
 
