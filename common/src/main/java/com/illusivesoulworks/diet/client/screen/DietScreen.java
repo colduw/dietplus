@@ -27,12 +27,6 @@ import com.illusivesoulworks.diet.common.config.DietConfig;
 import com.illusivesoulworks.diet.common.data.effect.DietEffectsInfo;
 import com.illusivesoulworks.diet.common.data.suite.DietSuites;
 import com.illusivesoulworks.diet.platform.Services;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,13 +36,13 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
-import org.joml.Matrix4f;
 
 public class DietScreen extends Screen {
 
@@ -111,22 +105,21 @@ public class DietScreen extends Screen {
       int lowerY = this.height / 2 - this.ySize / 2 + 7;
       int upperX = lowerX + 16;
       int upperY = lowerY + 16;
-      guiGraphics.blit(RenderType::guiTextured, ICONS, lowerX, lowerY, 0, 37, 16, 16, 16, 16, 256, 256);
+      guiGraphics.blit(RenderPipelines.GUI_TEXTURED, ICONS, lowerX, lowerY, 0, 37, 16, 16, 16, 16, 256, 256);
 
       if (mouseX >= lowerX && mouseX <= upperX && mouseY >= lowerY && mouseY <= upperY) {
         List<Component> tooltips = DietTooltip.getEffects();
-        guiGraphics.renderComponentTooltip(this.font, tooltips, mouseX, mouseY);
+        guiGraphics.setComponentTooltipForNextFrame(this.font, tooltips, mouseX, mouseY);
       }
     }
   }
 
   private int getTextColor() {
     String config = DietConfig.CLIENT.textColor.get();
-
     if (config.startsWith("#")) {
-      return Integer.parseInt(config.substring(1), 16);
+      return ARGB.opaque(Integer.parseInt(config.substring(1), 16));
     }
-    return Integer.parseInt(config);
+    return ARGB.opaque(Integer.parseInt(config));
   }
 
   public void renderForeground(GuiGraphics guiGraphics, int mouseX, int mouseY) {
@@ -152,21 +145,19 @@ public class DietScreen extends Screen {
                 int blue = color.blue();
                 int percent = (int) Math.floor(diet.getValue(group.getName()) * 100.0f);
                 String percentText = percent + "%";
-                coloredBlit(guiGraphics.pose(), x + 90, y + 2, 102, 5, 20, 0, 102, 5, 256, 256, red,
-                    green, blue, 255);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, ICONS, x + 90, y + 2, 20, 0, 102, 5, 102, 5, 256, 256, ARGB.color(255, red, green, blue));
 
                 if (percent > 0) {
                   int texWidth = percent + 1;
-                  coloredBlit(guiGraphics.pose(), x + 90, y + 2, texWidth, 5, 20, 5, texWidth, 5,
-                      256, 256, red, green, blue, 255);
+                  guiGraphics.blit(RenderPipelines.GUI_TEXTURED, ICONS, x + 90, y + 2, 20, 5, texWidth, 5, texWidth, 5, 256, 256, ARGB.color(255, red, green, blue));
                 }
                 int xPos = x + 200;
                 int yPos = y + 1;
-                guiGraphics.drawString(this.font, percentText, (xPos + 1), yPos, 0, false);
-                guiGraphics.drawString(this.font, percentText, (xPos - 1), yPos, 0, false);
-                guiGraphics.drawString(this.font, percentText, xPos, (yPos + 1), 0, false);
-                guiGraphics.drawString(this.font, percentText, xPos, (yPos - 1), 0, false);
-                guiGraphics.drawString(this.font, percentText, xPos, yPos, color.getRGB(), false);
+                guiGraphics.drawString(this.font, percentText, (xPos + 1), yPos, ARGB.opaque(0), false);
+                guiGraphics.drawString(this.font, percentText, (xPos - 1), yPos, ARGB.opaque(0), false);
+                guiGraphics.drawString(this.font, percentText, xPos, (yPos + 1), ARGB.opaque(0), false);
+                guiGraphics.drawString(this.font, percentText, xPos, (yPos - 1), ARGB.opaque(0), false);
+                guiGraphics.drawString(this.font, percentText, xPos, yPos, ARGB.opaque(color.getRGB()), false);
                 int lowerY = y - 5;
                 int upperX = x + 16;
                 int upperY = lowerY + 16;
@@ -184,7 +175,7 @@ public class DietScreen extends Screen {
 
               if (tooltip != null) {
                 List<Component> tooltips = Lists.newArrayList(tooltip);
-                guiGraphics.renderComponentTooltip(this.font, tooltips, mouseX, mouseY);
+                guiGraphics.setComponentTooltipForNextFrame(this.font, tooltips, mouseX, mouseY);
               }
             }));
       }
@@ -198,9 +189,9 @@ public class DietScreen extends Screen {
     if (this.minecraft != null) {
       int i = (this.width - this.xSize) / 2;
       int j = (this.height - this.ySize) / 2;
-      guiGraphics.blit(RenderType::guiTextured, BACKGROUND, i, j, 0, 0, this.xSize, 4, 248, 4, 256, 256);
-      guiGraphics.blit(RenderType::guiTextured, BACKGROUND, i, j + 4, 0, 4, this.xSize, this.ySize - 8, 248, 24, 256, 256);
-      guiGraphics.blit(RenderType::guiTextured, BACKGROUND, i, j + this.ySize - 4, 0, 162, this.xSize, 4, 248, 4, 256, 256);
+      guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, i, j, 0, 0, this.xSize, 4, 248, 4, 256, 256);
+      guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, i, j + 4, 0, 4, this.xSize, this.ySize - 8, 248, 24, 256, 256);
+      guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, i, j + this.ySize - 4, 0, 162, this.xSize, 4, 248, 4, 256, 256);
     }
   }
 
@@ -228,24 +219,5 @@ public class DietScreen extends Screen {
   @Override
   public boolean isPauseScreen() {
     return false;
-  }
-
-  private static void coloredBlit(PoseStack matrixStack, int x, int y, int width, int height,
-                                  float uOffset, float vOffset, int uWidth, int vHeight,
-                                  int textureWidth, int textureHeight, int red, int green, int blue,
-                                  int alpha) {
-    int x2 = x + width;
-    int y2 = y + height;
-    float minU = (uOffset + 0.0F) / (float) textureWidth;
-    float maxU = (uOffset + (float) uWidth) / (float) textureWidth;
-    float minV = (vOffset + 0.0F) / (float) textureHeight;
-    float maxV = (vOffset + (float) vHeight) / (float) textureHeight;
-    Matrix4f matrix = matrixStack.last().pose();
-    BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-    bufferbuilder.addVertex(matrix, (float) x, (float) y2, 0).setColor(red, green, blue, alpha).setUv(minU, maxV);
-    bufferbuilder.addVertex(matrix, (float) x2, (float) y2, 0).setColor(red, green, blue, alpha).setUv(maxU, maxV);
-    bufferbuilder.addVertex(matrix, (float) x2, (float) y, 0).setColor(red, green, blue, alpha).setUv(maxU, minV);
-    bufferbuilder.addVertex(matrix, (float) x, (float) y, 0).setColor(red, green, blue, alpha).setUv(minU, minV);
-    RenderType.guiTextured(ICONS).draw(bufferbuilder.buildOrThrow());
   }
 }

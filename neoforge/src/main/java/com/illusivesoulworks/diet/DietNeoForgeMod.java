@@ -107,7 +107,7 @@ public class DietNeoForgeMod {
     PackOutput packOutput = generator.getPackOutput();
     DietBlockTagsProvider blockTagsProvider = new DietBlockTagsProvider(packOutput, lookupProvider);
     generator.addProvider(true, blockTagsProvider);
-    generator.addProvider(true, new DietTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter()));
+    generator.addProvider(true, new DietTagsProvider(packOutput, Registries.ITEM, lookupProvider, DietConstants.MOD_ID));
   }
 
   private void modifyAttributes(final EntityAttributeModificationEvent evt) {
@@ -131,7 +131,7 @@ public class DietNeoForgeMod {
     DietCommand.register(evt.getDispatcher());
   }
 
-  @EventBusSubscriber(modid = DietConstants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+  @EventBusSubscriber(modid = DietConstants.MOD_ID, value = Dist.CLIENT)
   public static class ClientModEvents {
     @SubscribeEvent
     public static void registerKeys(final RegisterKeyMappingsEvent evt) {

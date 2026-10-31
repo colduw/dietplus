@@ -25,30 +25,32 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.KeyTagProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 
-public class DietTagsProvider extends ItemTagsProvider {
+public class DietTagsProvider extends KeyTagProvider<Item> {
 
-  protected TagsProvider.TagAppender<Item> fruits;
-  protected TagsProvider.TagAppender<Item> grains;
-  protected TagsProvider.TagAppender<Item> proteins;
-  protected TagsProvider.TagAppender<Item> sugars;
-  protected TagsProvider.TagAppender<Item> vegetables;
-  protected TagsProvider.TagAppender<Item> specialFood;
-  protected TagsProvider.TagAppender<Item> ingredients;
+  protected TagAppender<ResourceKey<Item>, Item> fruits;
+  protected TagAppender<ResourceKey<Item>, Item> grains;
+  protected TagAppender<ResourceKey<Item>, Item> proteins;
+  protected TagAppender<ResourceKey<Item>, Item> sugars;
+  protected TagAppender<ResourceKey<Item>, Item> vegetables;
+  protected TagAppender<ResourceKey<Item>, Item> specialFood;
+  protected TagAppender<ResourceKey<Item>, Item> ingredients;
 
-  public DietTagsProvider(PackOutput p_275343_, CompletableFuture<HolderLookup.Provider> p_275729_, CompletableFuture<TagLookup<Block>> p_275322_) {
-    super(p_275343_, p_275729_, p_275322_, DietConstants.MOD_ID);
+  public DietTagsProvider(PackOutput output, ResourceKey<? extends Registry<Item>> registryKey, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId) {
+    super(output, registryKey, lookupProvider, modId);
   }
 
   protected void init() {
@@ -1789,22 +1791,21 @@ public class DietTagsProvider extends ItemTagsProvider {
     return "Diet Item Tags";
   }
 
-  protected void add(TagsProvider.TagAppender<Item> builder, Item item) {
+  protected void add(TagAppender<ResourceKey<Item>, Item> builder, Item item) {
     builder.add(BuiltInRegistries.ITEM.getResourceKey(item).orElseThrow());
   }
 
-  protected void addTag(TagsProvider.TagAppender<Item> builder, TagKey<Item> tag) {
+  protected void addTag(TagAppender<ResourceKey<Item>, Item> builder, TagKey<Item> tag) {
     builder.addTag(tag);
   }
 
-  protected void addOptional(TagsProvider.TagAppender<Item> builder, String name) {
-
+  protected void addOptional(TagAppender<ResourceKey<Item>, Item> builder, String name) {
     if (name.startsWith("#")) {
       throw new IllegalArgumentException(
           "Attempted to use optional tag: " + name +
               "! Do not use optional tags, this causes weird issues to occur with the Diet tagging system.");
     }
-    builder.addOptional(ResourceLocation.parse(name));
+    builder.addOptional(ResourceKey.create(Registries.ITEM, ResourceLocation.parse(name)));
   }
 
   protected TagKey<Item> tag(String name) {

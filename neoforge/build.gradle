@@ -42,7 +42,8 @@ neoForge {
 dependencies {
     compileOnly project(":common")
 
-    implementation(group: 'top.theillusivec4.curios', name: 'curios-neoforge', version: "${curios_version}")
+    implementation "curse.maven:curios-309927:${curios_version}"
+
     implementation(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge', version: "${spectrelib_version}")
     jarJar(implementation(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-neoforge')) {
         version {

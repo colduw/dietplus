@@ -46,7 +46,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -55,8 +54,8 @@ import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.bus.BusGroup;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -73,20 +72,20 @@ public class DietForgeMod {
   private static final DeferredRegister<ArgumentTypeInfo<?, ?>> ARGUMENT_TYPE_INFO_DEFERRED_REGISTER = DeferredRegister.create(Registries.COMMAND_ARGUMENT_TYPE, DietConstants.MOD_ID);
   private static final RegistryObject<ArgumentTypeInfo<?, ?>> GROUP_ARGUMENT = ARGUMENT_TYPE_INFO_DEFERRED_REGISTER.register("group", () -> ArgumentTypeInfos.registerByClass(DietGroupArgument.class, SingletonArgumentInfo.contextFree(DietGroupArgument::group)));
 
-  public DietForgeMod() {
-    IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-    eventBus.addListener(this::setup);
-    eventBus.addListener(this::process);
-    eventBus.addListener(this::gatherData);
-    eventBus.addListener(this::registerCaps);
-    eventBus.addListener(this::modifyAttributes);
+  public DietForgeMod(FMLJavaModLoadingContext context) {
+    BusGroup eventBus = context.getModBusGroup();
+    FMLCommonSetupEvent.getBus(eventBus).addListener(this::setup);
+    InterModProcessEvent.getBus(eventBus).addListener(this::process);
+    GatherDataEvent.getBus(eventBus).addListener(this::gatherData);
+    RegisterCapabilitiesEvent.getBus(eventBus).addListener(this::registerCaps);
+    EntityAttributeModificationEvent.getBus(eventBus).addListener(this::modifyAttributes);
     DietConfigLoader.setup();
     ATTRIBUTES.register(eventBus);
     ARGUMENT_TYPE_INFO_DEFERRED_REGISTER.register(eventBus);
-    MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
-    MinecraftForge.EVENT_BUS.addListener(this::onDatapackSync);
-    MinecraftForge.EVENT_BUS.addListener(this::setupCommands);
-    MinecraftForge.EVENT_BUS.addListener(this::addReloaders);
+    ServerStartingEvent.BUS.addListener(this::serverStarting);
+    OnDatapackSyncEvent.BUS.addListener(this::onDatapackSync);
+    RegisterCommandsEvent.BUS.addListener(this::setupCommands);
+    AddReloadListenerEvent.BUS.addListener(this::addReloaders);
   }
 
   private void setup(final FMLCommonSetupEvent evt) {
@@ -113,7 +112,7 @@ public class DietForgeMod {
       PackOutput packOutput = generator.getPackOutput();
       DietBlockTagsProvider blockTagsProvider = new DietBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
       generator.addProvider(true, blockTagsProvider);
-      generator.addProvider(true, new DietTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
+      generator.addProvider(true, new DietTagsProvider(packOutput, Registries.ITEM, lookupProvider, DietConstants.MOD_ID, existingFileHelper));
     }
   }
 

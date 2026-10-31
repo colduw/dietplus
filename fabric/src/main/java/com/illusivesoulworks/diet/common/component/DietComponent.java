@@ -17,12 +17,15 @@
 
 package com.illusivesoulworks.diet.common.component;
 
+import com.illusivesoulworks.diet.DietConstants;
 import com.illusivesoulworks.diet.common.capability.PlayerDietTracker;
 import javax.annotation.Nonnull;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.Component;
 
 public class DietComponent extends PlayerDietTracker implements Component {
@@ -31,12 +34,14 @@ public class DietComponent extends PlayerDietTracker implements Component {
   }
 
   @Override
-  public void readFromNbt(@Nonnull CompoundTag tag, HolderLookup.Provider provider) {
-    this.load(tag);
+  public void readData(ValueInput valueInput) {
+    valueInput.read(DietConstants.MOD_ID, CompoundTag.CODEC).ifPresent(this::load);
   }
 
   @Override
-  public void writeToNbt(@Nonnull CompoundTag tag, HolderLookup.Provider provider) {
-    this.save(tag);
+  public void writeData(ValueOutput valueOutput) {
+    CompoundTag compoundTag = new CompoundTag();
+    this.save(compoundTag);
+    valueOutput.store(DietConstants.MOD_ID, CompoundTag.CODEC, compoundTag);
   }
 }

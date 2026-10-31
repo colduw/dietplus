@@ -39,14 +39,13 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.Priority;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = DietConstants.MOD_ID)
 public class DietCapabilityEventsListener {
-
   @SubscribeEvent
   @SuppressWarnings("unused")
   public static void attachCapabilities(final AttachCapabilitiesEvent<Entity> evt) {
@@ -107,7 +106,7 @@ public class DietCapabilityEventsListener {
     }
   }
 
-  @SubscribeEvent(priority = EventPriority.LOW)
+  @SubscribeEvent(priority = Priority.LOW)
   @SuppressWarnings("unused")
   public static void finishItemUse(final LivingEntityUseItemEvent.Finish evt) {
     ItemStack stack = evt.getItem();

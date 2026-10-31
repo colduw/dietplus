@@ -22,9 +22,10 @@ import com.illusivesoulworks.diet.api.type.IDietTracker;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import net.neoforged.neoforge.attachment.IAttachmentSerializer;
@@ -35,18 +36,19 @@ public class DietCapability {
   public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPE_DEFERRED_REGISTER = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, DietConstants.MOD_ID);
   public static final Supplier<AttachmentType<IDietTracker>> DIET_TRACKER = ATTACHMENT_TYPE_DEFERRED_REGISTER.register("diet_tracker", () -> AttachmentType.<IDietTracker>builder(
           iAttachmentHolder -> new PlayerDietTracker((Player) iAttachmentHolder)
-  ).serialize(new IAttachmentSerializer<CompoundTag, IDietTracker>() {
+  ).serialize(new IAttachmentSerializer<IDietTracker>() {
             @Override
-            public CompoundTag write(IDietTracker iDietTracker, HolderLookup.Provider provider) {
+            public boolean write(IDietTracker iDietTracker, ValueOutput valueOutput) {
               CompoundTag tag = new CompoundTag();
               iDietTracker.save(tag);
-              return tag;
+              valueOutput.store(DietConstants.MOD_ID, CompoundTag.CODEC, tag);
+              return true;
             }
 
             @Override
-            public IDietTracker read(IAttachmentHolder holder, CompoundTag tag, HolderLookup.Provider provider) {
+            public IDietTracker read(IAttachmentHolder holder, ValueInput valueInput) {
               IDietTracker dietTracker = new PlayerDietTracker((Player) holder);
-              dietTracker.load(tag);
+              valueInput.read(DietConstants.MOD_ID, CompoundTag.CODEC).ifPresent(dietTracker::load);
               return dietTracker;
             }
           })

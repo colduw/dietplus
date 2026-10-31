@@ -83,10 +83,9 @@ public class DietClientEvents {
   }
 
   public static void renderEffectsTooltip(Screen screen, GuiGraphics guiGraphics) {
-
     if (tooltip != null && screen != null) {
-      guiGraphics.renderTooltip(Minecraft.getInstance().font, tooltip, Optional.empty(), tooltipX,
-          tooltipY);
+      guiGraphics.setTooltipForNextFrame(Minecraft.getInstance().font, tooltip, Optional.empty(), tooltipX, tooltipY);
+      guiGraphics.renderDeferredTooltip();
       tooltip = null;
     }
   }
