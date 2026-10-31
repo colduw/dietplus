@@ -191,19 +191,16 @@ public class DietCommand {
   }
 
   private static int clear(CommandSourceStack sender, ServerPlayer player) {
-
-    for (AttributeInstance instance : player.getAttributes().getDirtyAttributes()) {
-
-      for (AttributeModifier attributeModifier : instance.getModifiers()) {
-
-        if (attributeModifier.getName().equals("Diet group effect")) {
-          instance.removeModifier(attributeModifier.getId());
+    Services.CAPABILITY.get(player).ifPresent(diet -> {
+      diet.getModifiers().forEach((k, v) -> {
+        AttributeInstance instance = player.getAttribute(k);
+        if (instance != null) {
+          v.forEach(instance::removeModifier);
         }
-      }
-    }
-    sender.sendSuccess(
-        () -> Component.translatable("commands." + DietConstants.MOD_ID + ".clear.success",
-            player.getName()), true);
+      });
+    });
+
+    sender.sendSuccess(() -> Component.translatable("commands." + DietConstants.MOD_ID + ".clear.success", player.getName()), true);
     return Command.SINGLE_SUCCESS;
   }
 
