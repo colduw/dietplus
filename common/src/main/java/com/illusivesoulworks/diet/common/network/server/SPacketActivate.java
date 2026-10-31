@@ -17,19 +17,31 @@
 
 package com.illusivesoulworks.diet.common.network.server;
 
+import com.illusivesoulworks.diet.DietCommonMod;
 import com.illusivesoulworks.diet.client.DietClientPacketReceiver;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
-public record SPacketActivate(boolean flag) {
+public record SPacketActivate(boolean flag) implements CustomPacketPayload {
+  public static final ResourceLocation ACTIVATION = DietCommonMod.resource("activation");
+
+  @Override
+  public void write(FriendlyByteBuf buf) {
+    encode(this, buf);
+  }
+
+  @Override
+  public ResourceLocation id() {
+    return ACTIVATION;
+  }
 
   public static void encode(SPacketActivate msg, FriendlyByteBuf buf) {
     buf.writeBoolean(msg.flag);
   }
-
   public static SPacketActivate decode(FriendlyByteBuf buf) {
     return new SPacketActivate(buf.readBoolean());
   }
-
   public static void handle(SPacketActivate msg) {
     DietClientPacketReceiver.handleActivate(msg);
   }

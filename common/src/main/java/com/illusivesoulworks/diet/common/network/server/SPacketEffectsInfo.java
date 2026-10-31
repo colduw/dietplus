@@ -17,14 +17,27 @@
 
 package com.illusivesoulworks.diet.common.network.server;
 
+import com.illusivesoulworks.diet.DietCommonMod;
 import com.illusivesoulworks.diet.client.DietClientPacketReceiver;
 import com.illusivesoulworks.diet.common.data.effect.DietEffectsInfo;
 import java.util.Objects;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
-public class SPacketEffectsInfo {
-
+public class SPacketEffectsInfo implements CustomPacketPayload {
+  public static final ResourceLocation EFFECTS_INFO = DietCommonMod.resource("effects_info");
   private final DietEffectsInfo info;
+
+  @Override
+  public void write(FriendlyByteBuf buf) {
+    encode(this, buf);
+  }
+
+  @Override
+  public ResourceLocation id() {
+    return EFFECTS_INFO;
+  }
 
   public SPacketEffectsInfo(DietEffectsInfo infoIn) {
     info = infoIn;

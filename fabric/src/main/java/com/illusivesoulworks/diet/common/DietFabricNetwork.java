@@ -31,7 +31,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
 public class DietFabricNetwork {
-
   public static final ResourceLocation EFFECTS_INFO = DietCommonMod.resource("effects_info");
   public static final ResourceLocation DIET = DietCommonMod.resource("diet");
   public static final ResourceLocation ACTIVATION = DietCommonMod.resource("activation");

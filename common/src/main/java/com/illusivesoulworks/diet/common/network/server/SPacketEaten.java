@@ -17,18 +17,30 @@
 
 package com.illusivesoulworks.diet.common.network.server;
 
+import com.illusivesoulworks.diet.DietCommonMod;
 import com.illusivesoulworks.diet.client.DietClientPacketReceiver;
 import com.illusivesoulworks.diet.platform.Services;
 import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
-public record SPacketEaten(Set<Item> items) {
+public record SPacketEaten(Set<Item> items) implements CustomPacketPayload {
+  public static final ResourceLocation EATEN = DietCommonMod.resource("eaten");
+
+  @Override
+  public void write(FriendlyByteBuf buf) {
+    encode(this, buf);
+  }
+
+  @Override
+  public ResourceLocation id() {
+    return EATEN;
+  }
 
   public static void encode(SPacketEaten msg, FriendlyByteBuf buf) {
-
     for (Item item : msg.items) {
       ResourceLocation rl = Services.REGISTRY.getItemKey(item);
 

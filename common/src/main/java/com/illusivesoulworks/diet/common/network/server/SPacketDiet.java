@@ -17,12 +17,26 @@
 
 package com.illusivesoulworks.diet.common.network.server;
 
+import com.illusivesoulworks.diet.DietCommonMod;
 import com.illusivesoulworks.diet.client.DietClientPacketReceiver;
 import java.util.Map;
 import java.util.TreeMap;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
-public record SPacketDiet(String suite, Map<String, Float> groups) {
+public record SPacketDiet(String suite, Map<String, Float> groups) implements CustomPacketPayload {
+  public static final ResourceLocation DIET = DietCommonMod.resource("diet");
+
+  @Override
+  public void write(FriendlyByteBuf buf) {
+    encode(this, buf);
+  }
+
+  @Override
+  public ResourceLocation id() {
+    return DIET;
+  }
 
   public static void encode(SPacketDiet msg, FriendlyByteBuf buf) {
     buf.writeUtf(msg.suite);

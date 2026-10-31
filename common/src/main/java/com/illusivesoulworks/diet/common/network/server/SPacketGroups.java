@@ -17,6 +17,7 @@
 
 package com.illusivesoulworks.diet.common.network.server;
 
+import com.illusivesoulworks.diet.DietCommonMod;
 import com.illusivesoulworks.diet.client.DietClientPacketReceiver;
 import com.illusivesoulworks.diet.platform.Services;
 import java.util.HashMap;
@@ -29,10 +30,22 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
-public record SPacketGroups(CompoundTag groups, Map<Item, Set<String>> generated) {
+public record SPacketGroups(CompoundTag groups, Map<Item, Set<String>> generated) implements CustomPacketPayload {
+  public static final ResourceLocation GROUPS = DietCommonMod.resource("groups");
+
+  @Override
+  public void write(FriendlyByteBuf buf) {
+    encode(this, buf);
+  }
+
+  @Override
+  public ResourceLocation id() {
+    return GROUPS;
+  }
 
   public static void encode(SPacketGroups msg, FriendlyByteBuf buf) {
     CompoundTag compoundNBT = new CompoundTag();

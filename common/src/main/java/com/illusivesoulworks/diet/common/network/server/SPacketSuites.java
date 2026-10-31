@@ -17,20 +17,32 @@
 
 package com.illusivesoulworks.diet.common.network.server;
 
+import com.illusivesoulworks.diet.DietCommonMod;
 import com.illusivesoulworks.diet.client.DietClientPacketReceiver;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 
-public record SPacketSuites(CompoundTag suites) {
+public record SPacketSuites(CompoundTag suites) implements CustomPacketPayload {
+  public static final ResourceLocation SUITES = DietCommonMod.resource("suites");
+
+  @Override
+  public void write(FriendlyByteBuf buf) {
+    encode(this, buf);
+  }
+
+  @Override
+  public ResourceLocation id() {
+    return SUITES;
+  }
 
   public static void encode(SPacketSuites msg, FriendlyByteBuf buf) {
     buf.writeNbt(msg.suites());
   }
-
   public static SPacketSuites decode(FriendlyByteBuf buf) {
     return new SPacketSuites(buf.readNbt());
   }
-
   public static void handle(SPacketSuites msg) {
     DietClientPacketReceiver.handleSuites(msg.suites());
   }
