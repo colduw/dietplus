@@ -25,16 +25,12 @@ dependencies {
 
     api "org.ladysnake.cardinal-components-api:cardinal-components-base:${cca_version}"
     api "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cca_version}"
-    // temporary cheap fix
-    // "minecraft": "~26.1" -> "minecraft": "~26.2"
-    // implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_range}"
-    implementation name: 'spectrelib-fabric-0.21.0+26.1.2'
+    implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_range}"
 
     // Embedded
     include "org.ladysnake.cardinal-components-api:cardinal-components-base:${cca_version}"
     include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cca_version}"
-    //include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}"
-    include name: 'spectrelib-fabric-0.21.0+26.1.2'
+    include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}"
 }
 
 loom {

@@ -23,11 +23,11 @@ public class NeoForgeClientService implements IClientService {
 
   @Override
   public int getGuiLeft(AbstractContainerScreen<?> containerScreen) {
-    return containerScreen.getGuiLeft();
+    return containerScreen.getLeftPos();
   }
 
   @Override
   public int getGuiTop(AbstractContainerScreen<?> containerScreen) {
-    return containerScreen.getGuiTop();
+    return containerScreen.getTopPos();
   }
 }

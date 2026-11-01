@@ -103,7 +103,7 @@ public class DietNeoForgeMod {
   private void gatherData(final GatherDataEvent.Server evt) {
     DataGenerator generator = evt.getGenerator();
 
-    CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
+    CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getWorldLookupProvider();
     PackOutput packOutput = generator.getPackOutput();
     DietBlockTagsProvider blockTagsProvider = new DietBlockTagsProvider(packOutput, lookupProvider);
     generator.addProvider(true, blockTagsProvider);
