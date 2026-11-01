@@ -48,8 +48,7 @@ import net.minecraftforge.fml.common.Mod;
 public class DietCapabilityEventsListener {
   @SubscribeEvent
   @SuppressWarnings("unused")
-  public static void attachCapabilities(final AttachCapabilitiesEvent<Entity> evt) {
-
+  public static void attachCapabilities(final AttachCapabilitiesEvent.Entities evt) {
     if (evt.getObject() instanceof Player player) {
       final IDietTracker tracker = new PlayerDietTracker(player);
       final LazyOptional<IDietTracker> capability = LazyOptional.of(() -> tracker);
