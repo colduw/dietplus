@@ -44,7 +44,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -99,14 +99,14 @@ public class DietSuites extends SimpleJsonResourceReloadListener<JsonElement> {
   }
 
   @Override
-  protected void apply(@Nonnull Map<ResourceLocation, JsonElement> object,
+  protected void apply(@Nonnull Map<Identifier, JsonElement> object,
                        @Nonnull ResourceManager resourceManager,
                        @Nonnull ProfilerFiller profilerFiller) {
     Map<String, DietSuite.Builder> map = new HashMap<>();
     uuidSuffix = 0;
 
-    for (Map.Entry<ResourceLocation, JsonElement> entry : object.entrySet()) {
-      ResourceLocation resourcelocation = entry.getKey();
+    for (Map.Entry<Identifier, JsonElement> entry : object.entrySet()) {
+      Identifier resourcelocation = entry.getKey();
 
       if (resourcelocation.getNamespace().equals(DietConstants.MOD_ID)) {
 
@@ -119,8 +119,8 @@ public class DietSuites extends SimpleJsonResourceReloadListener<JsonElement> {
       }
     }
 
-    for (Map.Entry<ResourceLocation, JsonElement> entry : object.entrySet()) {
-      ResourceLocation resourcelocation = entry.getKey();
+    for (Map.Entry<Identifier, JsonElement> entry : object.entrySet()) {
+      Identifier resourcelocation = entry.getKey();
 
       if (resourcelocation.getPath().startsWith("_") ||
           resourcelocation.getNamespace().equals(DietConstants.MOD_ID)) {
@@ -191,7 +191,7 @@ public class DietSuites extends SimpleJsonResourceReloadListener<JsonElement> {
           throw new IllegalArgumentException("Attribute requires a name!");
         }
         String name = GsonHelper.getAsString(attributeObject, "name");
-        Services.REGISTRY.getAttribute(ResourceLocation.parse(name)).ifPresentOrElse(att -> {
+        Services.REGISTRY.getAttribute(Identifier.parse(name)).ifPresentOrElse(att -> {
           float amount = GsonHelper.getAsFloat(attributeObject, "amount", 1.0f);
           AttributeModifier.Operation op =
               getOperation(GsonHelper.getAsString(attributeObject, "operation", ""));
@@ -210,7 +210,7 @@ public class DietSuites extends SimpleJsonResourceReloadListener<JsonElement> {
           throw new IllegalArgumentException("Status effect requires a name!");
         }
         String name = GsonHelper.getAsString(statusEffectObject, "name");
-        Services.REGISTRY.getStatusEffect(ResourceLocation.parse(name)).ifPresentOrElse(eff -> {
+        Services.REGISTRY.getStatusEffect(Identifier.parse(name)).ifPresentOrElse(eff -> {
           int power = GsonHelper.getAsInt(statusEffectObject, "power", 0);
           int increment = GsonHelper.getAsInt(statusEffectObject, "increment", 1);
           finalStatusEffects.add(new DietEffect.DietStatusEffect(eff, power, increment));

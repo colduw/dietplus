@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
@@ -45,7 +45,6 @@ import net.minecraftforge.server.command.ModIdArgument;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class ForgeRegistryService implements IRegistryService {
-
   private static final ITagManager<Item> ITEM_TAGS = ForgeRegistries.ITEMS.tags();
   private static final TagKey<Item> INGREDIENTS = ITEM_TAGS != null ?
       ITEM_TAGS.createTagKey(DietCommonMod.resource("ingredients")) : null;
@@ -53,32 +52,32 @@ public class ForgeRegistryService implements IRegistryService {
       ITEM_TAGS.createTagKey(DietCommonMod.resource("special_food")) : null;
 
   @Override
-  public Optional<Item> getItem(ResourceLocation resourceLocation) {
+  public Optional<Item> getItem(Identifier resourceLocation) {
     return Optional.ofNullable(ForgeRegistries.ITEMS.getValue(resourceLocation));
   }
 
   @Override
-  public ResourceLocation getItemKey(Item item) {
+  public Identifier getItemKey(Item item) {
     return ForgeRegistries.ITEMS.getKey(item);
   }
 
   @Override
-  public Optional<Attribute> getAttribute(ResourceLocation resourceLocation) {
+  public Optional<Attribute> getAttribute(Identifier resourceLocation) {
     return Optional.ofNullable(ForgeRegistries.ATTRIBUTES.getValue(resourceLocation));
   }
 
   @Override
-  public ResourceLocation getAttributeKey(Attribute attribute) {
+  public Identifier getAttributeKey(Attribute attribute) {
     return ForgeRegistries.ATTRIBUTES.getKey(attribute);
   }
 
   @Override
-  public Optional<MobEffect> getStatusEffect(ResourceLocation resourceLocation) {
+  public Optional<MobEffect> getStatusEffect(Identifier resourceLocation) {
     return Optional.ofNullable(ForgeRegistries.MOB_EFFECTS.getValue(resourceLocation));
   }
 
   @Override
-  public ResourceLocation getStatusEffectKey(MobEffect effect) {
+  public Identifier getStatusEffectKey(MobEffect effect) {
     return ForgeRegistries.MOB_EFFECTS.getKey(effect);
   }
 

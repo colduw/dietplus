@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -144,7 +145,7 @@ public class DietConfig {
 
         for (String s : foodOverrides.get()) {
           String[] split = s.split(";");
-          Services.REGISTRY.getItem(ResourceLocation.parse(split[0]))
+          Services.REGISTRY.getItem(Identifier.parse(split[0]))
               .ifPresent(item1 -> overrideMap.put(item1, Float.parseFloat(split[1])));
         }
       }

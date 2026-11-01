@@ -32,7 +32,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 public record SPacketGroups(CompoundTag groups, Map<Item, Set<String>> generated) implements CustomPacketPayload {
@@ -67,7 +67,7 @@ public record SPacketGroups(CompoundTag groups, Map<Item, Set<String>> generated
     if (compoundNBT != null) {
 
       for (String name : compoundNBT.keySet()) {
-        Item item = Services.REGISTRY.getItem(ResourceLocation.parse(name)).orElse(null);
+        Item item = Services.REGISTRY.getItem(Identifier.parse(name)).orElse(null);
 
         if (item != null) {
           ListTag listNBT = compoundNBT.getListOrEmpty(name);

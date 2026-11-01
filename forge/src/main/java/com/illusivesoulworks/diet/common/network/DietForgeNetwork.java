@@ -28,7 +28,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.*;
@@ -39,7 +39,7 @@ public class DietForgeNetwork {
   public static SimpleChannel instance;
 
   public static void setup() {
-    instance = ChannelBuilder.named(ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "main"))
+    instance = ChannelBuilder.named(Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, "main"))
             .networkProtocolVersion(PTC_VERSION).clientAcceptedVersions(Channel.VersionTest.exact(PTC_VERSION))
             .serverAcceptedVersions(Channel.VersionTest.exact(PTC_VERSION)).simpleChannel();
 

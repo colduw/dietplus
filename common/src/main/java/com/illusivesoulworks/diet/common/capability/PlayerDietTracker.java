@@ -47,7 +47,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
@@ -437,7 +437,7 @@ public class PlayerDietTracker implements IDietTracker {
     if (eaten != null) {
 
       for (Item item : eaten) {
-        ResourceLocation rl = Services.REGISTRY.getItemKey(item);
+        Identifier rl = Services.REGISTRY.getItemKey(item);
 
         if (rl != null) {
           list.add(StringTag.valueOf(rl.toString()));
@@ -465,8 +465,7 @@ public class PlayerDietTracker implements IDietTracker {
 
     for (int i = 0; i < list.size(); i++) {
       CompoundTag attributeTag = list.getCompoundOrEmpty(i);
-      Attribute att = Services.REGISTRY.getAttribute(
-          ResourceLocation.parse(attributeTag.getStringOr("AttributeName", ""))).orElse(null);
+      Attribute att = Services.REGISTRY.getAttribute(Identifier.parse(attributeTag.getStringOr("AttributeName", ""))).orElse(null);
 
       if (att != null) {
         Set<UUID> uuids = new HashSet<>();
@@ -483,7 +482,7 @@ public class PlayerDietTracker implements IDietTracker {
 
     for (int i = 0; i < list.size(); i++) {
       String s = list.getStringOr(i, "");
-      ResourceLocation rl = ResourceLocation.parse(s);
+      Identifier rl = Identifier.parse(s);
       Services.REGISTRY.getItem(rl).ifPresent(eaten::add);
     }
     this.setEaten(eaten);

@@ -33,6 +33,7 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.permissions.Permissions;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -40,9 +41,8 @@ import net.minecraft.world.entity.player.Player;
 public class DietCommand {
 
   public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-    final int opPermissionLevel = 2;
     LiteralArgumentBuilder<CommandSourceStack> dietCommand =
-        Commands.literal("diet").requires(player -> player.hasPermission(opPermissionLevel));
+        Commands.literal("diet").requires(player -> player.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER));
 
     dietCommand.then(Commands.literal("get")
         .then(Commands.argument("player", EntityArgument.player())

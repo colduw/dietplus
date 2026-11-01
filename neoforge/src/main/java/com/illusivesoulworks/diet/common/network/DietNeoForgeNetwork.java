@@ -24,12 +24,6 @@ import com.illusivesoulworks.diet.common.network.server.SPacketEaten;
 import com.illusivesoulworks.diet.common.network.server.SPacketEffectsInfo;
 import com.illusivesoulworks.diet.common.network.server.SPacketGroups;
 import com.illusivesoulworks.diet.common.network.server.SPacketSuites;
-
-import java.util.function.Consumer;
-
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 

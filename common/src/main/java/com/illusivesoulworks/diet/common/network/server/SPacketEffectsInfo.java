@@ -24,7 +24,6 @@ import java.util.Objects;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 
 public class SPacketEffectsInfo implements CustomPacketPayload {
   public static final Type<SPacketEffectsInfo> EFFECTS_INFO = new Type<>(DietCommonMod.resource("effects_info"));

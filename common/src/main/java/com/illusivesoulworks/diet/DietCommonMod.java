@@ -17,11 +17,11 @@
 
 package com.illusivesoulworks.diet;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class DietCommonMod {
 
-  public static ResourceLocation resource(String path) {
-    return ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, path);
+  public static Identifier resource(String path) {
+    return Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, path);
   }
 }

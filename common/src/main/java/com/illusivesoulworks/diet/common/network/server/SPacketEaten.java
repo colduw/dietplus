@@ -25,7 +25,7 @@ import java.util.Set;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 public record SPacketEaten(Set<Item> items) implements CustomPacketPayload {
@@ -39,10 +39,10 @@ public record SPacketEaten(Set<Item> items) implements CustomPacketPayload {
 
   public static void encode(SPacketEaten msg, FriendlyByteBuf buf) {
     for (Item item : msg.items) {
-      ResourceLocation rl = Services.REGISTRY.getItemKey(item);
+      Identifier rl = Services.REGISTRY.getItemKey(item);
 
       if (rl != null) {
-        buf.writeResourceLocation(rl);
+        buf.writeIdentifier(rl);
       }
     }
   }
@@ -51,9 +51,8 @@ public record SPacketEaten(Set<Item> items) implements CustomPacketPayload {
     Set<Item> items = new HashSet<>();
 
     while (buf.isReadable()) {
-      ResourceLocation rl = buf.readResourceLocation();
+      Identifier rl = buf.readIdentifier();
       Services.REGISTRY.getItem(rl).ifPresent(items::add);
-
     }
     return new SPacketEaten(items);
   }

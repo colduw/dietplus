@@ -38,7 +38,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -110,13 +110,13 @@ public class DietGroups extends SimpleJsonResourceReloadListener<JsonElement> {
   }
 
   @Override
-  protected void apply(@Nonnull Map<ResourceLocation, JsonElement> object,
+  protected void apply(@Nonnull Map<Identifier, JsonElement> object,
                        @Nonnull ResourceManager resourceManager,
                        @Nonnull ProfilerFiller profilerFiller) {
     Map<String, DietGroup.Builder> map = new HashMap<>();
 
-    for (Map.Entry<ResourceLocation, JsonElement> entry : object.entrySet()) {
-      ResourceLocation resourcelocation = entry.getKey();
+    for (Map.Entry<Identifier, JsonElement> entry : object.entrySet()) {
+      Identifier resourcelocation = entry.getKey();
 
       if (resourcelocation.getNamespace().equals(DietConstants.MOD_ID)) {
 
@@ -129,8 +129,8 @@ public class DietGroups extends SimpleJsonResourceReloadListener<JsonElement> {
       }
     }
 
-    for (Map.Entry<ResourceLocation, JsonElement> entry : object.entrySet()) {
-      ResourceLocation resourcelocation = entry.getKey();
+    for (Map.Entry<Identifier, JsonElement> entry : object.entrySet()) {
+      Identifier resourcelocation = entry.getKey();
 
       if (resourcelocation.getPath().startsWith("_") ||
           resourcelocation.getNamespace().equals(DietConstants.MOD_ID)) {
@@ -153,7 +153,7 @@ public class DietGroups extends SimpleJsonResourceReloadListener<JsonElement> {
 
     if (topElement.has("icon")) {
       String icon = GsonHelper.getAsString(topElement, "icon");
-      Services.REGISTRY.getItem(ResourceLocation.parse(icon)).ifPresent(builder::icon);
+      Services.REGISTRY.getItem(Identifier.parse(icon)).ifPresent(builder::icon);
     }
 
     if (topElement.has("color")) {

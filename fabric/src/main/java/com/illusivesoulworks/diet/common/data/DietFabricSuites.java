@@ -22,17 +22,17 @@ import com.illusivesoulworks.diet.common.data.suite.DietSuites;
 import java.util.Collection;
 import java.util.Collections;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class DietFabricSuites extends DietSuites implements IdentifiableResourceReloadListener {
 
   @Override
-  public ResourceLocation getFabricId() {
+  public Identifier getFabricId() {
     return DietCommonMod.resource("suites");
   }
 
   @Override
-  public Collection<ResourceLocation> getFabricDependencies() {
+  public Collection<Identifier> getFabricDependencies() {
     return Collections.singleton(DietCommonMod.resource("groups"));
   }
 }

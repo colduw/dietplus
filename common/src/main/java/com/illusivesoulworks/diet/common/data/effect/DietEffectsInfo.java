@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -92,7 +91,7 @@ public class DietEffectsInfo {
     for (int i = 0; i < modifiersList.size(); i++) {
       CompoundTag modifierTag = modifiersList.getCompoundOrEmpty(i);
       String name = modifierTag.getStringOr("AttributeName", "");
-      Attribute attribute = Services.REGISTRY.getAttribute(ResourceLocation.parse(name)).orElse(null);
+      Attribute attribute = Services.REGISTRY.getAttribute(Identifier.parse(name)).orElse(null);
 
       if (attribute == null) {
         continue;
@@ -106,7 +105,7 @@ public class DietEffectsInfo {
     for (int i = 0; i < effectsList.size(); i++) {
       CompoundTag effectTag = effectsList.getCompoundOrEmpty(i);
       String name = effectTag.getStringOr("EffectName", "");
-      MobEffect effect = Services.REGISTRY.getStatusEffect(ResourceLocation.parse(name)).orElse(null);
+      MobEffect effect = Services.REGISTRY.getStatusEffect(Identifier.parse(name)).orElse(null);
 
       if (effect == null) {
         continue;

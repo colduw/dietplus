@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
@@ -39,17 +39,17 @@ import org.apache.commons.lang3.tuple.Triple;
 
 public interface IRegistryService {
 
-  Optional<Item> getItem(ResourceLocation resourceLocation);
+  Optional<Item> getItem(Identifier resourceLocation);
 
-  ResourceLocation getItemKey(Item item);
+  Identifier getItemKey(Item item);
 
-  Optional<Attribute> getAttribute(ResourceLocation resourceLocation);
+  Optional<Attribute> getAttribute(Identifier resourceLocation);
 
-  ResourceLocation getAttributeKey(Attribute attribute);
+  Identifier getAttributeKey(Attribute attribute);
 
-  Optional<MobEffect> getStatusEffect(ResourceLocation resourceLocation);
+  Optional<MobEffect> getStatusEffect(Identifier resourceLocation);
 
-  ResourceLocation getStatusEffectKey(MobEffect effect);
+  Identifier getStatusEffectKey(MobEffect effect);
 
   FoodProperties getFoodProperties(ItemStack stack, Player player);
 

@@ -24,7 +24,7 @@ import com.illusivesoulworks.diet.platform.Services;
 import java.util.Objects;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -57,7 +57,7 @@ public final class DietGroup implements IDietGroup {
   public static IDietGroup load(CompoundTag tag) {
     String name = tag.getStringOr("Name", "");
     String icon = tag.getStringOr("Icon", "");
-    Item item = Services.REGISTRY.getItem(ResourceLocation.parse(icon)).orElse(null);
+    Item item = Services.REGISTRY.getItem(Identifier.parse(icon)).orElse(null);
     int order = tag.getIntOr("Order", 0);
     boolean beneficial = tag.getBooleanOr("Beneficial", true);
     int color = tag.getIntOr("Color", 0);

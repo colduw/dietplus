@@ -27,18 +27,17 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class DynamicButton extends Button {
   private final AbstractContainerScreen<?> containerScreen;
   private final int xTexStartIn, yTexStartIn, yDiffTextIn;
-  ResourceLocation texture;
+  Identifier texture;
 
   public DynamicButton(AbstractContainerScreen<?> screenIn, int xIn, int yIn, int widthIn,
                        int heightIn, int xTexStartIn, int yTexStartIn, int yDiffTextIn,
-                       ResourceLocation resourceLocationIn, OnPress onPressIn) {
+                       Identifier resourceLocationIn, OnPress onPressIn) {
     super(xIn, yIn, widthIn, heightIn, Component.empty(), onPressIn, DEFAULT_NARRATION);
     this.containerScreen = screenIn;
     this.xTexStartIn = xTexStartIn;
@@ -48,7 +47,7 @@ public class DynamicButton extends Button {
   }
 
   @Override
-  public void renderWidget(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+  public void renderContents(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
     this.setX(ClientServices.INSTANCE.getGuiLeft(this.containerScreen) + DietConfig.CLIENT.buttonX.get());
     this.setY(ClientServices.INSTANCE.getGuiTop(this.containerScreen) + DietConfig.CLIENT.buttonY.get() + 83);
 

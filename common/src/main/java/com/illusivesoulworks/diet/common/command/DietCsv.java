@@ -33,7 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
@@ -45,7 +46,7 @@ public class DietCsv {
     List<String[]> data = new ArrayList<>();
 
     for (Item item : Services.REGISTRY.getItems()) {
-      ResourceLocation rl = Services.REGISTRY.getItemKey(item);
+      Identifier rl = Services.REGISTRY.getItemKey(item);
 
       if (rl != null) {
 

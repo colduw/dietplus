@@ -22,7 +22,6 @@ import com.illusivesoulworks.diet.client.DietClientPacketReceiver;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 
 public record SPacketActivate(boolean flag) implements CustomPacketPayload {
   public static final Type<SPacketActivate> ACTIVATION = new Type<>(DietCommonMod.resource("activation"));

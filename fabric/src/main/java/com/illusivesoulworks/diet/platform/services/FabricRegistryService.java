@@ -31,7 +31,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
@@ -52,32 +52,32 @@ public class FabricRegistryService implements IRegistryService {
       TagKey.create(Registries.ITEM, DietCommonMod.resource("special_food"));
 
   @Override
-  public Optional<Item> getItem(ResourceLocation resourceLocation) {
+  public Optional<Item> getItem(Identifier resourceLocation) {
     return BuiltInRegistries.ITEM.getOptional(resourceLocation);
   }
 
   @Override
-  public ResourceLocation getItemKey(Item item) {
+  public Identifier getItemKey(Item item) {
     return BuiltInRegistries.ITEM.getKey(item);
   }
 
   @Override
-  public Optional<Attribute> getAttribute(ResourceLocation resourceLocation) {
+  public Optional<Attribute> getAttribute(Identifier resourceLocation) {
     return BuiltInRegistries.ATTRIBUTE.getOptional(resourceLocation);
   }
 
   @Override
-  public ResourceLocation getAttributeKey(Attribute attribute) {
+  public Identifier getAttributeKey(Attribute attribute) {
     return BuiltInRegistries.ATTRIBUTE.getKey(attribute);
   }
 
   @Override
-  public Optional<MobEffect> getStatusEffect(ResourceLocation resourceLocation) {
+  public Optional<MobEffect> getStatusEffect(Identifier resourceLocation) {
     return BuiltInRegistries.MOB_EFFECT.getOptional(resourceLocation);
   }
 
   @Override
-  public ResourceLocation getStatusEffectKey(MobEffect effect) {
+  public Identifier getStatusEffectKey(MobEffect effect) {
     return BuiltInRegistries.MOB_EFFECT.getKey(effect);
   }
 

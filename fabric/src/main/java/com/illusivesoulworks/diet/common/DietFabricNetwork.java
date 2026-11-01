@@ -24,12 +24,8 @@ import com.illusivesoulworks.diet.common.network.server.SPacketEaten;
 import com.illusivesoulworks.diet.common.network.server.SPacketEffectsInfo;
 import com.illusivesoulworks.diet.common.network.server.SPacketGroups;
 import com.illusivesoulworks.diet.common.network.server.SPacketSuites;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 
 public class DietFabricNetwork {
   public static void setupServer() {

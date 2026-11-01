@@ -21,7 +21,7 @@ import com.illusivesoulworks.diet.DietConstants;
 import com.illusivesoulworks.diet.api.type.IDietTracker;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.ComponentRegistry;
 import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
@@ -29,7 +29,7 @@ import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
 import org.ladysnake.cca.api.v3.entity.RespawnCopyStrategy;
 
 public class DietComponents implements EntityComponentInitializer {
-  public static final ComponentKey<DietComponent> DIET_TRACKER = ComponentRegistry.getOrCreate(ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "diet_tracker"), DietComponent.class);
+  public static final ComponentKey<DietComponent> DIET_TRACKER = ComponentRegistry.getOrCreate(Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, "diet_tracker"), DietComponent.class);
 
   public static void setup() {
     ServerPlayerEvents.COPY_FROM.register(

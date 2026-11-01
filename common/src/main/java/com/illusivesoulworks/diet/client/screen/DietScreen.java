@@ -42,14 +42,14 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 
 public class DietScreen extends Screen {
 
-  private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/demo_background.png");
-  private static final ResourceLocation ICONS = ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "textures/gui/icons.png");
+  private static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath("minecraft", "textures/gui/demo_background.png");
+  private static final Identifier ICONS = Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, "textures/gui/icons.png");
 
   public static DietEffectsInfo tooltip = new DietEffectsInfo();
   private final Set<IDietGroup> groups = new HashSet<>();

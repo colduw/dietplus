@@ -22,7 +22,8 @@ import com.illusivesoulworks.diet.api.type.IDietTracker;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -35,7 +36,7 @@ public class DietCapability {
       CapabilityManager.get(new CapabilityToken<>() {
       });
 
-  public static final ResourceLocation DIET_TRACKER_ID = ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "diet_tracker");
+  public static final Identifier DIET_TRACKER_ID = Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, "diet_tracker");
 
   private static final Map<UUID, LazyOptional<IDietTracker>> SERVER_CACHE = new HashMap<>();
   private static final Map<UUID, LazyOptional<IDietTracker>> CLIENT_CACHE = new HashMap<>();

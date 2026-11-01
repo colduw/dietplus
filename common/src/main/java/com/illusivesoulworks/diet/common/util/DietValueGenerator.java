@@ -34,8 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.context.ContextMap;
@@ -43,7 +42,6 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
@@ -211,7 +209,7 @@ public class DietValueGenerator {
     for (List<RecipeHolder<?>> list : result.values()) {
 
       if (list.size() > 1) {
-        list.sort(Comparator.comparing(recipeHolder -> recipeHolder.id().location()));
+        list.sort(Comparator.comparing(recipeHolder -> recipeHolder.id().identifier()));
       }
     }
     RECIPES.putAll(result);
@@ -272,8 +270,8 @@ public class DietValueGenerator {
 
     @Override
     public int compare(ItemStack o1, ItemStack o2) {
-      ResourceLocation rl1 = Services.REGISTRY.getItemKey(o1.getItem());
-      ResourceLocation rl2 = Services.REGISTRY.getItemKey(o2.getItem());
+      Identifier rl1 = Services.REGISTRY.getItemKey(o1.getItem());
+      Identifier rl2 = Services.REGISTRY.getItemKey(o2.getItem());
 
       if (rl1 == null) {
         return 1;

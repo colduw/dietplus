@@ -35,7 +35,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -45,17 +44,18 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class DietClientEvents {
 
-  private static final TagKey<Item> SPECIAL_FOOD = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "special_food"));
+  private static final TagKey<Item> SPECIAL_FOOD = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, "special_food"));
   private static final DecimalFormat DECIMALFORMAT = Util.make(new DecimalFormat("#.#"), (num) -> num.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ROOT)));
-  private static final ResourceLocation ICONS = ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, "textures/gui/icons.png");
+  private static final Identifier ICONS = Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, "textures/gui/icons.png");
 
   public static List<Component> tooltip = null;
   public static int tooltipX = 0;

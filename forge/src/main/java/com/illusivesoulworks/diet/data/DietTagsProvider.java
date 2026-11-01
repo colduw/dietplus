@@ -29,8 +29,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.KeyTagProvider;
 import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -1804,11 +1804,11 @@ public class DietTagsProvider extends KeyTagProvider<Item> {
           "Attempted to use optional tag: " + name +
               "! Do not use optional tags, this causes weird issues to occur with the Diet tagging system.");
     }
-    builder.addOptional(ResourceLocation.parse(name));
+    builder.addOptional(Identifier.parse(name));
   }
 
   protected TagKey<Item> tag(String name) {
-    return ItemTags.create(ResourceLocation.fromNamespaceAndPath(DietConstants.MOD_ID, name));
+    return ItemTags.create(Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, name));
   }
 
   @SafeVarargs
