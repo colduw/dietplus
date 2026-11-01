@@ -21,7 +21,7 @@ import com.illusivesoulworks.diet.common.DietFabricNetwork;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.Minecraft;
@@ -31,18 +31,18 @@ public class DietFabricClientMod implements ClientModInitializer {
   @Override
   public void onInitializeClient() {
     DietFabricNetwork.setupClient();
-    KeyBindingHelper.registerKeyBinding(DietKeys.get());
+    KeyMappingHelper.registerKeyMapping(DietKeys.get());
     ClientTickEvents.END_CLIENT_TICK.register(DietClientEvents::tick);
     ItemTooltipCallback.EVENT.register(
         (stack, context, flag, lines) -> DietClientEvents.renderItemTooltip(
             Minecraft.getInstance().player, stack, lines));
     ScreenEvents.BEFORE_INIT.register(
-        (client, screen, scaledWidth, scaledHeight) -> ScreenEvents.afterRender(screen).register(
+        (client, screen, scaledWidth, scaledHeight) -> ScreenEvents.afterExtract(screen).register(
             (screen1, matrices, mouseX, mouseY, tickDelta) -> DietClientEvents.renderEffectsTooltip(screen1, matrices)));
     ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
 
       if (screen instanceof InventoryScreen inventoryScreen) {
-        Screens.getButtons(inventoryScreen).add(DietClientEvents.getButton(inventoryScreen));
+        Screens.getWidgets(inventoryScreen).add(DietClientEvents.getButton(inventoryScreen));
       }
     });
   }

@@ -19,7 +19,7 @@ package com.illusivesoulworks.diet.common.component;
 
 import com.illusivesoulworks.diet.DietConstants;
 import com.illusivesoulworks.diet.api.type.IDietTracker;
-import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityLevelChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.minecraft.resources.Identifier;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
@@ -38,7 +38,7 @@ public class DietComponents implements EntityComponentInitializer {
     ServerPlayerEvents.AFTER_RESPAWN.register(
         (oldPlayer, newPlayer, alive) -> DietComponents.DIET_TRACKER.maybeGet(newPlayer)
             .ifPresent(IDietTracker::sync));
-    ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(
+    ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register(
         (player, origin, destination) -> DietComponents.DIET_TRACKER.maybeGet(player)
             .ifPresent(IDietTracker::sync));
   }

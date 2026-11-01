@@ -29,8 +29,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.Identifier;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.*;
 import net.minecraftforge.network.SimpleChannel;
 
@@ -54,7 +52,7 @@ public class DietForgeNetwork {
 
   public static <M> void register(Class<M> clazz, BiConsumer<M, RegistryFriendlyByteBuf> encoder, Function<RegistryFriendlyByteBuf, M> decoder, Consumer<M> handler) {
     instance.messageBuilder(clazz, NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder)
-            .consumerMainThread((m, context) -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handler.accept(m)))
+            .consumerMainThread((m, context) -> handler.accept(m))
             .add();
   }
 }

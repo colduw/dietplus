@@ -29,12 +29,12 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
 public class DietFabricNetwork {
   public static void setupServer() {
-    PayloadTypeRegistry.playS2C().register(SPacketEffectsInfo.EFFECTS_INFO, SPacketEffectsInfo.CODEC);
-    PayloadTypeRegistry.playS2C().register(SPacketDiet.DIET, SPacketDiet.CODEC);
-    PayloadTypeRegistry.playS2C().register(SPacketActivate.ACTIVATION, SPacketActivate.CODEC);
-    PayloadTypeRegistry.playS2C().register(SPacketEaten.EATEN, SPacketEaten.CODEC);
-    PayloadTypeRegistry.playS2C().register(SPacketGroups.GROUPS, SPacketGroups.CODEC);
-    PayloadTypeRegistry.playS2C().register(SPacketSuites.SUITES, SPacketSuites.CODEC);
+    PayloadTypeRegistry.clientboundPlay().register(SPacketEffectsInfo.EFFECTS_INFO, SPacketEffectsInfo.CODEC);
+    PayloadTypeRegistry.clientboundPlay().register(SPacketDiet.DIET, SPacketDiet.CODEC);
+    PayloadTypeRegistry.clientboundPlay().register(SPacketActivate.ACTIVATION, SPacketActivate.CODEC);
+    PayloadTypeRegistry.clientboundPlay().register(SPacketEaten.EATEN, SPacketEaten.CODEC);
+    PayloadTypeRegistry.clientboundPlay().register(SPacketGroups.GROUPS, SPacketGroups.CODEC);
+    PayloadTypeRegistry.clientboundPlay().register(SPacketSuites.SUITES, SPacketSuites.CODEC);
   }
 
   public static void setupClient() {

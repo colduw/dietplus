@@ -2,9 +2,10 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle'
-    id 'org.parchmentmc.librarian.forgegradle'
-    id 'org.spongepowered.mixin'
+    id 'net.minecraftforge.jarjar'
 }
+
+jarJar.register()
 
 version = "${version}"
 group = "top.theillusivec4.${mod_id}"
@@ -13,13 +14,7 @@ base {
     archivesName = "${mod_id}-forge"
 }
 
-mixin {
-    config "${mod_id}.mixins.json"
-}
-
 minecraft {
-    mappings channel: 'parchment', version: "${parchment_mc_version}-${parchment_version}-${minecraft_version}"
-
     if (project.hasProperty('forge_ats_enabled') && project.findProperty('forge_ats_enabled').toBoolean()) {
         // This location is hardcoded in Forge and can not be changed.
         // https://github.com/MinecraftForge/MinecraftForge/blob/be1698bb1554f9c8fa2f58e32b9ab70bc4385e60/fmlloader/src/main/java/net/minecraftforge/fml/loading/moddiscovery/ModFile.java#L123
@@ -29,10 +24,7 @@ minecraft {
 
     runs {
         client {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            workingDir = project.file('run')
 			args "-mixin.config=${mod_id}.mixins.json"
             mods {
                 modClientRun {
@@ -43,10 +35,7 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            workingDir = project.file('run')
 			args "-mixin.config=${mod_id}.mixins.json"
             mods {
                 modServerRun {
@@ -57,11 +46,8 @@ minecraft {
         }
 
         data {
-            workingDirectory project.file('run')
-            ideaModule "${rootProject.name}.${project.name}.main"
+            workingDir = project.file('run')
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 			args "-mixin.config=${mod_id}.mixins.json"
             mods {
                 modDataRun {
@@ -75,17 +61,21 @@ minecraft {
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+}
+
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
     compileOnly project(":common")
 
     implementation(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_version}")
-    jarJar(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_range}") {
-        jarJar.pin(it, "${spectrelib_version}")
-    }
+    jarJar(implementation(group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-forge', version: "${spectrelib_version}"))
 }
 
-tasks.withType(JavaCompile) {
+tasks.named('compileJava', JavaCompile) {
     source(project(":common").sourceSets.main.allSource)
 }
 

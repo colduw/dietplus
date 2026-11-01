@@ -32,7 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -47,8 +47,7 @@ import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 
 public class DietScreen extends Screen {
-
-  private static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath("minecraft", "textures/gui/demo_background.png");
+  private static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, "textures/gui/demo_background.png");
   private static final Identifier ICONS = Identifier.fromNamespaceAndPath(DietConstants.MOD_ID, "textures/gui/icons.png");
 
   public static DietEffectsInfo tooltip = new DietEffectsInfo();
@@ -88,16 +87,16 @@ public class DietScreen extends Screen {
   }
 
   @Override
-  public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+  public void extractRenderState(@Nonnull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
     // this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
-    super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
     this.renderForeground(guiGraphics, mouseX, mouseY);
     this.renderTitle(guiGraphics, mouseX, mouseY);
   }
 
-  public void renderTitle(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+  public void renderTitle(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
     int titleWidth = this.font.width(this.title.getString());
-    guiGraphics.drawString(this.font, this.title, this.width / 2 - titleWidth / 2,
+    guiGraphics.text(this.font, this.title, this.width / 2 - titleWidth / 2,
         this.height / 2 - this.ySize / 2 + 10, getTextColor(), false);
     List<DietEffectsInfo.AttributeModifier> modifiers = DietScreen.tooltip.getModifiers();
     List<DietEffectsInfo.StatusEffect> effects = DietScreen.tooltip.getEffects();
@@ -124,7 +123,7 @@ public class DietScreen extends Screen {
     return ARGB.opaque(Integer.parseInt(config));
   }
 
-  public void renderForeground(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+  public void renderForeground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
 
     if (this.minecraft != null && this.minecraft.level != null) {
       LocalPlayer player = this.minecraft.player;
@@ -137,10 +136,10 @@ public class DietScreen extends Screen {
               Component tooltip = null;
 
               for (IDietGroup group : suite.getGroups()) {
-                guiGraphics.renderItem(new ItemStack(group.getIcon()), x, y - 5);
+                guiGraphics.item(new ItemStack(group.getIcon()), x, y - 5);
                 MutableComponent text = Component.translatable(
                     "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name");
-                guiGraphics.drawString(this.font, text, x + 20, y, getTextColor(), false);
+                guiGraphics.text(this.font, text, x + 20, y, getTextColor(), false);
                 DietColor color = diet.isActive() ? group.getColor() : DietColor.GRAY;
                 int red = color.red();
                 int green = color.green();
@@ -155,11 +154,11 @@ public class DietScreen extends Screen {
                 }
                 int xPos = x + 200;
                 int yPos = y + 1;
-                guiGraphics.drawString(this.font, percentText, (xPos + 1), yPos, ARGB.opaque(0), false);
-                guiGraphics.drawString(this.font, percentText, (xPos - 1), yPos, ARGB.opaque(0), false);
-                guiGraphics.drawString(this.font, percentText, xPos, (yPos + 1), ARGB.opaque(0), false);
-                guiGraphics.drawString(this.font, percentText, xPos, (yPos - 1), ARGB.opaque(0), false);
-                guiGraphics.drawString(this.font, percentText, xPos, yPos, ARGB.opaque(color.getRGB()), false);
+                guiGraphics.text(this.font, percentText, (xPos + 1), yPos, ARGB.opaque(0), false);
+                guiGraphics.text(this.font, percentText, (xPos - 1), yPos, ARGB.opaque(0), false);
+                guiGraphics.text(this.font, percentText, xPos, (yPos + 1), ARGB.opaque(0), false);
+                guiGraphics.text(this.font, percentText, xPos, (yPos - 1), ARGB.opaque(0), false);
+                guiGraphics.text(this.font, percentText, xPos, yPos, ARGB.opaque(color.getRGB()), false);
                 int lowerY = y - 5;
                 int upperX = x + 16;
                 int upperY = lowerY + 16;
@@ -185,8 +184,8 @@ public class DietScreen extends Screen {
   }
 
   @Override
-  public void renderBackground(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-    super.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
+  public void extractBackground(@Nonnull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    super.extractBackground(guiGraphics, mouseX, mouseY, partialTicks);
 
     if (this.minecraft != null) {
       int i = (this.width - this.xSize) / 2;

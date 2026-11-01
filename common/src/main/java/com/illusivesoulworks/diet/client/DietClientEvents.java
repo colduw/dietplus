@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -82,10 +82,10 @@ public class DietClientEvents {
     return null;
   }
 
-  public static void renderEffectsTooltip(Screen screen, GuiGraphics guiGraphics) {
+  public static void renderEffectsTooltip(Screen screen, GuiGraphicsExtractor guiGraphics) {
     if (tooltip != null && screen != null) {
       guiGraphics.setTooltipForNextFrame(Minecraft.getInstance().font, tooltip, Optional.empty(), tooltipX, tooltipY);
-      guiGraphics.renderDeferredElements();
+      guiGraphics.extractDeferredElements(tooltipX, tooltipY, 0.0f);
       tooltip = null;
     }
   }

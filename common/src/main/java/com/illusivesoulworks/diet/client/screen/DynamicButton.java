@@ -22,9 +22,8 @@ import com.illusivesoulworks.diet.common.config.DietConfig;
 import com.illusivesoulworks.diet.platform.ClientServices;
 import java.util.List;
 import javax.annotation.Nonnull;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -47,7 +46,7 @@ public class DynamicButton extends Button {
   }
 
   @Override
-  public void renderContents(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+  public void extractContents(@Nonnull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
     this.setX(ClientServices.INSTANCE.getGuiLeft(this.containerScreen) + DietConfig.CLIENT.buttonX.get());
     this.setY(ClientServices.INSTANCE.getGuiTop(this.containerScreen) + DietConfig.CLIENT.buttonY.get() + 83);
 

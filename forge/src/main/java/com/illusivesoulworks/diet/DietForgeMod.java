@@ -18,7 +18,6 @@
 package com.illusivesoulworks.diet;
 
 import com.illusivesoulworks.diet.api.DietApi;
-import com.illusivesoulworks.diet.api.type.IDietTracker;
 import com.illusivesoulworks.diet.client.DietKeys;
 import com.illusivesoulworks.diet.common.DietEvents;
 import com.illusivesoulworks.diet.common.command.DietCommand;
@@ -46,7 +45,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -77,8 +75,7 @@ public class DietForgeMod {
     FMLCommonSetupEvent.getBus(eventBus).addListener(this::setup);
     InterModProcessEvent.getBus(eventBus).addListener(this::process);
     GatherDataEvent.getBus(eventBus).addListener(this::gatherData);
-    RegisterCapabilitiesEvent.getBus(eventBus).addListener(this::registerCaps);
-    EntityAttributeModificationEvent.getBus(eventBus).addListener(this::modifyAttributes);
+    EntityAttributeModificationEvent.BUS.addListener(this::modifyAttributes);
     DietConfigLoader.setup();
     ATTRIBUTES.register(eventBus);
     ARGUMENT_TYPE_INFO_DEFERRED_REGISTER.register(eventBus);
@@ -114,10 +111,6 @@ public class DietForgeMod {
       generator.addProvider(true, blockTagsProvider);
       generator.addProvider(true, new DietTagsProvider(packOutput, Registries.ITEM, lookupProvider, DietConstants.MOD_ID, existingFileHelper));
     }
-  }
-
-  private void registerCaps(final RegisterCapabilitiesEvent evt) {
-    evt.register(IDietTracker.class);
   }
 
   private void modifyAttributes(final EntityAttributeModificationEvent evt) {
