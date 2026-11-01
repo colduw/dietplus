@@ -78,7 +78,7 @@ public class DietScreen extends Screen {
           if (this.minecraft != null && this.minecraft.player != null) {
 
             if (fromInventory) {
-              this.minecraft.setScreen(new InventoryScreen(this.minecraft.player));
+              this.minecraft.gui.setScreen(new InventoryScreen(this.minecraft.player));
             } else {
               this.onClose();
             }
@@ -200,12 +200,12 @@ public class DietScreen extends Screen {
   public boolean keyPressed(KeyEvent event) {
     if (this.minecraft != null && this.minecraft.player != null) {
       if (this.minecraft.options.keyInventory.matches(event)) {
-        this.minecraft.setScreen(new InventoryScreen(this.minecraft.player));
+        this.minecraft.gui.setScreen(new InventoryScreen(this.minecraft.player));
         return true;
       } else if (DietKeys.OPEN_GUI.matches(event)) {
 
         if (fromInventory) {
-          this.minecraft.setScreen(new InventoryScreen(this.minecraft.player));
+          this.minecraft.gui.setScreen(new InventoryScreen(this.minecraft.player));
         } else {
           this.onClose();
         }

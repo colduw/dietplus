@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.InterModComms;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class DietOverride {
@@ -41,10 +41,10 @@ public class DietOverride {
       Object object = message.messageSupplier().get();
 
       if (method.equals(Type.ITEM.id)) {
-        Tuple<Item, BiFunction<Player, ItemStack, Triple<List<ItemStack>, Integer, Float>>>
+        Pair<Item, BiFunction<Player, ItemStack, Triple<List<ItemStack>, Integer, Float>>>
             value =
-            (Tuple<Item, BiFunction<Player, ItemStack, Triple<List<ItemStack>, Integer, Float>>>) object;
-        items.put(value.getA(), value.getB());
+            (Pair<Item, BiFunction<Player, ItemStack, Triple<List<ItemStack>, Integer, Float>>>) object;
+        items.put(value.getLeft(), value.getRight());
       }
     });
   }

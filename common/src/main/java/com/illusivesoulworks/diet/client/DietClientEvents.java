@@ -64,9 +64,9 @@ public class DietClientEvents {
   public static void tick(Minecraft mc) {
     LocalPlayer player = mc.player;
 
-    if (player != null && mc.isWindowActive() && !(mc.screen instanceof DietScreen) &&
+    if (player != null && mc.isWindowActive() && !(mc.gui.screen() instanceof DietScreen) &&
         DietKeys.OPEN_GUI.consumeClick()) {
-      mc.setScreen(new DietScreen(mc.screen instanceof InventoryScreen));
+      mc.gui.setScreen(new DietScreen(mc.gui.screen() instanceof InventoryScreen));
     }
   }
 
@@ -77,7 +77,7 @@ public class DietClientEvents {
       return new DynamicButton(containerScreen,
           ClientServices.INSTANCE.getGuiLeft(containerScreen) + DietConfig.CLIENT.buttonX.get(),
           containerScreen.height / 2 + DietConfig.CLIENT.buttonY.get(), 20, 18, 0, 0, 19, ICONS,
-          (button) -> Minecraft.getInstance().setScreen(new DietScreen(true)));
+          (button) -> Minecraft.getInstance().gui.setScreen(new DietScreen(true)));
     }
     return null;
   }

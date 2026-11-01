@@ -27,8 +27,8 @@ import javax.annotation.Nonnull;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.KeyTagProvider;
 import net.minecraft.data.tags.TagAppender;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
@@ -38,15 +38,15 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class DietTagsProvider extends KeyTagProvider<Item> {
+public class DietTagsProvider extends TagsProvider<Item> {
 
-  protected TagAppender<ResourceKey<Item>, Item> fruits;
-  protected TagAppender<ResourceKey<Item>, Item> grains;
-  protected TagAppender<ResourceKey<Item>, Item> proteins;
-  protected TagAppender<ResourceKey<Item>, Item> sugars;
-  protected TagAppender<ResourceKey<Item>, Item> vegetables;
-  protected TagAppender<ResourceKey<Item>, Item> specialFood;
-  protected TagAppender<ResourceKey<Item>, Item> ingredients;
+  protected TagAppender<Item> fruits;
+  protected TagAppender<Item> grains;
+  protected TagAppender<Item> proteins;
+  protected TagAppender<Item> sugars;
+  protected TagAppender<Item> vegetables;
+  protected TagAppender<Item> specialFood;
+  protected TagAppender<Item> ingredients;
 
   public DietTagsProvider(PackOutput pOutput, ResourceKey<? extends Registry<Item>> pRegistryKey, CompletableFuture<HolderLookup.Provider> pLookupProvider, String modId, @org.jetbrains.annotations.Nullable net.minecraftforge.common.data.ExistingFileHelper existingFileHelper) {
     super(pOutput, pRegistryKey, pLookupProvider, DietConstants.MOD_ID, existingFileHelper);
@@ -196,16 +196,16 @@ public class DietTagsProvider extends KeyTagProvider<Item> {
     addTag(this.ingredients, ItemTags.WOOL);
     addTag(this.ingredients, ItemTags.PLANKS);
     addTag(this.ingredients, ItemTags.STONE_BRICKS);
-    addTag(this.ingredients, ItemTags.BUTTONS);
+    addTag(this.ingredients, ItemTags.WOODEN_BUTTONS);
     addTag(this.ingredients, ItemTags.WOOL_CARPETS);
     addTag(this.ingredients, ItemTags.WOODEN_PRESSURE_PLATES);
-    addTag(this.ingredients, ItemTags.DOORS);
+    addTag(this.ingredients, ItemTags.WOODEN_DOORS);
     addTag(this.ingredients, ItemTags.LOGS);
     addTag(this.ingredients, ItemTags.BANNERS);
     addTag(this.ingredients, ItemTags.SAND);
-    addTag(this.ingredients, ItemTags.STAIRS);
-    addTag(this.ingredients, ItemTags.SLABS);
-    addTag(this.ingredients, ItemTags.FENCES);
+    addTag(this.ingredients, ItemTags.WOODEN_STAIRS);
+    addTag(this.ingredients, ItemTags.WOODEN_SLABS);
+    addTag(this.ingredients, ItemTags.WOODEN_FENCES);
     addTag(this.ingredients, ItemTags.BOATS);
     addTag(this.ingredients, ItemTags.SIGNS);
     addTag(this.ingredients, Tags.Items.MUSIC_DISCS);
@@ -1790,15 +1790,15 @@ public class DietTagsProvider extends KeyTagProvider<Item> {
     return "Diet Item Tags";
   }
 
-  protected void add(TagAppender<ResourceKey<Item>, Item> builder, Item item) {
+  protected void add(TagAppender<Item> builder, Item item) {
     builder.add(ForgeRegistries.ITEMS.getResourceKey(item).orElseThrow());
   }
 
-  protected void addTag(TagAppender<ResourceKey<Item>, Item> builder, TagKey<Item> tag) {
+  protected void addTag(TagAppender<Item> builder, TagKey<Item> tag) {
     builder.addTag(tag);
   }
 
-  protected void addOptional(TagAppender<ResourceKey<Item>, Item> builder, String name) {
+  protected void addOptional(TagAppender<Item> builder, String name) {
     if (name.startsWith("#")) {
       throw new IllegalArgumentException(
           "Attempted to use optional tag: " + name +

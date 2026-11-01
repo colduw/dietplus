@@ -29,7 +29,6 @@ import com.illusivesoulworks.diet.common.integration.IntegrationManager;
 import com.illusivesoulworks.diet.common.network.DietForgeNetwork;
 import com.illusivesoulworks.diet.common.util.DietOverride;
 import com.illusivesoulworks.diet.common.util.DietValueGenerator;
-import com.illusivesoulworks.diet.data.DietBlockTagsProvider;
 import com.illusivesoulworks.diet.data.DietTagsProvider;
 import java.util.concurrent.CompletableFuture;
 
@@ -41,7 +40,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -107,14 +106,12 @@ public class DietForgeMod {
       ExistingFileHelper existingFileHelper = evt.getExistingFileHelper();
       CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
       PackOutput packOutput = generator.getPackOutput();
-      DietBlockTagsProvider blockTagsProvider = new DietBlockTagsProvider(packOutput, lookupProvider, existingFileHelper);
-      generator.addProvider(true, blockTagsProvider);
       generator.addProvider(true, new DietTagsProvider(packOutput, Registries.ITEM, lookupProvider, DietConstants.MOD_ID, existingFileHelper));
     }
   }
 
   private void modifyAttributes(final EntityAttributeModificationEvent evt) {
-    evt.add(EntityType.PLAYER, BuiltInRegistries.ATTRIBUTE.wrapAsHolder(DietApi.getInstance().getNaturalRegeneration()));
+    evt.add(EntityTypes.PLAYER, BuiltInRegistries.ATTRIBUTE.wrapAsHolder(DietApi.getInstance().getNaturalRegeneration()));
   }
 
   private void serverStarting(final ServerStartingEvent evt) {

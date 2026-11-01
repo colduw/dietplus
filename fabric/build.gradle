@@ -7,6 +7,12 @@ base {
     archivesName = "${mod_id}-fabric"
 }
 
+repositories {
+    flatDir {
+        dirs "./lib"
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
 
@@ -19,12 +25,16 @@ dependencies {
 
     api "org.ladysnake.cardinal-components-api:cardinal-components-base:${cca_version}"
     api "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cca_version}"
-    implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_range}"
+    // temporary cheap fix
+    // "minecraft": "~26.1" -> "minecraft": "~26.2"
+    // implementation group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_range}"
+    implementation name: 'spectrelib-fabric-0.21.0+26.1.2'
 
     // Embedded
     include "org.ladysnake.cardinal-components-api:cardinal-components-base:${cca_version}"
     include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cca_version}"
-    include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}"
+    //include group: 'com.illusivesoulworks.spectrelib', name: 'spectrelib-fabric', version: "${spectrelib_version}"
+    include name: 'spectrelib-fabric-0.21.0+26.1.2'
 }
 
 loom {

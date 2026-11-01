@@ -42,7 +42,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -111,7 +111,7 @@ public class DietNeoForgeMod {
   }
 
   private void modifyAttributes(final EntityAttributeModificationEvent evt) {
-    evt.add(EntityType.PLAYER, BuiltInRegistries.ATTRIBUTE.wrapAsHolder(DietApi.getInstance().getNaturalRegeneration()));
+    evt.add(EntityTypes.PLAYER, BuiltInRegistries.ATTRIBUTE.wrapAsHolder(DietApi.getInstance().getNaturalRegeneration()));
   }
 
   private void serverStarting(final ServerStartingEvent evt) {
