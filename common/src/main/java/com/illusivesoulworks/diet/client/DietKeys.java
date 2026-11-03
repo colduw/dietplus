@@ -23,8 +23,7 @@ import net.minecraft.client.KeyMapping;
 public class DietKeys {
 
   public static final KeyMapping OPEN_GUI =
-      new KeyMapping("key.diet.open.desc", InputConstants.UNKNOWN.getValue(),
-          "key.diet.category");
+      new KeyMapping("key.dietplus.open.desc", InputConstants.UNKNOWN.getValue(), "key.dietplus.category");
 
   public static KeyMapping get() {
     return OPEN_GUI;
