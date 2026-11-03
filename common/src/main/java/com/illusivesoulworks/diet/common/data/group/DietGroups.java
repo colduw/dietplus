@@ -56,7 +56,7 @@ public class DietGroups extends SimpleJsonResourceReloadListener<JsonElement> {
   private Map<String, IDietGroup> groups = new HashMap<>();
 
   public DietGroups() {
-    super(ExtraCodecs.JSON, FileToIdConverter.json("diet/groups"));
+    super(ExtraCodecs.JSON, FileToIdConverter.json("dietplus/groups"));
   }
 
   public static Set<IDietGroup> getGroups(Level level) {
