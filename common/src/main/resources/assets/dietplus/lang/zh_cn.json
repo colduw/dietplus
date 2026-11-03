@@ -1,0 +1,20 @@
+{
+  "gui.dietplus.title": "均衡饮食",
+  "tooltip.dietplus.eaten": "摄入时：",
+  "tooltip.dietplus.effects": "膳食增益效果",
+  "groups.dietplus.grains.name": "谷物",
+  "groups.dietplus.proteins.name": "蛋白质",
+  "groups.dietplus.fruits.name": "水果",
+  "groups.dietplus.vegetables.name": "蔬菜",
+  "groups.dietplus.sugars.name": "糖类",
+  "commands.dietplus.set.success": "%s饮食指数已设置为 %s%%。目标：%s",
+  "commands.dietplus.get.success": "%s饮食指数为 %s%%。目标：%s",
+  "commands.dietplus.add.success": "%s饮食指数已提高 %s%%。目标：%s",
+  "commands.dietplus.subtract.success": "%s饮食指数已降低 %s%%。目标：%s",
+  "commands.dietplus.reset.success": "已重置 %s 的饮食指数",
+  "commands.dietplus.pause.success": "已暂停 %s 的饮食跟踪",
+  "commands.dietplus.resume.success": "已重启 %s 的饮食跟踪",
+  "commands.dietplus.clear.success": "已清除 %s 的膳食增益效果",
+  "key.dietplus.category": "均衡饮食",
+  "key.dietplus.open.desc": "打开饮食指数界面"
+}
