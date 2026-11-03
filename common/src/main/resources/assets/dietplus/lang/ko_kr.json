@@ -21,6 +21,6 @@
   "commands.dietplus.group.unknown": "Unknown diet group: %s",
   "commands.dietplus.export.started": "Exporting diet information, please wait...",
   "commands.dietplus.export.finished": "Finished exporting diet information to logs/diet.csv",
-  "key.dietplus.category": "식단",
+  "key.category.dietplus.category": "식단",
   "key.dietplus.open.desc": "식단 화면 열기"
 }

@@ -21,7 +21,7 @@
   "commands.dietplus.group.unknown": "Unknown diet group: %s",
   "commands.dietplus.export.started": "Exporting diet information, please wait...",
   "commands.dietplus.export.finished": "Finished exporting diet information to logs/diet.csv",
-  "key.dietplus.category": "Diet+",
+  "key.category.dietplus.category": "Diet+",
   "key.dietplus.open.desc": "Open Diet Screen",
   "attribute.dietplus.modifier.disabled": "No %s",
   "dietplus.naturalRegeneration": "Natural Regeneration",
