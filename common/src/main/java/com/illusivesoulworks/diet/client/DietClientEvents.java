@@ -113,8 +113,8 @@ public class DietClientEvents {
 
           for (Map.Entry<IDietGroup, Float> entry : groups.entrySet()) {
             float value = entry.getValue();
-            Component groupName = Component.translatable(
-                "groups." + DietConstants.MOD_ID + "." + entry.getKey().getName() + ".name");
+            Component groupName = Component.translatableWithFallback(
+                "groups." + DietConstants.MOD_ID + "." + entry.getKey().getName() + ".name", entry.getKey().getDisplayName());
             MutableComponent tooltip = null;
 
             if (specialFood) {
