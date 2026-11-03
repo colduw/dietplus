@@ -31,7 +31,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 
 public class ModIdArgument implements ArgumentType<String> {
 
-  private static final List<String> EXAMPLES = Arrays.asList("fabric-api", "diet");
+  private static final List<String> EXAMPLES = Arrays.asList("fabric-api", "dietplus");
 
   public static ModIdArgument modIdArgument() {
     return new ModIdArgument();
