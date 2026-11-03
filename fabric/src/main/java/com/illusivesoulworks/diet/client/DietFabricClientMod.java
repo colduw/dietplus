@@ -44,42 +44,42 @@ public class DietFabricClientMod implements ClientModInitializer {
       if (updateResult != null && client.player != null) {
         DietConstants.LOG.info("Diet+ version {}. (from version JSON): latest: {}, recommended: {}", updateResult.currentVersion, updateResult.latestVersion, updateResult.recommendedVersion);
         switch (updateResult.verStates) {
-          case AHEAD -> client.player.displayClientMessage(
+          case AHEAD -> client.player.sendSystemMessage(
                   Component.translatable("dietplus.init.update.ahead",
                           Component.literal(updateResult.currentVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD),
                           Component.literal(updateResult.latestVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD),
                           Component.literal(updateResult.recommendedVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD)
-                  ), false
+                  )
           );
-          case LATEST -> client.player.displayClientMessage(
+          case LATEST -> client.player.sendSystemMessage(
                   Component.translatable("dietplus.init.update.latest",
                           Component.literal(updateResult.latestVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD)
-                  ), false
+                  )
           );
-          case RECOMMENDED -> client.player.displayClientMessage(
+          case RECOMMENDED -> client.player.sendSystemMessage(
                   Component.translatable("dietplus.init.update.recommended",
                           Component.literal(updateResult.recommendedVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD),
                           Component.literal(updateResult.latestVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD)
-                  ), false
+                  )
           );
-          case BEHIND_LATEST_AHEAD_RECOMMENDED -> client.player.displayClientMessage(
+          case BEHIND_LATEST_AHEAD_RECOMMENDED -> client.player.sendSystemMessage(
                   Component.translatable("dietplus.init.update.behindlatestaheadrecommended",
                           Component.literal(updateResult.currentVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD),
                           Component.literal(updateResult.latestVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD),
                           Component.literal(updateResult.recommendedVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD)
-                  ).withStyle(ChatFormatting.GOLD), false
+                  ).withStyle(ChatFormatting.GOLD)
           );
-          case BEHIND -> client.player.displayClientMessage(
+          case BEHIND -> client.player.sendSystemMessage(
                   Component.translatable("dietplus.init.update.behind",
                           Component.literal(updateResult.currentVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD),
                           Component.literal(updateResult.latestVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD),
                           Component.literal(updateResult.recommendedVersion).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.BOLD)
-                  ).withStyle(ChatFormatting.GOLD), false
+                  ).withStyle(ChatFormatting.GOLD)
           );
-          case ERROR -> client.player.displayClientMessage(
+          case ERROR -> client.player.sendSystemMessage(
                   Component.translatable("dietplus.init.update.error",
                           Component.literal(updateResult.currentVersion) // stores the ex message
-                  ).withStyle(ChatFormatting.RED), false
+                  ).withStyle(ChatFormatting.RED)
           );
         }
       }
