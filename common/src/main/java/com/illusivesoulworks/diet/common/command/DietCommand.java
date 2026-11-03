@@ -42,7 +42,7 @@ public class DietCommand {
 
   public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
     LiteralArgumentBuilder<CommandSourceStack> dietCommand =
-        Commands.literal("diet").requires(player -> player.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER));
+        Commands.literal("dietplus").requires(player -> player.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER));
 
     dietCommand.then(Commands.literal("get")
         .then(Commands.argument("player", EntityArgument.player())
