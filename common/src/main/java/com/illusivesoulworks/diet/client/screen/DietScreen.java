@@ -138,8 +138,8 @@ public class DietScreen extends Screen {
 
               for (IDietGroup group : suite.getGroups()) {
                 guiGraphics.renderItem(new ItemStack(group.getIcon()), x, y - 5);
-                MutableComponent text = Component.translatable(
-                    "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name");
+                MutableComponent text = Component.translatableWithFallback(
+                    "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name", group.getDisplayName());
                 guiGraphics.drawString(this.font, text, x + 20, y, getTextColor(), false);
                 DietColor color = diet.isActive() ? group.getColor() : DietColor.GRAY;
                 int red = color.red();
