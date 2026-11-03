@@ -29,12 +29,13 @@
   },
   "custom": {
     "cardinal-components": [
-      "diet:diet_tracker"
-    ]
+      "dietplus:diet_tracker"
+    ],
+    "updateJSONURL": "${updateURL}"
   },
   "mixins": [
-    "diet.mixins.json",
-    "diet.fabric.mixins.json"
+    "dietplus.mixins.json",
+    "dietplus.fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.23",

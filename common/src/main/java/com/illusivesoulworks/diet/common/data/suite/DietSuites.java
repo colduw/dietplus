@@ -66,7 +66,7 @@ public class DietSuites extends SimpleJsonResourceReloadListener {
   private int uuidSuffix = 0;
 
   public DietSuites() {
-    super(GSON, "diet/suites");
+    super(GSON, "dietplus/suites");
   }
 
   public static Optional<IDietSuite> getSuite(Level level, String name) {
