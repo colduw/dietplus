@@ -1,8 +1,8 @@
-// 1.20.4	2026-10-29T19:02:57.943330229	Diet Item Tags
-94b2311069d1c117261bf7522fb882838f1bb19d data/diet/tags/items/fruits.json
-e224a366e598dba56b8668ce12f639dde85591be data/diet/tags/items/grains.json
-5d4b719071db4a36abfe6ee8071b27f1683d228e data/diet/tags/items/ingredients.json
-2ccf56e619770b8934b2a4b427ebf92b9a65f774 data/diet/tags/items/proteins.json
-d082838d9e5e71b89acdc364c3285bf6baf40cf1 data/diet/tags/items/special_food.json
-bea751f6ecab52408583f153621b80ba7afb0ebe data/diet/tags/items/sugars.json
-0270182aca46658a259ee9889c65cadf2b754edf data/diet/tags/items/vegetables.json
+// 1.20.4	2026-11-03T18:11:09.03789403	Diet Item Tags
+94b2311069d1c117261bf7522fb882838f1bb19d data/dietplus/tags/items/fruits.json
+e224a366e598dba56b8668ce12f639dde85591be data/dietplus/tags/items/grains.json
+5d4b719071db4a36abfe6ee8071b27f1683d228e data/dietplus/tags/items/ingredients.json
+2ccf56e619770b8934b2a4b427ebf92b9a65f774 data/dietplus/tags/items/proteins.json
+d082838d9e5e71b89acdc364c3285bf6baf40cf1 data/dietplus/tags/items/special_food.json
+bea751f6ecab52408583f153621b80ba7afb0ebe data/dietplus/tags/items/sugars.json
+0270182aca46658a259ee9889c65cadf2b754edf data/dietplus/tags/items/vegetables.json
