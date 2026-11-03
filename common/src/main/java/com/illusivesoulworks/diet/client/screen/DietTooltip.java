@@ -42,7 +42,7 @@ public class DietTooltip {
       return new ArrayList<>();
     }
     List<Component> tooltips = new ArrayList<>();
-    tooltips.add(Component.translatable("tooltip.diet.effects"));
+    tooltips.add(Component.translatable("tooltip.dietplus.effects"));
     tooltips.add(Component.empty());
     Map<Attribute, AttributeTooltip> mergedAttributes = new HashMap<>();
 
@@ -59,7 +59,7 @@ public class DietTooltip {
         float val = (info.added + info.added * info.baseMultiplier) * info.totalMultiplier;
 
         if (val < 1.0f) {
-          tooltips.add(Component.translatable("attribute.diet.modifier.disabled",
+          tooltips.add(Component.translatable("attribute.dietplus.modifier.disabled",
               Component.translatable(key.getDescriptionId())).withStyle(ChatFormatting.RED));
         }
       } else {
