@@ -80,7 +80,7 @@ public class DietScreen extends Screen {
     }
     this.ySize = this.groups.size() * 20 + 60;
     this.addRenderableWidget(
-        Button.builder(Component.translatable("gui.diet.close"), (button) -> {
+        Button.builder(Component.translatable("gui.dietplus.close"), (button) -> {
           if (this.minecraft != null && this.minecraft.player != null) {
 
             if (fromInventory) {
