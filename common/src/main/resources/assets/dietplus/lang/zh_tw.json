@@ -1,0 +1,22 @@
+{
+  "gui.dietplus.title": "Diet+",
+  "tooltip.dietplus.eaten": "當食用時:",
+  "tooltip.dietplus.group": "+%s%% %s",
+  "tooltip.dietplus.group_": "+%s",
+  "tooltip.dietplus.effects": "飲食效果",
+  "groups.dietplus.grains.name": "穀物",
+  "groups.dietplus.proteins.name": "蛋白質",
+  "groups.dietplus.fruits.name": "水果",
+  "groups.dietplus.vegetables.name": "蔬菜",
+  "groups.dietplus.sugars.name": "糖分",
+  "commands.dietplus.set.success": "Value for group %s set to %s%% for %s",
+  "commands.dietplus.get.success": "Value for group %s is %s%% for %s",
+  "commands.dietplus.add.success": "Value for group %s increased by %s%% for %s",
+  "commands.dietplus.subtract.success": "Value for group %s decreased by %s%% for %s",
+  "commands.dietplus.reset.success": "重設飲食價值 %s",
+  "commands.dietplus.pause.success": "暫停飲食追蹤 %s",
+  "commands.dietplus.resume.success": "恢復飲食追蹤 %s",
+  "commands.dietplus.clear.success": "解除飲食效果 %s",
+  "key.dietplus.category": "Diet+",
+  "key.dietplus.open.desc": "打開飲食介面"
+}

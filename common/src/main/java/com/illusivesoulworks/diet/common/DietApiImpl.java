@@ -46,7 +46,7 @@ import org.apache.commons.lang3.tuple.Triple;
 public class DietApiImpl extends DietApi {
 
   private static final Attribute NATURAL_REGEN =
-      new RangedAttribute("diet.naturalRegeneration", 1.0d, 0.0d, 2.0d).setSyncable(true);
+      new RangedAttribute("dietplus.naturalRegeneration", 1.0d, 0.0d, 2.0d).setSyncable(true);
 
   @Override
   public Set<IDietGroup> getGroups(Player player, ItemStack input) {
