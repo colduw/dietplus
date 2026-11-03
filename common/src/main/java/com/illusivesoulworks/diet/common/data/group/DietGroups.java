@@ -150,7 +150,6 @@ public class DietGroups extends SimpleJsonResourceReloadListener {
   }
 
   private void buildGroup(DietGroup.Builder builder, JsonObject topElement) {
-
     if (topElement.has("icon")) {
       String icon = GsonHelper.getAsString(topElement, "icon");
       Services.REGISTRY.getItem(new ResourceLocation(icon)).ifPresent(builder::icon);
@@ -169,6 +168,10 @@ public class DietGroups extends SimpleJsonResourceReloadListener {
       int g = ((col >> 8) & 0xff);
       int b = ((col) & 0xff);
       builder.color(new DietColor(r, g, b));
+    }
+
+    if (topElement.has("display_name")) {
+      builder.displayName(GsonHelper.getAsString(topElement, "display_name"));
     }
 
     if (topElement.has("order")) {

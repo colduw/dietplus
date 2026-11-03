@@ -121,8 +121,8 @@ public class DietCommand {
       float amount = diet.getValue(group.getName());
       sender.sendSuccess(
           () -> Component.translatable("commands." + DietConstants.MOD_ID + ".get.success",
-              Component.translatable(
-                  "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name"), amount * 100,
+              Component.translatableWithFallback(
+                  "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name", group.getDisplayName()), amount * 100,
               player.getName()), true);
     });
     return Command.SINGLE_SUCCESS;
@@ -136,8 +136,8 @@ public class DietCommand {
         diet.sync();
         sender.sendSuccess(
             () -> Component.translatable("commands." + DietConstants.MOD_ID + ".set.success",
-                Component.translatable(
-                    "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name"),
+                Component.translatableWithFallback(
+                    "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name", group.getDisplayName()),
                 value * 100, player.getName()), true);
       }
     });
@@ -154,8 +154,8 @@ public class DietCommand {
           diet.sync();
           String arg = amount > 0 ? "add" : "remove";
           sender.sendSuccess(() -> Component.translatable(
-              "commands." + DietConstants.MOD_ID + "." + arg + ".success", Component.translatable(
-                  "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name"), amount * 100,
+              "commands." + DietConstants.MOD_ID + "." + arg + ".success", Component.translatableWithFallback(
+                  "groups." + DietConstants.MOD_ID + "." + group.getName() + ".name", group.getDisplayName()), amount * 100,
               player.getName()), true);
         }
       });
