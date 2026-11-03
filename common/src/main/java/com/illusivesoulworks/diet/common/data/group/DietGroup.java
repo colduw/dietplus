@@ -31,8 +31,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public final class DietGroup implements IDietGroup {
-
   private final String name;
+  private final String displayName;
   private final Item icon;
   private final DietColor color;
   private final float defaultValue;
@@ -44,6 +44,7 @@ public final class DietGroup implements IDietGroup {
 
   private DietGroup(Builder builder) {
     this.name = builder.name;
+    this.displayName = builder.displayName;
     this.icon = builder.icon;
     this.color = builder.color;
     this.defaultValue = builder.defaultValue;
@@ -56,6 +57,7 @@ public final class DietGroup implements IDietGroup {
 
   public static IDietGroup load(CompoundTag tag) {
     String name = tag.getStringOr("Name", "");
+    String displayName = tag.getStringOr("DisplayName", "");
     String icon = tag.getStringOr("Icon", "");
     Item item = Services.REGISTRY.getItem(Identifier.parse(icon)).orElse(null);
     int order = tag.getIntOr("Order", 0);
@@ -65,6 +67,7 @@ public final class DietGroup implements IDietGroup {
     int g = ((color >> 8) & 0xff);
     int b = ((color) & 0xff);
     Builder builder = new Builder(name);
+    builder.displayName(displayName);
     builder.icon(item);
     builder.order(order);
     builder.beneficial(beneficial);
@@ -77,6 +80,11 @@ public final class DietGroup implements IDietGroup {
   @Override
   public String getName() {
     return name;
+  }
+
+  @Override
+  public String getDisplayName() {
+    return displayName;
   }
 
   @Override
@@ -128,6 +136,7 @@ public final class DietGroup implements IDietGroup {
   public CompoundTag save() {
     CompoundTag tag = new CompoundTag();
     tag.putString("Name", this.name);
+    tag.putString("DisplayName", this.displayName);
     tag.putString("Icon", Services.REGISTRY.getItemKey(this.icon).toString());
     tag.putInt("Order", this.order);
     tag.putBoolean("Beneficial", this.beneficial);
@@ -157,6 +166,7 @@ public final class DietGroup implements IDietGroup {
   public static class Builder {
 
     private final String name;
+    private String displayName;
     private Item icon = Items.AIR;
     private DietColor color = new DietColor(255, 255, 255);
     private float defaultValue = 0.0f;
@@ -167,6 +177,12 @@ public final class DietGroup implements IDietGroup {
 
     public Builder(String name) {
       this.name = name;
+      this.displayName = name;
+    }
+
+    public Builder displayName(String displayName) {
+      this.displayName = displayName;
+      return this;
     }
 
     public Builder icon(Item icon) {
