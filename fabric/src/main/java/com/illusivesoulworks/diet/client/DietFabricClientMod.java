@@ -88,7 +88,7 @@ public class DietFabricClientMod implements ClientModInitializer {
     DietFabricNetwork.setupClient();
     KeyBindingHelper.registerKeyBinding(DietKeys.get());
     ClientTickEvents.END_CLIENT_TICK.register(DietClientEvents::tick);
-    ItemTooltipCallback.EVENT.register((stack, context, lines) -> DietClientEvents.renderItemTooltip(Minecraft.getInstance().player, stack, lines));
+    ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> DietClientEvents.renderItemTooltip(Minecraft.getInstance().player, stack, lines));
     ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> ScreenEvents.afterRender(screen).register((screen1, matrices, mouseX, mouseY, tickDelta) -> DietClientEvents.renderEffectsTooltip(screen1, matrices)));
     ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
       if (screen instanceof InventoryScreen inventoryScreen) {
