@@ -24,8 +24,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public interface IDietGroup {
-
   String getName();
+
+  String getDisplayName();
 
   Item getIcon();
 
