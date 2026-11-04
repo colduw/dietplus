@@ -29,7 +29,7 @@
     "minecraft:wheat_seeds",
     "#c:flowers",
     "#minecraft:leaves",
-    "#forge:mushrooms",
+    "#c:mushrooms",
     {
       "id": "abundance:lavender",
       "required": false
