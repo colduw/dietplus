@@ -2,7 +2,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 This is a copy of the changelog for the most recent version. For the full version history, go [here](https://github.com/illusivesoulworks/diet/blob/1.20.x/CHANGELOG.md).
 
-## [2.1.1+1.20.1] - 2023.10.23
+## [2.2.0] - 2026.11.04
 ### Changed
-- Updated to SpectreLib 0.12.6
-- [Fabric] Requires Fabric Loader >=0.14.23
+- Added `display_name` to groups, to make it easier to add new ones via datapacks, instead of having to create resource packs.
+    - Note: a resource pack with dedicated language files is still ideal, if the group is to be localized into multiple languages
+- Changed most references of Diet to Diet+

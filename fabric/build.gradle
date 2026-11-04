@@ -1,6 +1,7 @@
 plugins {
     id 'net.fabricmc.fabric-loom'
     id 'idea'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
 base {
@@ -84,4 +85,21 @@ tasks.named('compileJava', JavaCompile) {
 
 tasks.named('jar', Jar) {
     archiveClassifier.set("")
+}
+
+publishMods {
+    file = jar.archiveFile
+    displayName = "${jar.archiveFileName.get()}"
+    changelog = rootProject.file('CHANGELOG_LATEST.md').text
+    type = STABLE
+    modLoaders.add("fabric")
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        projectId = "${curseforge_id}"
+        minecraftVersionList("${curseforge_version_list}")
+        javaVersions.add(JavaVersion.VERSION_21)
+        client = true
+        server = true
+    }
 }
