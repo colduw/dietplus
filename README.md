@@ -1,29 +1,30 @@
-# Diet
-[![](http://cf.way2muchnoise.eu/versions/diet.svg)](https://www.curseforge.com/minecraft/mc-mods/diet)
-[![](http://cf.way2muchnoise.eu/short_diet_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/diet/files)
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg?&style=flat-square)](https://www.gnu.org/licenses/lgpl-3.0)
-[![ko-fi](https://img.shields.io/badge/Support%20Me-Ko--fi-%23FF5E5B?style=flat-square)](https://ko-fi.com/C0C1NL4O)
+# Diet+
+[![Static Badge](https://img.shields.io/badge/Available%20for-1.20%20%7C%201.21%20%7C%2026.1%20%7C%2026.2%20%7C%2026.3-orange?style=flat&labelColor=%232d2d2d)](https://www.curseforge.com/minecraft/mc-mods/dietplus)
+![Static Badge](https://img.shields.io/badge/License-LGPL%20v3-blue)
+[![Static Badge](https://img.shields.io/badge/Support%20C4%20(the%20original%20developer)-on%20Ko--fi!-%23ff5e5b)](https://ko-fi.com/C0C1NL4O)
 
-Diet is a mod that facilitates the creation and management of dietary food groups in Minecraft. Diet
+Diet+ is a mod that facilitates the creation and management of dietary food groups in Minecraft. Diet+
 comes with a default configuration that creates five classical food groups (fruits, grains, vegetables,
 proteins, and sugars). The mod is highly configurable; users and modpack developers can define their
 own food groups, classifications, and diet effects.
+
+Diet+ is an **unofficial** port of [TheIllusiveC4](https://github.com/TheIllusiveC4)'s [Diet](https://www.curseforge.com/minecraft/mc-mods/diet) mod for [NeoForge](https://neoforged.net/) / [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) / [Fabric](https://fabricmc.net/), and is not affiliated with, or endorsed by them. The original [Diet](https://www.curseforge.com/minecraft/mc-mods/diet) is licensed under [LGPLv3](https://github.com/illusivesoulworks/diet/blob/1.20.x/LICENSE).
 
 ## Features
 
 ### Food Groups
 
-![](https://i.ibb.co/BLYDcbT/diet-screen.png)
+[Diet Screen](/.github/docs/diet.png)
 
 Food groups are custom dietary groups that represent the types of food that you have eaten. Each
-group has a value ranging between 0% and 100% depending on how much of that particular category that
+group has a value ranging between 0% (0.0) and 100% (1.0) depending on how much of that particular category that
 a player has eaten. These values increase depending on what types of food a player eats and every
 group gradually decays when the player uses up their hunger bar.
 
-By default, Diet comes with five classical food groups: Fruits, Grains, Proteins, Vegetables, and
+By default, Diet+ comes with five classical food groups: Fruits, Grains, Proteins, Vegetables, and
 Sugars.
 
-By editing the `diet-groups.toml` configuration file in the world save's `serverconfig` folder,
+By adding new datapacks in the world's save's `datapacks` folder,
 users and modpack developers can create their own custom food groups. Configurable options include:
 - Name
 - Item Icon
@@ -33,16 +34,16 @@ users and modpack developers can create their own custom food groups. Configurab
 - Gain Multiplier
 - Decay Multiplier
 
-Please refer to the [wiki](https://github.com/TheIllusiveC4/Diet/wiki) for more detailed
+Please refer to the [wiki](https://github.com/colduw/dietplus/wiki) for more detailed
 information.
 
 ### Dietary Effects
 
-![](https://i.ibb.co/7vmZfpD/diet-effects.png)
+[Diet Effects](/.github/docs/diet-effects.png)
 
 Dietary effects are custom rewards or penalties applied to players based on certain, configurable
-food group values. These effects can be configured through the `diet-effects.toml` file in the world
-save's `serverconfig` folder.
+food group values. These effects can be configured through datapacks in the world
+save's `datapacks` folder.
 
 Possible effects can include any registered potion effect, vanilla and modded, as
 well as modifying attributes directly (i.e. increasing maximum health by an arbitrary value).
@@ -50,14 +51,14 @@ The conditions for these effects are highly configurable, including checking spe
 checking only subsets of groups, applying effects cumulatively for each matching test, and much
 more.
 
-Please refer to the [wiki](https://github.com/TheIllusiveC4/Diet/wiki) for more detailed
+Please refer to the [wiki](https://github.com/colduw/dietplus/wiki) for more detailed
 information.
 
 ### Commands
 
-Diet registers a few commands to help aid debugging and server management.
+Diet+ registers a few commands to help aid debugging and server management.
 
-- `/diet`
+- `/dietplus`
     - `get <player> <group>`
     - `set <player> <group> <value>`
     - `add <player> <group> <value>`
@@ -68,11 +69,13 @@ Diet registers a few commands to help aid debugging and server management.
     - `export <filter> <argument>`
 
 ## Downloads
-- [Diet on CurseForge](https://www.curseforge.com/minecraft/mc-mods/diet/files)
+- [Diet+ on CurseForge](https://www.curseforge.com/minecraft/mc-mods/dietplus/files/all?page=1&pageSize=20&showAlphaFiles=show)
 
 ## Support
 
-Please report all bugs, issues, and feature requests to the [issue tracker](https://github.com/TheIllusiveC4/Diet/issues).
+**Any bugs caused by this fork should NOT be reported in the original developer's issue tracker.**
+
+Please report all bugs, issues, and feature requests to the [issue tracker](https://github.com/colduw/dietplus/issues).
 
 For non-technical support and questions, join the developer's [Discord](https://discord.gg/JWgrdwt).
 
@@ -82,7 +85,7 @@ All source code and assets are licensed under LGPL 3.0.
 
 ## Donations
 
-Donations to the developer can be sent through [Ko-fi](https://ko-fi.com/C0C1NL4O).
+Donations to the original developer (C4) can be sent through [Ko-fi](https://ko-fi.com/C0C1NL4O).
 
 ## Affiliates
 
@@ -230,5 +233,5 @@ Donations to the developer can be sent through [Ko-fi](https://ko-fi.com/C0C1NL4
 - [XercaMod](https://www.curseforge.com/minecraft/mc-mods/xercamod)
 - ...and more!
 
-Please request support by opening an issue on the [issue tracker](https://github.com/TheIllusiveC4/Diet/issues)
+Please request support by opening an issue on the [issue tracker](https://github.com/colduw/dietplus/issues)
 or opening a pull request to contribute directly.
