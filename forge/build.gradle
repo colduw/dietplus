@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id 'net.minecraftforge.gradle'
     id 'net.minecraftforge.jarjar'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
 jarJar.register()
@@ -131,4 +132,21 @@ tasks.named('build') {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+publishMods {
+    file = tasks.jarJar.archiveFile
+    displayName = "${tasks.jarJar.archiveFileName.get()}"
+    changelog = rootProject.file('CHANGELOG_LATEST.md').text
+    type = STABLE
+    modLoaders.add("forge")
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        projectId = "${curseforge_id}"
+        minecraftVersionList("${curseforge_version_list}")
+        javaVersions.add(JavaVersion.VERSION_21)
+        client = true
+        server = true
+    }
 }
