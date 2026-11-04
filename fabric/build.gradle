@@ -89,7 +89,7 @@ publishMods {
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
         projectId = "${curseforge_id}"
         minecraftVersionList("${curseforge_version_list}")
-        javaVersions.add(JavaVersion.VERSION_17)
+        javaVersions.add(JavaVersion.VERSION_21)
         client = true
         server = true
     }
