@@ -25,7 +25,9 @@ jobs:
       uses: gradle/actions/setup-gradle@v6
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew build
+      run: ./gradlew build publishMods
+      env:
+        CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
 
     - name: Create Epoch Timestamp
       id: epoch_timestamp
