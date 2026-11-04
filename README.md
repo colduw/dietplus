@@ -14,7 +14,7 @@ Diet+ is an **unofficial** port of [TheIllusiveC4](https://github.com/TheIllusiv
 
 ### Food Groups
 
-[Diet Screen](/.github/docs/diet.png)
+![Diet Screen](/.github/docs/diet.png)
 
 Food groups are custom dietary groups that represent the types of food that you have eaten. Each
 group has a value ranging between 0% (0.0) and 100% (1.0) depending on how much of that particular category that
@@ -39,7 +39,7 @@ information.
 
 ### Dietary Effects
 
-[Diet Effects](/.github/docs/diet-effects.png)
+![Diet Effects](/.github/docs/diet-effects.png)
 
 Dietary effects are custom rewards or penalties applied to players based on certain, configurable
 food group values. These effects can be configured through datapacks in the world
