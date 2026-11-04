@@ -1,5 +1,6 @@
 plugins {
     id 'fabric-loom' version '1.2-SNAPSHOT'
+    id "me.modmuss50.mod-publish-plugin" version "2.2.1"
     id 'idea'
 }
 
@@ -75,4 +76,21 @@ processResources {
 
 tasks.withType(JavaCompile) {
     source(project(":common").sourceSets.main.allSource)
+}
+
+publishMods {
+    file = remapJar.archiveFile
+    displayName = "${remapJar.archiveFileName.get()}"
+    changelog = rootProject.file('CHANGELOG_LATEST.md').text
+    type = STABLE
+    modLoaders.add("fabric")
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        projectId = "${curseforge_id}"
+        minecraftVersionList("${curseforge_version_list}")
+        javaVersions.add(JavaVersion.VERSION_17)
+        client = true
+        server = true
+    }
 }
